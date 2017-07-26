@@ -14,21 +14,22 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate,
 MCSessionDelegate, UITextFieldDelegate {
 
         let serviceType = "LCOC-Chat"
-        
-        var browser : MCBrowserViewController!
-        var assistant : MCAdvertiserAssistant!
-        var session : MCSession!
-        var peerID: MCPeerID!
-        var leftValue : Int!
-        var rightValue : Int!
-        var sign : Int!
+    // ここから
+        var browser : MCBrowserViewController!   //
+        var assistant : MCAdvertiserAssistant!   //
+        var session : MCSession!                 //セッション
+        var peerID: MCPeerID!                    //接続先の名前
+    //ここまではコピぺの変数
+        var leftValue : Int!                     //左の数値
+        var rightValue : Int!                    //右の数値
+        var sign : Int!                          //符号
+        var objc : Receiver!                     //objective-C呼び出しのオブジェクト
     
     
+        @IBOutlet weak var leftLabel: UILabel! //左側の数値のラベル
+        @IBOutlet weak var rightLabel: UILabel! //右側の数値のラベル
     
-        @IBOutlet weak var leftLabel: UILabel!
-        @IBOutlet weak var rightLabel: UILabel!
-    
-        
+        // セッション
         override func viewDidLoad() {
             super.viewDidLoad()
             
@@ -47,7 +48,7 @@ MCSessionDelegate, UITextFieldDelegate {
             self.assistant.start()
         }
         
-        
+        // 左スライドを動かした時呼び出される
     @IBAction func slide1(_ sender: UISlider) {
         leftValue = sign * (Int(256 * sender.value) + 1000)
         let data = NSData(bytes: &leftValue, length: MemoryLayout<NSInteger>.size)
@@ -59,9 +60,10 @@ MCSessionDelegate, UITextFieldDelegate {
         }
         
         leftLabel.text = String(leftValue - (sign *  1000))
+        
     }
     
-    
+    // 右スライドを動かした時呼び出される
     @IBAction func slide2(_ sender: UISlider) {
         rightValue = sign * Int(256 * sender.value)
         let data = NSData(bytes: &rightValue, length: MemoryLayout<NSInteger>.size)
@@ -75,12 +77,15 @@ MCSessionDelegate, UITextFieldDelegate {
         rightLabel.text = String(rightValue)
         
     }
-        
+    
+    //逆回転のボタンを押した時呼び出される
     @IBAction func reverse(_ sender: UIButton) {
         sign = sign * (-1)
         var rvalue = -1 * rightValue
         rightLabel.text = String(rvalue)
         var data = NSData(bytes: &(rvalue), length: MemoryLayout<NSInteger>.size)
+        
+        // dataを送る
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
@@ -90,6 +95,7 @@ MCSessionDelegate, UITextFieldDelegate {
         leftLabel.text = String(lvalue - (sign * 1000))
         data = NSData(bytes: &lvalue, length: MemoryLayout<NSInteger>.size)
         
+        // dataを送る
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
@@ -107,7 +113,9 @@ MCSessionDelegate, UITextFieldDelegate {
             rightLabel.text = String(num)
         }
     
+    // ブラウザボタンを押した時呼び出される
     @IBAction func showBrowser(_ sender: UIButton) {
+        
         sign = 1
         self.present(self.browser, animated: true, completion: nil)
     
@@ -128,20 +136,25 @@ MCSessionDelegate, UITextFieldDelegate {
             self.dismiss(animated: true, completion: nil)
         }
         
-        // 相手からNSDataが送られてきたとき
+        // 相手からNSDataが送られてきたとき(sendメソッドによりおくられる)
         func session(_ session: MCSession, didReceive data: Data,
                      fromPeer peerID: MCPeerID)  {
             DispatchQueue.main.async() {
+                // objective-Cメソッド呼び出し用オブジェクト生成
+                self.objc = Receiver()
                 let data = NSData(data: data)
                 var numData : NSInteger = 0
                 data.getBytes(&numData, length: data.length)
-                // ラベルの更新
+                // ラベルの更新(左右の判定)左の数値は1000足された値
                 if (1000 <= numData && 1256 >= numData) {
                 self.updateLabelleft(num: (numData - 1000))
+                self.objc.getLeftData(numData)
                 } else if (numData <= -1000) {
                 self.updateLabelleft(num: (numData + 1000))
+                self.objc.getLeftData(numData)
                 } else {
                 self.updateLabelright(num: numData)
+                self.objc.getRightData(numData)
                 }
             }
         }
