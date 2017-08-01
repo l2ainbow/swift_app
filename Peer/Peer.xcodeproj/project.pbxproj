@@ -13,6 +13,8 @@
 		DBE028731F30DBC10073D890 /* FSKRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = DBE028701F30DBC10073D890 /* FSKRecognizer.mm */; };
 		DBE028741F30DBC10073D890 /* FSKSerialGenerator.mm in Sources */ = {isa = PBXBuildFile; fileRef = DBE028721F30DBC10073D890 /* FSKSerialGenerator.mm */; };
 		DBE028791F30DBF30073D890 /* MultiDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE028771F30DBF30073D890 /* MultiDelegate.m */; };
+		DBE0287D1F30DE4C0073D890 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE0287B1F30DE4C0073D890 /* AudioToolbox.framework */; };
+		DBE0287E1F30DE4C0073D890 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE0287C1F30DE4C0073D890 /* AVFoundation.framework */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -38,6 +40,8 @@
 		DBE028761F30DBF30073D890 /* MultiDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiDelegate.h; path = Peer/MultiDelegate.h; sourceTree = "<group>"; };
 		DBE028771F30DBF30073D890 /* MultiDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiDelegate.m; path = Peer/MultiDelegate.m; sourceTree = "<group>"; };
 		DBE028781F30DBF30073D890 /* PatternRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatternRecognizer.h; path = Peer/PatternRecognizer.h; sourceTree = "<group>"; };
+		DBE0287B1F30DE4C0073D890 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		DBE0287C1F30DE4C0073D890 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F91BCA991F28B2A300A3443D /* Receiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Receiver.h; path = Peer/Receiver.h; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,18 +59,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBE0287D1F30DE4C0073D890 /* AudioToolbox.framework in Frameworks */,
+				DBE0287E1F30DE4C0073D890 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DBE0287A1F30DE4C0073D890 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DBE0287B1F30DE4C0073D890 /* AudioToolbox.framework */,
+				DBE0287C1F30DE4C0073D890 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F98954D71F21315200B24DC0 = {
 			isa = PBXGroup;
 			children = (
 				F9D80B591F28DD8C0014B85B /* Objective-C_Code */,
 				F98954E21F21315200B24DC0 /* Peer */,
 				F98954E11F21315200B24DC0 /* Products */,
+				DBE0287A1F30DE4C0073D890 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
