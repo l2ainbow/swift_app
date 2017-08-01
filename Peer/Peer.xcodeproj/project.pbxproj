@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DBE0286A1F30DBA40073D890 /* AudioQueueObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE028651F30DBA40073D890 /* AudioQueueObject.m */; };
+		DBE0286B1F30DBA40073D890 /* AudioSignalAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE028671F30DBA40073D890 /* AudioSignalAnalyzer.m */; };
+		DBE0286C1F30DBA40073D890 /* AudioSignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE028691F30DBA40073D890 /* AudioSignalGenerator.m */; };
+		DBE028731F30DBC10073D890 /* FSKRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = DBE028701F30DBC10073D890 /* FSKRecognizer.mm */; };
+		DBE028741F30DBC10073D890 /* FSKSerialGenerator.mm in Sources */ = {isa = PBXBuildFile; fileRef = DBE028721F30DBC10073D890 /* FSKSerialGenerator.mm */; };
+		DBE028791F30DBF30073D890 /* MultiDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE028771F30DBF30073D890 /* MultiDelegate.m */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -16,6 +22,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DBE028641F30DBA40073D890 /* AudioQueueObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioQueueObject.h; path = Peer/AudioQueueObject.h; sourceTree = "<group>"; };
+		DBE028651F30DBA40073D890 /* AudioQueueObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueObject.m; path = Peer/AudioQueueObject.m; sourceTree = "<group>"; };
+		DBE028661F30DBA40073D890 /* AudioSignalAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioSignalAnalyzer.h; path = Peer/AudioSignalAnalyzer.h; sourceTree = "<group>"; };
+		DBE028671F30DBA40073D890 /* AudioSignalAnalyzer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioSignalAnalyzer.m; path = Peer/AudioSignalAnalyzer.m; sourceTree = "<group>"; };
+		DBE028681F30DBA40073D890 /* AudioSignalGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioSignalGenerator.h; path = Peer/AudioSignalGenerator.h; sourceTree = "<group>"; };
+		DBE028691F30DBA40073D890 /* AudioSignalGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioSignalGenerator.m; path = Peer/AudioSignalGenerator.m; sourceTree = "<group>"; };
+		DBE0286D1F30DBC10073D890 /* FSKByteQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSKByteQueue.h; path = Peer/FSKByteQueue.h; sourceTree = "<group>"; };
+		DBE0286E1F30DBC10073D890 /* FSKModemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSKModemConfig.h; path = Peer/FSKModemConfig.h; sourceTree = "<group>"; };
+		DBE0286F1F30DBC10073D890 /* FSKRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSKRecognizer.h; path = Peer/FSKRecognizer.h; sourceTree = "<group>"; };
+		DBE028701F30DBC10073D890 /* FSKRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FSKRecognizer.mm; path = Peer/FSKRecognizer.mm; sourceTree = "<group>"; };
+		DBE028711F30DBC10073D890 /* FSKSerialGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSKSerialGenerator.h; path = Peer/FSKSerialGenerator.h; sourceTree = "<group>"; };
+		DBE028721F30DBC10073D890 /* FSKSerialGenerator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FSKSerialGenerator.mm; path = Peer/FSKSerialGenerator.mm; sourceTree = "<group>"; };
+		DBE028751F30DBF30073D890 /* lockfree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lockfree.h; path = Peer/lockfree.h; sourceTree = "<group>"; };
+		DBE028761F30DBF30073D890 /* MultiDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiDelegate.h; path = Peer/MultiDelegate.h; sourceTree = "<group>"; };
+		DBE028771F30DBF30073D890 /* MultiDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiDelegate.m; path = Peer/MultiDelegate.m; sourceTree = "<group>"; };
+		DBE028781F30DBF30073D890 /* PatternRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatternRecognizer.h; path = Peer/PatternRecognizer.h; sourceTree = "<group>"; };
 		F91BCA991F28B2A300A3443D /* Receiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Receiver.h; path = Peer/Receiver.h; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +94,22 @@
 		F9D80B591F28DD8C0014B85B /* Objective-C_Code */ = {
 			isa = PBXGroup;
 			children = (
+				DBE028641F30DBA40073D890 /* AudioQueueObject.h */,
+				DBE028651F30DBA40073D890 /* AudioQueueObject.m */,
+				DBE028661F30DBA40073D890 /* AudioSignalAnalyzer.h */,
+				DBE028671F30DBA40073D890 /* AudioSignalAnalyzer.m */,
+				DBE028681F30DBA40073D890 /* AudioSignalGenerator.h */,
+				DBE028691F30DBA40073D890 /* AudioSignalGenerator.m */,
+				DBE0286D1F30DBC10073D890 /* FSKByteQueue.h */,
+				DBE0286E1F30DBC10073D890 /* FSKModemConfig.h */,
+				DBE0286F1F30DBC10073D890 /* FSKRecognizer.h */,
+				DBE028701F30DBC10073D890 /* FSKRecognizer.mm */,
+				DBE028711F30DBC10073D890 /* FSKSerialGenerator.h */,
+				DBE028721F30DBC10073D890 /* FSKSerialGenerator.mm */,
+				DBE028751F30DBF30073D890 /* lockfree.h */,
+				DBE028761F30DBF30073D890 /* MultiDelegate.h */,
+				DBE028771F30DBF30073D890 /* MultiDelegate.m */,
+				DBE028781F30DBF30073D890 /* PatternRecognizer.h */,
 				F91BCA991F28B2A300A3443D /* Receiver.h */,
 				F9E1B1901F28AD8800A69D64 /* Receiver.m */,
 				F9E1B18F1F28AD8700A69D64 /* Peer-Bridging-Header.h */,
@@ -153,9 +191,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBE028741F30DBC10073D890 /* FSKSerialGenerator.mm in Sources */,
+				DBE028791F30DBF30073D890 /* MultiDelegate.m in Sources */,
+				DBE028731F30DBC10073D890 /* FSKRecognizer.mm in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */,
 				F9E1B1911F28AD8800A69D64 /* Receiver.m in Sources */,
+				DBE0286A1F30DBA40073D890 /* AudioQueueObject.m in Sources */,
+				DBE0286C1F30DBA40073D890 /* AudioSignalGenerator.m in Sources */,
+				DBE0286B1F30DBA40073D890 /* AudioSignalAnalyzer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
