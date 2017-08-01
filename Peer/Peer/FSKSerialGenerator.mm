@@ -169,8 +169,6 @@ SAMPLE sineTable[SINE_TABLE_LENGTH];
 {
 	if(byteQueue)
 		delete byteQueue;
-	
-	[super dealloc];
 }
 
 @end

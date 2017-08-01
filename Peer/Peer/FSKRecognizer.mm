@@ -220,10 +220,6 @@
 {
 	if(byteQueue)
 		delete byteQueue;
-	
-	[receivers release];
-	
-	[super dealloc];
 }
 
 @end
