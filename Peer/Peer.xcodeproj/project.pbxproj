@@ -24,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DBC20BD31F30E046009AB0D7 /* CharReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CharReceiver.h; path = Peer/CharReceiver.h; sourceTree = "<group>"; };
 		DBE028641F30DBA40073D890 /* AudioQueueObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioQueueObject.h; path = Peer/AudioQueueObject.h; sourceTree = "<group>"; };
 		DBE028651F30DBA40073D890 /* AudioQueueObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueObject.m; path = Peer/AudioQueueObject.m; sourceTree = "<group>"; };
 		DBE028661F30DBA40073D890 /* AudioSignalAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioSignalAnalyzer.h; path = Peer/AudioSignalAnalyzer.h; sourceTree = "<group>"; };
@@ -116,6 +117,7 @@
 				DBE028671F30DBA40073D890 /* AudioSignalAnalyzer.m */,
 				DBE028681F30DBA40073D890 /* AudioSignalGenerator.h */,
 				DBE028691F30DBA40073D890 /* AudioSignalGenerator.m */,
+				DBC20BD31F30E046009AB0D7 /* CharReceiver.h */,
 				DBE0286D1F30DBC10073D890 /* FSKByteQueue.h */,
 				DBE0286E1F30DBC10073D890 /* FSKModemConfig.h */,
 				DBE0286F1F30DBC10073D890 /* FSKRecognizer.h */,
