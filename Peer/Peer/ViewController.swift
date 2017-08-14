@@ -11,7 +11,7 @@ import MultipeerConnectivity
 
 
 class ViewController: UIViewController, MCBrowserViewControllerDelegate,
-MCSessionDelegate, UITextFieldDelegate {
+MCSessionDelegate, UITextFieldDelegate, CharReceiver {
 
         let serviceType = "LCOC-Chat"
     // ここから
@@ -28,6 +28,10 @@ MCSessionDelegate, UITextFieldDelegate {
     
         @IBOutlet weak var leftLabel: UILabel! //左側の数値のラベル
         @IBOutlet weak var rightLabel: UILabel! //右側の数値のラベル
+    
+    func receivedChar(_ input: Int8) {
+        
+    }
     
         // セッション
         override func viewDidLoad() {

@@ -7,15 +7,47 @@
 //
 
 import UIKit
+import AVFoundation
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var generator: FSKSerialGenerator!
+    var recognizer: FSKRecognizer!
+    var analyzer: AudioSignalAnalyzer!
+    var viewController: ViewController!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        viewController = ViewController(nibName: "MainView", bundle: nil)
+        
+        let session: AVAudioSession = AVAudioSession.sharedInstance()
+        do {
+            if (session.isInputAvailable){
+                try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            } else {
+                try session.setCategory(AVAudioSessionCategoryPlayback)
+            }
+            try session.setActive(true)
+            try session.setPreferredIOBufferDuration(0.023220)
+        } catch {
+            fatalError("Cannot set Parameters of AVAudioSession")
+        }
+        recognizer = FSKRecognizer.init()
+        recognizer.add(viewController)
+        
+        generator = FSKSerialGenerator.init()
+        generator.play()
+        
+        analyzer = AudioSignalAnalyzer.init()
+        analyzer.add(recognizer)
+        
+        if (session.isInputAvailable){
+            analyzer.record()
+        }
+        
         return true
     }
 
