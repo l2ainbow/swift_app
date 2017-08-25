@@ -46,6 +46,8 @@ MCSessionDelegate, UITextFieldDelegate {
             
             // tell the assistant to start advertising our fabulous chat
             self.assistant.start()
+            
+            self.sign = 1
         }
         
         // 左スライドを動かした時呼び出される
@@ -115,10 +117,7 @@ MCSessionDelegate, UITextFieldDelegate {
     
     // ブラウザボタンを押した時呼び出される
     @IBAction func showBrowser(_ sender: UIButton) {
-        
-        sign = 1
         self.present(self.browser, animated: true, completion: nil)
-    
     }
         
     func browserViewControllerDidFinish(
