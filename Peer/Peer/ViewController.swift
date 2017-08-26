@@ -212,7 +212,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
         // BLE通信にて送信
         let data = String(leftValue).data(using: .utf8)!
-        peripheral.writeValue(data, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
+        peripheral.writeValue(data, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
     }
     
     // 右スライドを動かした時呼び出される
@@ -227,6 +227,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         rightLabel.text = String(rightValue)
         // 数値の読み上げ
         speak(word: "右" + rightLabel.text!)
+        
+        // BLE通信にて送信
+        let data = String(rightValue).data(using: .utf8)!
+        peripheral.writeValue(data, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
     }
     
     //逆回転のボタンを押した時呼び出される
@@ -244,6 +248,12 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         leftLabel.text = String(leftValue)
         let lStr:String = "l" + String(leftValue)
         sendToPeer(message: lStr)
+        
+        // BLE通信にて送信
+        let rData = String(rightValue).data(using: .utf8)!
+        peripheral.writeValue(rData, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        let lData = String(leftValue).data(using: .utf8)!
+        peripheral.writeValue(lData, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
     }
     
     // ラベルの更新
