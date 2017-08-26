@@ -51,6 +51,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     @IBOutlet weak var leftLabel: UILabel! //左側の数値のラベル
     @IBOutlet weak var rightLabel: UILabel! //右側の数値のラベル
+    @IBOutlet weak var leftLowerLabel: UILabel! // 左下の数値のラベル
+    @IBOutlet weak var rightLowerLabel: UILabel! // 右下の数値のラベル
     
     // セッション
     override func viewDidLoad() {
@@ -144,10 +146,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             
             switch characteristic.uuid{
             case (CHAR_UUIDs["leftMotor"]?.uuid)!:
-                leftLabel.text = String(data: characteristic.value!, encoding: .utf8)
+                leftLowerLabel.text = String(data: characteristic.value!, encoding: .utf8)
                 break
             case (CHAR_UUIDs["rightMotor"]?.uuid)!:
-                rightLabel.text = String(data: characteristic.value!, encoding: .utf8)
+                rightLowerLabel.text = String(data: characteristic.value!, encoding: .utf8)
                 break
             default:
                 break
@@ -163,10 +165,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         }
         switch characteristic.uuid{
         case (CHAR_UUIDs["leftMotor"]?.uuid)!:
-            leftLabel.text = String(data: characteristic.value!, encoding: .utf8)
+            leftLowerLabel.text = String(data: characteristic.value!, encoding: .utf8)
             break
         case (CHAR_UUIDs["rightMotor"]?.uuid)!:
-            rightLabel.text = String(data: characteristic.value!, encoding: .utf8)
+            rightLowerLabel.text = String(data: characteristic.value!, encoding: .utf8)
             break
         default:
             break
