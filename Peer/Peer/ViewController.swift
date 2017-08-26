@@ -9,6 +9,7 @@
 import UIKit
 import MultipeerConnectivity
 import CoreBluetooth
+import AVFoundation
 
 class ViewController: UIViewController, MCBrowserViewControllerDelegate,
 MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -19,6 +20,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     }
     
     let serviceType = "LCOC-Chat"
+    
+    // 音声パラメータ
+    let VOICE_RATE = Float(0.5) // 0.1-1.0
+    let VOICE_PITCH = Float(1.4) // 0.5-2.0
     
     // BLE UUID
     let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
@@ -42,6 +47,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     var rightValue : Int!                    //右の数値
     var sign : Int!                          //符号
     var objc : Receiver!                     //objective-C呼び出しのオブジェクト
+    var synthesizer = AVSpeechSynthesizer() // 音声生成
     
     @IBOutlet weak var leftLabel: UILabel! //左側の数値のラベル
     @IBOutlet weak var rightLabel: UILabel! //右側の数値のラベル
@@ -166,6 +172,14 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         }
     }
     
+    // 文章の読み上げ
+    func speak(word: String) {
+        let utterance = AVSpeechUtterance(string: word)
+        utterance.rate = VOICE_RATE
+        utterance.pitchMultiplier = VOICE_PITCH
+        self.synthesizer.speak(utterance)
+    }
+    
     // 左スライドを動かした時呼び出される
     @IBAction func slide1(_ sender: UISlider) {
         leftValue = sign * (Int(256 * sender.value) + 1000)
@@ -177,6 +191,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         }
         
         leftLabel.text = String(leftValue - (sign *  1000))
+        // 数値の読み上げ
+        speak(word: "左" + leftLabel.text!)
     }
     
     // 右スライドを動かした時呼び出される
@@ -189,10 +205,13 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             print(error)
         }
         rightLabel.text = String(rightValue)
+        // 数値の読み上げ
+        speak(word: "右" + rightLabel.text!)
     }
     
     //逆回転のボタンを押した時呼び出される
     @IBAction func reverse(_ sender: UIButton) {
+        speak(word: "そこは、おさないで？")
         sign = sign * (-1)
         var rvalue = -1 * rightValue
         rightLabel.text = String(rvalue)
@@ -225,10 +244,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     // ブラウザボタンを押した時呼び出される
     @IBAction func showBrowser(_ sender: UIButton) {
-        
-        sign = 1
         self.present(self.browser, animated: true, completion: nil)
-        
     }
     
     func browserViewControllerDidFinish(
