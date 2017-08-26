@@ -16,7 +16,7 @@ MCSessionDelegate, UITextFieldDelegate {
     let serviceType = "LCOC-Chat"
     // 音声パラメータ
     let VOICE_RATE = Float(0.5) // 0.1-1.0
-    let VOICE_PITCH = Float(1.0) // 0.5-2.0
+    let VOICE_PITCH = Float(1.4) // 0.5-2.0
     
     // ここから
     var browser : MCBrowserViewController!   //
@@ -56,6 +56,15 @@ MCSessionDelegate, UITextFieldDelegate {
         self.sign = 1
         self.leftValue = 0
         self.rightValue = 0
+        
+    }
+    
+    // 文章の読み上げ
+    func speak(word: String) {
+        let utterance = AVSpeechUtterance(string: word)
+        utterance.rate = VOICE_RATE
+        utterance.pitchMultiplier = VOICE_PITCH
+        self.synthesizer.speak(utterance)
     }
     
     // 左スライドを動かした時呼び出される
@@ -71,10 +80,7 @@ MCSessionDelegate, UITextFieldDelegate {
         
         leftLabel.text = String(leftValue - (sign *  1000))
         // 数値の読み上げ
-        let utterance = AVSpeechUtterance(string: "左" + leftLabel.text!)
-        utterance.rate = VOICE_RATE
-        utterance.pitchMultiplier = VOICE_PITCH
-        self.synthesizer.speak(utterance)
+        speak(word: "左" + leftLabel.text!)
     }
     
     // 右スライドを動かした時呼び出される
@@ -90,14 +96,12 @@ MCSessionDelegate, UITextFieldDelegate {
         
         rightLabel.text = String(rightValue)
         // 数値の読み上げ
-        let utterance = AVSpeechUtterance(string: "右" + rightLabel.text!)
-        utterance.rate = VOICE_RATE
-        utterance.pitchMultiplier = VOICE_PITCH
-        self.synthesizer.speak(utterance)
+        speak(word: "右" + rightLabel.text!)
     }
     
     //逆回転のボタンを押した時呼び出される
     @IBAction func reverse(_ sender: UIButton) {
+        speak(word: "そこは、おさないで？")
         sign = sign * (-1)
         var rvalue = -1 * rightValue
         rightLabel.text = String(rvalue)
@@ -119,8 +123,6 @@ MCSessionDelegate, UITextFieldDelegate {
         } catch {
             print(error)
         }
-        
-        
     }
     // ラベルの更新
     func updateLabelleft(num : Int) {
