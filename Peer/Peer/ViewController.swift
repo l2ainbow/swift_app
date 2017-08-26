@@ -71,7 +71,7 @@ MCSessionDelegate, UITextFieldDelegate {
         
         leftLabel.text = String(leftValue - (sign *  1000))
         // 数値の読み上げ
-        let utterance = AVSpeechUtterance(string: leftLabel.text!)
+        let utterance = AVSpeechUtterance(string: "左" + leftLabel.text!)
         utterance.rate = VOICE_RATE
         utterance.pitchMultiplier = VOICE_PITCH
         self.synthesizer.speak(utterance)
@@ -89,7 +89,11 @@ MCSessionDelegate, UITextFieldDelegate {
         }
         
         rightLabel.text = String(rightValue)
-        
+        // 数値の読み上げ
+        let utterance = AVSpeechUtterance(string: "右" + rightLabel.text!)
+        utterance.rate = VOICE_RATE
+        utterance.pitchMultiplier = VOICE_PITCH
+        self.synthesizer.speak(utterance)
     }
     
     //逆回転のボタンを押した時呼び出される
