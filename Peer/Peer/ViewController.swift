@@ -136,11 +136,12 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             print("キャラクタリスティック発見時エラー:%@", error!)
             return
         }
-        peripheral.setNotifyValue(true, for: (service.characteristics?.first)!)
         
         for characteristic in service.characteristics!
         {
             print("キャラクタリスティク発見:%@",characteristic)
+            peripheral.setNotifyValue(true, for: characteristic)
+            
             switch characteristic.uuid{
             case (CHAR_UUIDs["leftMotor"]?.uuid)!:
                 leftLabel.text = String(data: characteristic.value!, encoding: .utf8)
@@ -233,6 +234,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             print(error)
         }
     }
+    
     // ラベルの更新
     func updateLabelleft(num : Int) {
         leftLabel.text = String(num)
