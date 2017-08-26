@@ -42,6 +42,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     // Bluetooth関連
     var centralManager: CBCentralManager!
     var peripheral: CBPeripheral! // BLEペリフェラル
+    var leftMotorCharacteristic : CBCharacteristic?
+    var rightMotorCharacteristic : CBCharacteristic?
     
     // ユーザデータ
     var leftValue : Int!                     //左の数値
@@ -147,9 +149,11 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             switch characteristic.uuid{
             case (CHAR_UUIDs["leftMotor"]?.uuid)!:
                 leftLowerLabel.text = String(data: characteristic.value!, encoding: .utf8)
+                leftMotorCharacteristic = characteristic
                 break
             case (CHAR_UUIDs["rightMotor"]?.uuid)!:
                 rightLowerLabel.text = String(data: characteristic.value!, encoding: .utf8)
+                rightMotorCharacteristic = characteristic
                 break
             default:
                 break
@@ -205,6 +209,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         leftLabel.text = String(leftValue)
         // 数値の読み上げ
         speak(word: "左" + leftLabel.text!)
+        
+        // BLE通信にて送信
+        let data = String(leftValue).data(using: .utf8)!
+        peripheral.writeValue(data, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
     }
     
     // 右スライドを動かした時呼び出される
