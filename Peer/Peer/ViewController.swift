@@ -50,7 +50,6 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
         self.session = MCSession(peer: peerID)
         self.session.delegate = self
@@ -64,10 +63,11 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
         // tell the assistant to start advertising our fabulous chat
         self.assistant.start()
-         */
         
         // 数値初期化
         self.sign = 1
+        self.leftValue = 0
+        self.rightValue = 0
         
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -78,7 +78,6 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         switch central.state{
         case .poweredOn:
             centralManager.scanForPeripherals(withServices: [SERVICE_UUID]) // Peripheralのスキャン開始
-            //centralManager.scanForPeripherals(withServices: nil) // Peripheralのスキャン開始
             print("state=powerOn, start to scan\(SERVICE_UUID)")
         default:
             break
@@ -92,25 +91,25 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         centralManager.stopScan()
         
         central.connect(peripheral, options: nil)
-        
     }
-    /*
+    
+    // Peripheralとの接続切断時
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if (error != nil){
-            print("Peripheral発見時エラー:%@", error!)
+            print("Peripheral切断時エラー:%@", error!)
             return
         }
-        self.peripheral = peripheral
-        print("ペリフェラル発見:%@",peripheral.name!)
-        centralManager.stopScan()
+        print("ペリフェラル切断:%@",peripheral.name!)
         
-        central.connect(peripheral, options: nil)
+        centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
-    */
-    
+ 
     // Periphralとの接続時
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("ペリフェラルとの接続成功:%@",peripheral.name!)
+        self.peripheral = peripheral
+        centralManager.stopScan()
+        
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
     }
@@ -170,34 +169,26 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     // 左スライドを動かした時呼び出される
     @IBAction func slide1(_ sender: UISlider) {
         leftValue = sign * (Int(256 * sender.value) + 1000)
-        //let data = NSData(bytes: &leftValue, length: MemoryLayout<NSInteger>.size)
-        /*
+        let data = NSData(bytes: &leftValue, length: MemoryLayout<NSInteger>.size)
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
-         */
         
         leftLabel.text = String(leftValue - (sign *  1000))
-        
     }
     
     // 右スライドを動かした時呼び出される
     @IBAction func slide2(_ sender: UISlider) {
         rightValue = sign * Int(256 * sender.value)
-        //let data = NSData(bytes: &rightValue, length: MemoryLayout<NSInteger>.size)
-        
-        /*
+        let data = NSData(bytes: &rightValue, length: MemoryLayout<NSInteger>.size)
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
-        */
-        
         rightLabel.text = String(rightValue)
-        
     }
     
     //逆回転のボタンを押した時呼び出される
@@ -206,29 +197,22 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         var rvalue = -1 * rightValue
         rightLabel.text = String(rvalue)
         var data = NSData(bytes: &(rvalue), length: MemoryLayout<NSInteger>.size)
-        
-        /*
         // dataを送る
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
-        */
         var lvalue = -1 * leftValue
         leftLabel.text = String(lvalue - (sign * 1000))
         data = NSData(bytes: &lvalue, length: MemoryLayout<NSInteger>.size)
         
-        /*
         // dataを送る
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
-        */
-        
-        
     }
     // ラベルの更新
     func updateLabelleft(num : Int) {
@@ -315,10 +299,3 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     
 }
-
-
-
-
-
-
-
