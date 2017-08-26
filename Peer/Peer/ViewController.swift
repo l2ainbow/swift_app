@@ -45,7 +45,6 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     // ユーザデータ
     var leftValue : Int!                     //左の数値
     var rightValue : Int!                    //右の数値
-    var sign : Int!                          //符号
     var objc : Receiver!                     //objective-C呼び出しのオブジェクト
     var synthesizer = AVSpeechSynthesizer() // 音声生成
     
@@ -73,7 +72,6 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.assistant.start()
         
         // 数値初期化
-        self.sign = 1
         self.leftValue = 0
         self.rightValue = 0
         
@@ -185,28 +183,37 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     // 左スライドを動かした時呼び出される
     @IBAction func slide1(_ sender: UISlider) {
-        leftValue = sign * (Int(256 * sender.value) + 1000)
-        let data = NSData(bytes: &leftValue, length: MemoryLayout<NSInteger>.size)
+        leftValue = Int(256 * sender.value)
+        
+        // 数値のP2P通信
+        let sendValue:String = "l" + String(leftValue)
+        let data = sendValue.data(using: .utf8)!
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
         
-        leftLabel.text = String(leftValue - (sign *  1000))
+        // ラベルの更新
+        leftLabel.text = String(leftValue)
         // 数値の読み上げ
         speak(word: "左" + leftLabel.text!)
     }
     
     // 右スライドを動かした時呼び出される
     @IBAction func slide2(_ sender: UISlider) {
-        rightValue = sign * Int(256 * sender.value)
-        let data = NSData(bytes: &rightValue, length: MemoryLayout<NSInteger>.size)
+        rightValue = Int(256 * sender.value)
+        
+        // 数値のP2P通信
+        let sendValue:String = "r" + String(rightValue)
+        let data = sendValue.data(using: .utf8)!
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
+        
+        // ラベルの更新
         rightLabel.text = String(rightValue)
         // 数値の読み上げ
         speak(word: "右" + rightLabel.text!)
@@ -215,23 +222,26 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     //逆回転のボタンを押した時呼び出される
     @IBAction func reverse(_ sender: UIButton) {
         speak(word: "そこは、おさないで？")
-        sign = sign * (-1)
-        var rvalue = -1 * rightValue
-        rightLabel.text = String(rvalue)
-        var data = NSData(bytes: &(rvalue), length: MemoryLayout<NSInteger>.size)
-        // dataを送る
-        do {
-            try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
-        } catch {
-            print(error)
-        }
-        var lvalue = -1 * leftValue
-        leftLabel.text = String(lvalue - (sign * 1000))
-        data = NSData(bytes: &lvalue, length: MemoryLayout<NSInteger>.size)
+        rightValue = -1 * rightValue
+        rightLabel.text = String(rightValue)
+        let rStr:String = "r" + String(rightValue)
+        let rData = rStr.data(using: .utf8)!
         
         // dataを送る
         do {
-            try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
+            try self.session.send(rData as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
+        } catch {
+            print(error)
+        }
+        
+        leftValue = -1 * leftValue
+        leftLabel.text = String(leftValue)
+        let lStr:String = "l" + String(leftValue)
+        let lData = lStr.data(using: .utf8)!
+        
+        // dataを送る
+        do {
+            try self.session.send(lData as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
@@ -269,24 +279,29 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     // 相手からNSDataが送られてきたとき(sendメソッドによりおくられる)
     func session(_ session: MCSession, didReceive data: Data,
                  fromPeer peerID: MCPeerID)  {
+        
         DispatchQueue.main.async() {
             // objective-Cメソッド呼び出し用オブジェクト生成
             self.objc = Receiver()
-            let data = NSData(data: data)
-            var numData : NSInteger = 0
-            data.getBytes(&numData, length: data.length)
+            let str = String(data: data, encoding: .utf8)!
+            let prefix = str[str.startIndex]
+            let val = str.substring(from: str.index(str.startIndex, offsetBy: 1))
+            
             // ラベルの更新(左右の判定)左の数値は1000足された値
-            if (1000 <= numData && 1256 >= numData) {
-                self.updateLabelleft(num: (numData - 1000))
-                self.objc.getLeftData(numData)
-            } else if (numData <= -1000) {
-                self.updateLabelleft(num: (numData + 1000))
-                self.objc.getLeftData(numData)
-            } else {
-                self.updateLabelright(num: numData)
-                self.objc.getRightData(numData)
+            switch prefix {
+            case "l":
+                self.updateLabelleft(num: Int(val)!)
+                self.objc.getLeftData(Int(val)!)
+                break
+            case "r":
+                self.updateLabelright(num: Int(val)!)
+                self.objc.getRightData(Int(val)!)
+                break
+            default:
+                break
             }
         }
+        
     }
     
     // The following methods do nothing, but the MCSessionDelegate protocol
