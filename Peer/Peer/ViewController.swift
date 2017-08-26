@@ -13,6 +13,7 @@ import AVFoundation
 
 class ViewController: UIViewController, MCBrowserViewControllerDelegate,
 MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDelegate {
+    // キャラクタリスティックの構造体
     struct Characteristic{
         let uuid: CBUUID
         let name: String
@@ -53,10 +54,11 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var leftLowerLabel: UILabel! // 左下の数値のラベル
     @IBOutlet weak var rightLowerLabel: UILabel! // 右下の数値のラベル
     
-    // セッション
+    // Viewの読込完了時
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // P2P通信の初期化
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
         self.session = MCSession(peer: peerID)
         self.session.delegate = self
@@ -181,18 +183,23 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.synthesizer.speak(utterance)
     }
     
-    // 左スライドを動かした時呼び出される
-    @IBAction func slide1(_ sender: UISlider) {
-        leftValue = Int(256 * sender.value)
-        
-        // 数値のP2P通信
-        let sendValue:String = "l" + String(leftValue)
-        let data = sendValue.data(using: .utf8)!
+    // P2P通信による送信
+    func sendToPeer(message: String){
+        let data = message.data(using: .utf8)!
         do {
             try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
             print(error)
         }
+    }
+    
+    // 左スライドを動かした時呼び出される
+    @IBAction func slide1(_ sender: UISlider) {
+        leftValue = Int(256 * sender.value)
+        
+        // 数値のP2P通信
+        let str : String = "l" + String(leftValue)
+        sendToPeer(message: str)
         
         // ラベルの更新
         leftLabel.text = String(leftValue)
@@ -205,13 +212,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         rightValue = Int(256 * sender.value)
         
         // 数値のP2P通信
-        let sendValue:String = "r" + String(rightValue)
-        let data = sendValue.data(using: .utf8)!
-        do {
-            try self.session.send(data as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
-        } catch {
-            print(error)
-        }
+        let str : String = "r" + String(rightValue)
+        sendToPeer(message: str)
         
         // ラベルの更新
         rightLabel.text = String(rightValue)
@@ -222,29 +224,18 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     //逆回転のボタンを押した時呼び出される
     @IBAction func reverse(_ sender: UIButton) {
         speak(word: "そこは、おさないで？")
+        
+        // 右モータの数値を送る
         rightValue = -1 * rightValue
         rightLabel.text = String(rightValue)
         let rStr:String = "r" + String(rightValue)
-        let rData = rStr.data(using: .utf8)!
+        sendToPeer(message: rStr)
         
-        // dataを送る
-        do {
-            try self.session.send(rData as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
-        } catch {
-            print(error)
-        }
-        
+        // 左モータの数値を送る
         leftValue = -1 * leftValue
         leftLabel.text = String(leftValue)
         let lStr:String = "l" + String(leftValue)
-        let lData = lStr.data(using: .utf8)!
-        
-        // dataを送る
-        do {
-            try self.session.send(lData as Data, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
-        } catch {
-            print(error)
-        }
+        sendToPeer(message: lStr)
     }
     
     // ラベルの更新
