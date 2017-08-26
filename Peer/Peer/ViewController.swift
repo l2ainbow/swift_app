@@ -8,12 +8,16 @@
 
 import UIKit
 import MultipeerConnectivity
-
+import AVFoundation
 
 class ViewController: UIViewController, MCBrowserViewControllerDelegate,
 MCSessionDelegate, UITextFieldDelegate {
     
     let serviceType = "LCOC-Chat"
+    // 音声パラメータ
+    let VOICE_RATE = Float(0.5) // 0.1-1.0
+    let VOICE_PITCH = Float(1.0) // 0.5-2.0
+    
     // ここから
     var browser : MCBrowserViewController!   //
     var assistant : MCAdvertiserAssistant!   //
@@ -24,6 +28,7 @@ MCSessionDelegate, UITextFieldDelegate {
     var rightValue : Int!                    //右の数値
     var sign : Int!                          //符号
     var objc : Receiver!                     //objective-C呼び出しのオブジェクト
+    var synthesizer = AVSpeechSynthesizer() // 音声生成
     
     
     @IBOutlet weak var leftLabel: UILabel! //左側の数値のラベル
@@ -47,6 +52,7 @@ MCSessionDelegate, UITextFieldDelegate {
         // tell the assistant to start advertising our fabulous chat
         self.assistant.start()
         
+        // 数値の初期化
         self.sign = 1
         self.leftValue = 0
         self.rightValue = 0
@@ -64,7 +70,11 @@ MCSessionDelegate, UITextFieldDelegate {
         }
         
         leftLabel.text = String(leftValue - (sign *  1000))
-        
+        // 数値の読み上げ
+        let utterance = AVSpeechUtterance(string: leftLabel.text!)
+        utterance.rate = VOICE_RATE
+        utterance.pitchMultiplier = VOICE_PITCH
+        self.synthesizer.speak(utterance)
     }
     
     // 右スライドを動かした時呼び出される
