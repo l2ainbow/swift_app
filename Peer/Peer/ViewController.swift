@@ -55,6 +55,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var rightLabel: UILabel! //右側の数値のラベル
     @IBOutlet weak var leftLowerLabel: UILabel! // 左下の数値のラベル
     @IBOutlet weak var rightLowerLabel: UILabel! // 右下の数値のラベル
+    @IBOutlet weak var peerMessageLabel: UILabel! // ピアからの受信文字列を表示するラベル
     
     // Viewの読込完了時
     override func viewDidLoad() {
@@ -199,7 +200,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     // 左スライドを動かした時呼び出される
     @IBAction func slide1(_ sender: UISlider) {
-        leftValue = Int(256 * sender.value)
+        leftValue = Int(100 * sender.value)
         
         // 数値のP2P通信
         let str : String = "l" + String(leftValue)
@@ -212,12 +213,14 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
         // BLE通信にて送信
         let data = String(leftValue).data(using: .utf8)!
-        peripheral.writeValue(data, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        if (peripheral != nil){
+            peripheral.writeValue(data, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        }
     }
     
     // 右スライドを動かした時呼び出される
     @IBAction func slide2(_ sender: UISlider) {
-        rightValue = Int(256 * sender.value)
+        rightValue = Int(100 * sender.value)
         
         // 数値のP2P通信
         let str : String = "r" + String(rightValue)
@@ -230,7 +233,9 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
         // BLE通信にて送信
         let data = String(rightValue).data(using: .utf8)!
-        peripheral.writeValue(data, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        if (peripheral != nil){
+            peripheral.writeValue(data, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        }
     }
     
     //逆回転のボタンを押した時呼び出される
@@ -251,9 +256,13 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
         // BLE通信にて送信
         let rData = String(rightValue).data(using: .utf8)!
-        peripheral.writeValue(rData, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        if (peripheral != nil){
+            peripheral.writeValue(rData, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        }
         let lData = String(leftValue).data(using: .utf8)!
-        peripheral.writeValue(lData, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        if (peripheral != nil){
+            peripheral.writeValue(lData, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        }
     }
     
     // ラベルの更新
@@ -293,18 +302,34 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             // objective-Cメソッド呼び出し用オブジェクト生成
             self.objc = Receiver()
             let str = String(data: data, encoding: .utf8)!
+            
+            print(str)
+            self.peerMessageLabel.text = str
             let prefix = str[str.startIndex]
             let val = str.substring(from: str.index(str.startIndex, offsetBy: 1))
             
             // ラベルの更新(左右の判定)左の数値は1000足された値
             switch prefix {
             case "l":
+                self.leftValue = Int(val);
                 self.updateLabelleft(num: Int(val)!)
                 self.objc.getLeftData(Int(val)!)
+                let data = String(self.leftValue).data(using: .utf8)!
+                if (self.peripheral != nil){
+                    self.peripheral.writeValue(data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                }
                 break
             case "r":
+                self.rightValue = Int(val);
                 self.updateLabelright(num: Int(val)!)
                 self.objc.getRightData(Int(val)!)
+                let data = String(self.rightValue).data(using: .utf8)!
+                if (self.peripheral != nil){
+                    self.peripheral.writeValue(data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                }
+                break
+            case "s":
+                self.speak(word: val)
                 break
             default:
                 break
