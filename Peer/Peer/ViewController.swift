@@ -308,8 +308,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             let prefix = str[str.startIndex]
             let val = str.substring(from: str.index(str.startIndex, offsetBy: 1))
             
-            // ラベルの更新(左右の判定)左の数値は1000足された値
             switch prefix {
+            // 左モータの数値変更
             case "l":
                 self.leftValue = Int(val);
                 self.updateLabelleft(num: Int(val)!)
@@ -319,6 +319,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
                     self.peripheral.writeValue(data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
+            // 右モータの数値変更
             case "r":
                 self.rightValue = Int(val);
                 self.updateLabelright(num: Int(val)!)
@@ -328,6 +329,24 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
                     self.peripheral.writeValue(data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
+            // 左右モータの数値同時変更
+            case "d":
+                self.rightValue = Int(val);
+                self.updateLabelright(num: Int(val)!)
+                self.objc.getRightData(Int(val)!)
+                let rdata = String(self.rightValue).data(using: .utf8)!
+                self.leftValue = Int(val);
+                self.updateLabelleft(num: Int(val)!)
+                self.objc.getLeftData(Int(val)!)
+                let ldata = String(self.leftValue).data(using: .utf8)!
+                if (self.peripheral != nil){
+                    self.peripheral.writeValue(rdata, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                }
+                if (self.peripheral != nil){
+                    self.peripheral.writeValue(ldata, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                }
+                break
+            // バディに話させる
             case "s":
                 self.speak(word: val)
                 break
