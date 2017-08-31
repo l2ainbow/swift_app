@@ -81,6 +81,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.leftValue = 0
         self.rightValue = 0
         
+        self.speakMessageBox.delegate = self
+        
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
     }
@@ -265,6 +267,11 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         if (peripheral != nil){
             peripheral.writeValue(lData, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
         }
+    }
+    
+    @IBAction func getText(sender: UITextField)
+    {
+        //speakMessageBox.text = sender.text
     }
     
     // ラベルの更新
