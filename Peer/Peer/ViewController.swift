@@ -24,7 +24,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     // 音声パラメータ
     let VOICE_RATE = Float(0.5) // 0.1-1.0
-    let VOICE_PITCH = Float(1.4) // 0.5-2.0
+    let VOICE_PITCH = Float(1.3) // 0.5-2.0
     
     // BLE UUID
     let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
@@ -56,6 +56,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var leftLowerLabel: UILabel! // 左下の数値のラベル
     @IBOutlet weak var rightLowerLabel: UILabel! // 右下の数値のラベル
     @IBOutlet weak var peerMessageLabel: UILabel! // ピアからの受信文字列を表示するラベル
+    @IBOutlet weak var speakMessageBox: UITextField! // 発話用テキストボックス
     
     // Viewの読込完了時
     override func viewDidLoad() {
@@ -240,7 +241,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     //逆回転のボタンを押した時呼び出される
     @IBAction func reverse(_ sender: UIButton) {
-        speak(word: "そこは、おさないで？")
+        //speak(word: "そこは、おさないで？")
+        speak(word: speakMessageBox.text!)
         
         // 右モータの数値を送る
         rightValue = -1 * rightValue
