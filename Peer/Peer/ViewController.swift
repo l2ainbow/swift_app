@@ -330,6 +330,22 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
                     self.peripheral.writeValue(data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
+            case "d":
+                self.rightValue = Int(val);
+                self.updateLabelright(num: Int(val)!)
+                self.objc.getRightData(Int(val)!)
+                self.leftValue = Int(val);
+                self.updateLabelleft(num: Int(val)!)
+                self.objc.getLeftData(Int(val)!)
+                let rdata = String(self.rightValue).data(using: .utf8)!
+                let ldata = String(self.leftValue).data(using: .utf8)!
+                if (self.peripheral != nil){
+                    self.peripheral.writeValue(rdata, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                }
+                if (self.peripheral != nil){
+                    self.peripheral.writeValue(ldata, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                }
+                break
             case "s":
                 self.speak(word: val)
                 break
