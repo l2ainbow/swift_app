@@ -101,7 +101,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     // Peripheral発見時
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.peripheral = peripheral
-        print("ペリフェラル発見:%@",peripheral.name!)
+        // print("ペリフェラル発見:%@",peripheral.name!)
         centralManager.stopScan()
         
         central.connect(peripheral, options: nil)
@@ -120,7 +120,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
  
     // Periphralとの接続時
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("ペリフェラルとの接続成功:%@",peripheral.name!)
+        // print("ペリフェラルとの接続成功:%@",peripheral.name!)
         self.peripheral = peripheral
         centralManager.stopScan()
         
@@ -149,6 +149,14 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         {
             print("キャラクタリスティク発見:%@",characteristic)
             peripheral.setNotifyValue(true, for: characteristic)
+            
+            if (characteristic.value == nil) {
+                
+                let a = 0
+                characteristic.setValue(a, forKey: "")
+                
+            }
+            
             
             switch characteristic.uuid{
             case (CHAR_UUIDs["leftMotor"]?.uuid)!:
@@ -218,6 +226,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         let data = String(leftValue).data(using: .utf8)!
         if (peripheral != nil){
             peripheral.writeValue(data, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        } else {
+            print("あああ")
         }
     }
     
@@ -238,6 +248,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         let data = String(rightValue).data(using: .utf8)!
         if (peripheral != nil){
             peripheral.writeValue(data, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        } else {
+            print("ああい")
         }
     }
     
