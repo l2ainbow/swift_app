@@ -33,8 +33,8 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
     
     var pwmData : Int!                   // PWM値
     var sameButtonCondition = true       // 同時ボタン状態
-    var speakContents = ["こんにちは", "晴れどす", "えらい、はずかしいどすなぁ", "はんから電話どす",
-                         "そんなこと、できひん", "よろしぅ", "おおきに"]  // 話す内容を格納する変数
+    var speakContents = ["こんにちは", "晴れどす", "えらい、はずかしいどすなぁ", "通知どす",
+                         "そんなこと、できひん", "よろしぅ", "おおきに","ご飯の時間だよ","おなか空いたよう","雨降りそうだよ","遅刻しちゃうよ"]  // 話す内容を格納する変数
     var speakContent = "こんにちは"
     
     // 音声用の選択リスト
@@ -273,7 +273,7 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
         
    
         } else if (buttonIndex == 10) {
-            
+            //停止
             self.leftButtonColorRiset()
             self.rightButtonColorRiset()
             self.buttons[2].setTitleColor(UIColor.red, for: .normal)
@@ -282,12 +282,20 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
             sendData(index: 7)
             
         } else if (buttonIndex == 11) {
-            
+            //回転
             self.leftButtonColorRiset()
             self.rightButtonColorRiset()
-            self.buttons[3].setTitleColor(UIColor.red, for: .normal)
-            self.buttons[6].setTitleColor(UIColor.red, for: .normal)
+            
+            sameButtonCondition = false
+            sameButton.setTitle("片側", for: UIControlState.normal)
+            
+            //self.buttons[3].setTitleColor(UIColor.red, for: .normal)
+            //self.buttons[6].setTitleColor(UIColor.red, for: .normal)
 
+            self.buttons[4].setTitleColor(UIColor.red, for: .normal)
+            self.buttons[5].setTitleColor(UIColor.red, for: .normal)
+
+            //変更前からこの値だけど大丈夫？
             sendData(index: 4)
             sendData(index: 5)
             
