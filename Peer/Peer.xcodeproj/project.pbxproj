@@ -12,11 +12,9 @@
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
 		F98954EB1F21315200B24DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98954EA1F21315200B24DC0 /* Assets.xcassets */; };
 		F98954EE1F21315200B24DC0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954EC1F21315200B24DC0 /* LaunchScreen.storyboard */; };
-		F9E1B1911F28AD8800A69D64 /* Receiver.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E1B1901F28AD8800A69D64 /* Receiver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F91BCA991F28B2A300A3443D /* Receiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Receiver.h; path = Peer/Receiver.h; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,8 +22,6 @@
 		F98954EA1F21315200B24DC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F98954ED1F21315200B24DC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F98954EF1F21315200B24DC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F9E1B18F1F28AD8700A69D64 /* Peer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Peer-Bridging-Header.h"; path = "Peer/Peer-Bridging-Header.h"; sourceTree = "<group>"; };
-		F9E1B1901F28AD8800A69D64 /* Receiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Receiver.m; path = Peer/Receiver.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +38,6 @@
 		F98954D71F21315200B24DC0 = {
 			isa = PBXGroup;
 			children = (
-				F9D80B591F28DD8C0014B85B /* Objective-C_Code */,
 				F98954E21F21315200B24DC0 /* Peer */,
 				F98954E11F21315200B24DC0 /* Products */,
 			);
@@ -67,16 +62,6 @@
 				F98954EF1F21315200B24DC0 /* Info.plist */,
 			);
 			path = Peer;
-			sourceTree = "<group>";
-		};
-		F9D80B591F28DD8C0014B85B /* Objective-C_Code */ = {
-			isa = PBXGroup;
-			children = (
-				F91BCA991F28B2A300A3443D /* Receiver.h */,
-				F9E1B1901F28AD8800A69D64 /* Receiver.m */,
-				F9E1B18F1F28AD8700A69D64 /* Peer-Bridging-Header.h */,
-			);
-			name = "Objective-C_Code";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,7 +140,6 @@
 			files = (
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */,
-				F9E1B1911F28AD8800A69D64 /* Receiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
