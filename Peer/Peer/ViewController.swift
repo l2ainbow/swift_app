@@ -296,6 +296,13 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         setRightValue(value: rightValue * -1)
     }
     
+    // 停止ボタン押下時
+    @IBAction func stop(_ sender: UIButton){
+        speak(word: "止まります")
+        setLeftValue(value: 0)
+        setRightValue(value: 0)
+    }
+    
     @IBAction func getText(sender: UITextField)
     {
         //speakMessageBox.text = sender.text
