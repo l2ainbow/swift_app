@@ -60,6 +60,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var peerMessageLabel: UILabel! // ピアからの受信文字列を表示するラベル
     @IBOutlet weak var speakMessageBox: UITextField! // 発話用テキストボックス
     @IBOutlet weak var synchronizeSwitch: UISwitch! // 同期ボタン
+    @IBOutlet weak var spinSwitch: UISwitch! // 同期ボタン
     
     // Viewの読込完了時
     override func viewDidLoad() {
@@ -222,6 +223,9 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         if (synchronizeSwitch.isOn){
             setRightValue(value: value)
         }
+        else if (spinSwitch.isOn){
+            setRightValue(value: -1 * value)
+        }
     }
     
     // 左モータの数値更新
@@ -254,6 +258,9 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         setRightValue(value: value)
         if (synchronizeSwitch.isOn){
             setLeftValue(value: value)
+        }
+        else if (spinSwitch.isOn){
+            setLeftValue(value: -1 * value)
         }
     }
     
