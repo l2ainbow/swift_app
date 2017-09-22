@@ -284,27 +284,9 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         //speak(word: "そこは、おさないで？")
         speak(word: speakMessageBox.text!)
         
-        // 右モータの数値を送る
-        rightValue = -1 * rightValue
-        rightLabel.text = String(rightValue)
-        let rStr:String = "r" + String(rightValue)
-        sendToPeer(message: rStr)
-        
-        // 左モータの数値を送る
-        leftValue = -1 * leftValue
-        leftLabel.text = String(leftValue)
-        let lStr:String = "l" + String(leftValue)
-        sendToPeer(message: lStr)
-        
-        // BLE通信にて送信
-        let rData = String(rightValue).data(using: .utf8)!
-        if (peripheral != nil){
-            peripheral.writeValue(rData, for: rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-        }
-        let lData = String(leftValue).data(using: .utf8)!
-        if (peripheral != nil){
-            peripheral.writeValue(lData, for: leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-        }
+        // 左右の値を反転させて更新
+        setLeftValue(value: leftValue * -1)
+        setRightValue(value: rightValue * -1)
     }
     
     @IBAction func getText(sender: UITextField)
