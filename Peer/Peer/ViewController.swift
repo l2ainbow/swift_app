@@ -55,8 +55,11 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var rightLabel: UILabel! //右側の数値のラベル
     @IBOutlet weak var leftLowerLabel: UILabel! // 左下の数値のラベル
     @IBOutlet weak var rightLowerLabel: UILabel! // 右下の数値のラベル
+    @IBOutlet weak var leftSlider: UISlider! // 左のスライダー
+    @IBOutlet weak var rightSlider: UISlider! // 左のスライダー
     @IBOutlet weak var peerMessageLabel: UILabel! // ピアからの受信文字列を表示するラベル
     @IBOutlet weak var speakMessageBox: UITextField! // 発話用テキストボックス
+    @IBOutlet weak var synchronizeSwitch: UISwitch! // 同期ボタン
     
     // Viewの読込完了時
     override func viewDidLoad() {
@@ -211,16 +214,27 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     // 左スライドを動かした時呼び出される
     @IBAction func slide1(_ sender: UISlider) {
-        leftValue = Int(100 * sender.value)
+        let value = Int(100 * sender.value)
+        // 数値の読み上げ
+        speak(word: "左" + String(value))
+        
+        setLeftValue(value: value)
+        if (synchronizeSwitch.isOn){
+            setRightValue(value: value)
+        }
+    }
+    
+    // 左モータの数値更新
+    func setLeftValue(value: Int){
+        leftValue = value
         
         // 数値のP2P通信
         let str : String = "l" + String(leftValue)
         sendToPeer(message: str)
-        
         // ラベルの更新
         leftLabel.text = String(leftValue)
-        // 数値の読み上げ
-        speak(word: "左" + leftLabel.text!)
+        // スライダーの値更新
+        leftSlider.setValue(Float(leftValue) * 0.01, animated: true)
         
         // BLE通信にて送信
         let data = String(leftValue).data(using: .utf8)!
@@ -233,7 +247,19 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     // 右スライドを動かした時呼び出される
     @IBAction func slide2(_ sender: UISlider) {
-        rightValue = Int(100 * sender.value)
+        let value = Int(100 * sender.value)
+        // 数値の読み上げ
+        speak(word: "右" + String(value))
+        
+        setRightValue(value: value)
+        if (synchronizeSwitch.isOn){
+            setLeftValue(value: value)
+        }
+    }
+    
+    // 右モータの数値更新
+    func setRightValue(value: Int){
+        rightValue = Int(value)
         
         // 数値のP2P通信
         let str : String = "r" + String(rightValue)
@@ -241,8 +267,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
         // ラベルの更新
         rightLabel.text = String(rightValue)
-        // 数値の読み上げ
-        speak(word: "右" + rightLabel.text!)
+        // スライダーの値更新
+        rightSlider.setValue(Float(rightValue) * 0.01, animated: true)
         
         // BLE通信にて送信
         let data = String(rightValue).data(using: .utf8)!

@@ -96,16 +96,23 @@
                                     <action selector="getTextWithSender:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="yoI-Mz-y7G"/>
                                 </connections>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="J6r-Wn-WHV" userLabel="同期">
+                                <rect key="frame" x="167" y="294" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="leftLabel" destination="wP6-PM-E7q" id="crh-oe-qHg"/>
                         <outlet property="leftLowerLabel" destination="GFl-2w-4tx" id="Ucf-ct-tGH"/>
+                        <outlet property="leftSlider" destination="Vsn-v4-2dA" id="NeC-dT-PuS"/>
                         <outlet property="peerMessageLabel" destination="cGk-6z-EPy" id="dC1-DP-Rzb"/>
                         <outlet property="rightLabel" destination="ahs-XD-31o" id="nL8-bV-xFt"/>
                         <outlet property="rightLowerLabel" destination="Jva-zb-bqF" id="Hy1-w4-WdT"/>
+                        <outlet property="rightSlider" destination="QuM-Tr-ZdK" id="ZP3-6y-Tq2"/>
                         <outlet property="speakMessageBox" destination="hge-xu-gFX" id="ccj-8r-t4Q"/>
+                        <outlet property="synchronizeSwitch" destination="J6r-Wn-WHV" id="DRG-j2-sI5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
