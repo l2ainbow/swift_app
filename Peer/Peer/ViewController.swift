@@ -30,7 +30,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
     let CHAR_UUIDs:[String:Characteristic] = [
         "leftMotor":Characteristic(uuid: CBUUID(string: "6C680001-F374-4D39-9FD8-A7DBB54CD6EB"), name: "leftMotor", byte: 4),
-        "rightMotor":Characteristic(uuid: CBUUID(string: "6C680002-F374-4D39-9FD8-A7DBB54CD6EB"), name: "rightMotor", byte: 4)
+        "rightMotor":Characteristic(uuid: CBUUID(string: "6C680002-F374-4D39-9FD8-A7DBB54CD6EB"), name: "rightMotor", byte: 4),
+//        "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
     ]
     
     // MultiConnectivity関連
@@ -44,17 +45,19 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     var peripheral: CBPeripheral! // BLEペリフェラル
     var leftMotorCharacteristic : CBCharacteristic?
     var rightMotorCharacteristic : CBCharacteristic?
+    var ledCharacteristic : CBCharacteristic?
     
     // ユーザデータ
     var leftValue : Int!                     //左の数値
     var rightValue : Int!                    //右の数値
     var synthesizer = AVSpeechSynthesizer() // 音声生成
 
+    @IBOutlet weak var conditionText: UILabel!
     
     // Viewの読込完了時
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor(red: 255,green: 255, blue: 0, alpha:1)
         // P2P通信の初期化
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
         self.session = MCSession(peer: peerID)
@@ -105,7 +108,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             return
         }
         print("ペリフェラル切断:%@",peripheral.name!)
-        
+        conditionText.text = "Bluetooth接続が切断されました。"
+        self.view.backgroundColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1)
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
  
@@ -114,7 +118,8 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         // print("ペリフェラルとの接続成功:%@",peripheral.name!)
         self.peripheral = peripheral
         centralManager.stopScan()
-        
+        self.view.backgroundColor = UIColor(red: 0, green: 255, blue: 0, alpha: 1)
+        conditionText.text = "Bluetooth接続しました。"
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
     }
@@ -147,14 +152,16 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
                 characteristic.setValue(a, forKey: "")
                 
             }
-            
-            
+
             switch characteristic.uuid{
             case (CHAR_UUIDs["leftMotor"]?.uuid)!:
                 leftMotorCharacteristic = characteristic
                 break
             case (CHAR_UUIDs["rightMotor"]?.uuid)!:
                 rightMotorCharacteristic = characteristic
+                break
+            case (CHAR_UUIDs["LED"]?.uuid)!:
+                ledCharacteristic = characteristic
                 break
             default:
                 break
@@ -167,14 +174,6 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         if (error != nil){
             print("データ更新エラー:%@", error!)
             return
-        }
-        switch characteristic.uuid{
-        case (CHAR_UUIDs["leftMotor"]?.uuid)!:
-            break
-        case (CHAR_UUIDs["rightMotor"]?.uuid)!:
-            break
-        default:
-            break
         }
     }
     
@@ -210,7 +209,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             
             
             let str = String(data: data, encoding: .utf8)!
-        
+            print(str)
             let prefix = str[str.startIndex]
             let val = str.substring(from: str.index(str.startIndex, offsetBy: 1))
             
@@ -218,10 +217,11 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             switch prefix {
             case "l":
                 self.leftValue = Int(val);
-                
+                var byte = Int8(Int(val)!)
                 let data = String(self.leftValue).data(using: .utf8)!
+                // let data = NSData(bytes: &byte, length: 1)
                 if (self.peripheral != nil){
-                    self.peripheral.writeValue(data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                    self.peripheral.writeValue(data as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
             case "r":
@@ -234,17 +234,31 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             case "d":
                 self.rightValue = Int(val);
                 self.leftValue = Int(val);
-                let rdata = String(self.rightValue).data(using: .utf8)!
+                var byte = Int8(val)
+                // let rdata = NSData(bytes: &byte, length: 1)
+                let rdata = String(self.leftValue).data(using: .utf8)!
+                // let ldata = NSData(bytes: &byte, length: 1)
                 let ldata = String(self.leftValue).data(using: .utf8)!
                 if (self.peripheral != nil){
-                    self.peripheral.writeValue(rdata, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                    self.peripheral.writeValue(rdata as Data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 if (self.peripheral != nil){
-                    self.peripheral.writeValue(ldata, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+                    self.peripheral.writeValue(ldata as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
             case "s":
                 self.speak(word: val)
+                self.conditionText.text = val
+                break
+            case "c":
+                var bytes = self.formatRGB(str: val)
+                self.displayColorChange(red: bytes[0], green: bytes[1], blue: bytes[2])
+//                if(self.peripheral != nil){
+//                    let data = NSData(bytes: &bytes, length: 3)
+//                    self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
+//                        CBCharacteristicWriteType.withResponse)
+//                    
+//                }
                 break
             default:
                 break
@@ -253,6 +267,36 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
     }
     
+    func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
+        print(CGFloat(r))
+        self.view.backgroundColor = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
+        
+    }
+    
+    func formatRGB(str: String) -> [UInt8]{
+        var rgb = ""
+        var subStr = str
+        var rgbData : [UInt8] = []
+        
+        for i in 0..<str.characters.count {
+            
+            subStr = str.substring(from: str.index(str.startIndex, offsetBy: i))
+            
+            if (String(subStr[subStr.startIndex]) == ","){
+                
+                rgbData.append(UInt8(rgb)!)
+                rgb = ""
+            
+            } else {
+            
+                rgb = rgb + String(subStr[subStr.startIndex])
+                print(rgb)
+            }
+            
+        }
+        rgbData.append(UInt8(rgb)!)
+        return rgbData
+    }
     // The following methods do nothing, but the MCSessionDelegate protocol
     // requires that we implement them.
     func session(_ session: MCSession,
@@ -277,7 +321,6 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     func session(_ session: MCSession, peer peerID: MCPeerID,
                  didChange state: MCSessionState)  {
         // Called when a connected peer changes state (for example, goes offline)
-        
     }
     
     

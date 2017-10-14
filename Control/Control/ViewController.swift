@@ -33,13 +33,16 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
     
     var pwmData : Int!                   // PWM値
     var sameButtonCondition = true       // 同時ボタン状態
-    var speakContents = ["こんにちは", "晴れどす", "えらい、はずかしいどすなぁ", "通知どす",
-                         "そんなこと、できひん", "よろしぅ", "おおきに","ご飯の時間だよ","おなか空いたよう","雨降りそうだよ","遅刻しちゃうよ"]  // 話す内容を格納する変数
+    var speakContents = ["おはよう、朝どす", "晴れどす",  "通知どす",
+                         "わかりました", "ご飯の時間どす", "久しぶりに、パスタはどないどすか", "雨が降りそうどす", "今日は、もう眠いどす", "おやすみどす", "どんな音楽が、ええどすか", "わかりました"]  // 話す内容を格納する変数
     var speakContent = "こんにちは"
     
+    var colorContents = ["赤","緑","青","黄"]
+    var colorContent = "赤"
+    var rgbData : String!
     // 音声用の選択リスト
     @IBOutlet weak var speakPicker: UIPickerView!
-    
+    @IBOutlet weak var colorPicker: UIPickerView!
     // leftbutton: indexを上から0として0 ~ 9のindexをそれぞれ振る
     @IBOutlet weak var leftButton5: UIButton!
     @IBOutlet weak var leftButton4: UIButton!
@@ -57,9 +60,6 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
     // PWM値のLabel
     @IBOutlet weak var pwmLabel: UILabel!
     
-    // Condition
-    @IBOutlet weak var conditionLabel: UILabel!
-
     
     // 同時ボタン
     @IBOutlet weak var sameButton: UIButton!
@@ -74,7 +74,8 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
         self.buttonsSet() // buttonの割り当て
         self.speakPicker.delegate = self
         self.speakPicker.dataSource = self
-        
+        self.colorPicker.delegate = self
+        self.colorPicker.dataSource = self
         
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
         self.session = MCSession(peer: peerID)
@@ -188,6 +189,25 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
         
     }
     
+    @IBAction func colorButtonTouch(_ sender: UIButton) {
+        switch colorContent {
+        case "赤":
+            rgbData = "c255,0,0"
+            break
+        case "青":
+            rgbData = "c0,0,255"
+            break
+        case "緑":
+            rgbData = "c0,255,0"
+            break
+        case "黄":
+            rgbData = "c255,255,0"
+            break
+        default:
+            break
+        }
+        sendData(index: 13)
+    }
     
     // 端末ボタンを押した際に呼ばれる
     @IBAction func showBrowser(_ sender: UIButton) {
@@ -312,20 +332,7 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
     // Labelに現在の状態を表示
     func conditionLabelUpdate(buttonIndex: Int) {
         
-        if (buttonIndex == 10) {
-            
-            conditionLabel.text = "    停止"
-            
-        } else if (buttonIndex == 11) {
-            
-            conditionLabel.text = "    回転"
-            
-        } else if (buttonIndex == 12) {
-            
-            conditionLabel.text = "    話す"
-            
-        } else {
-            
+  
             if (buttonIndex < 5) {
                 
                 leftLabelText = "    左: \(buttonIndex - 2)"
@@ -337,10 +344,9 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
                 
                 rightLabelText = "    右: \(buttonIndex - 7)"
             }
+        
             
-            conditionLabel.text = leftLabelText + rightLabelText
-            
-        }
+        
     }
     
     // 左側のボタンを全て青にする
@@ -369,36 +375,21 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
     func calcPWM(buttonIndex: Int) -> String {
         
         if (buttonIndex < 5) {
-            
-            pwm = (buttonIndex - 2) * 50
-            if (pwm > 0) {
-                pwm = pwm + 30
-            } else if (pwm  < 0){
-                pwm = pwm - 30
-            }
-            if (pwm > 100) {
-                pwm = 100
-            }
-            if (pwm < -100) {
-                pwm = -100
+            if (abs(buttonIndex - 2) == 2) {
+                pwm = (buttonIndex - 2) * 40
+            } else {
+                pwm = (buttonIndex - 2) * 50
             }
             pwmLeftLabelText = "PWM左:"  + String(pwm)
             pwmStr = "l"
             
         } else if (buttonIndex < 10 && buttonIndex >= 5) {
+            if (abs(buttonIndex - 7) == 2) {
+                pwm = (buttonIndex - 7) * 40
+            } else {
+                pwm = (buttonIndex - 7) * 50
+            }
             
-            pwm = (buttonIndex - 7) * 50
-            if (pwm > 0) {
-                pwm = pwm + 30
-            } else if (pwm < 0) {
-                pwm = pwm - 30
-            }
-            if (pwm > 100) {
-                pwm = 100
-            }
-            if (pwm < -100) {
-                pwm = -100
-            }
             pwmRightLabelText = "PWM右:" + String(pwm)
             pwmStr = "r"
             
@@ -433,6 +424,10 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
         } else if (index == 12){
             
             dataStr = "s" + speakContent
+            
+        }else {
+            
+            dataStr = rgbData
             
         }
         
@@ -513,23 +508,33 @@ MCSessionDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDele
      (実装必須)
      */
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return speakContents.count
+        if(pickerView == colorPicker) {
+            return colorContents.count
+        }else {
+            return speakContents.count
+        }
     }
     
     /*
      pickerに表示する値を返すデリゲートメソッド.
      */
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return speakContents[row]
+        if(pickerView == colorPicker) {
+            return colorContents[row]
+        }else {
+            return speakContents[row]
+        }
     }
     
     /*
      pickerが選択された際に呼ばれるデリゲートメソッド.
      */
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        speakContent = speakContents[row]
-        
+        if(pickerView == colorPicker) {
+            colorContent = colorContents[row]
+        }else {
+            speakContent = speakContents[row]
+        }
     }
 }
 

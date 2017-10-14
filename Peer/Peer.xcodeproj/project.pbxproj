@@ -96,7 +96,7 @@
 				TargetAttributes = {
 					F98954DF1F21315200B24DC0 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = WB7NGK438F;
+						DevelopmentTeam = MF4M3CTG8F;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
@@ -263,10 +263,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = WB7NGK438F;
+				DEVELOPMENT_TEAM = MF4M3CTG8F;
 				INFOPLIST_FILE = Peer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Shingo.Peer;
+				PRODUCT_BUNDLE_IDENTIFIER = Shingo.SwiftApp.Peer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Peer/Peer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -279,10 +279,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = WB7NGK438F;
+				DEVELOPMENT_TEAM = MF4M3CTG8F;
 				INFOPLIST_FILE = Peer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Shingo.Peer;
+				PRODUCT_BUNDLE_IDENTIFIER = Shingo.SwiftApp.Peer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Peer/Peer-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
