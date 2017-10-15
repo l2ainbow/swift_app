@@ -11,8 +11,7 @@ import MultipeerConnectivity
 import CoreBluetooth
 import AVFoundation
 
-class ViewController: UIViewController, MCBrowserViewControllerDelegate,
-MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDelegate {
+class ViewController: UIViewController {
     /** 構造体 **/
     // キャラクタリスティックの構造体
     struct Characteristic{
@@ -105,6 +104,107 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
+    // 文字列の読み上げ
+    func speak(word: String) {
+        let utterance = AVSpeechUtterance(string: word)
+        utterance.rate = VOICE_RATE
+        utterance.pitchMultiplier = VOICE_PITCH
+        self.synthesizer.speak(utterance)
+    }
+
+    // ディスプレイの色変更
+    func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
+        print(CGFloat(r))
+        self.view.backgroundColor = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
+        
+    }
+    
+    // 文字列のRGBを1byte整数配列に変換
+    func formatRGB(str: String) -> [UInt8]{
+        var rgb = ""
+        var subStr = str
+        var rgbData : [UInt8] = []
+        
+        for i in 0..<str.characters.count {
+            
+            subStr = str.substring(from: str.index(str.startIndex, offsetBy: i))
+            
+            if (String(subStr[subStr.startIndex]) == ","){
+                
+                rgbData.append(UInt8(rgb)!)
+                rgb = ""
+                
+            } else {
+                
+                rgb = rgb + String(subStr[subStr.startIndex])
+                print(rgb)
+            }
+            
+        }
+        rgbData.append(UInt8(rgb)!)
+        return rgbData
+    }
+
+}
+
+// MARK:- CBPeripheralからのコールバック
+extension ViewController: CBPeripheralDelegate {
+    // サービス発見時の処理
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if (error != nil){
+            print("サービス発見時エラー:%@", error!)
+            return
+        }
+        print("サービス発見:%@",peripheral.services!)
+        peripheral.discoverCharacteristics([], for: (peripheral.services?.first)!)
+    }
+    
+    // キャラクタリスティック発見時の処理
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if (error != nil){
+            print("キャラクタリスティック発見時エラー:%@", error!)
+            return
+        }
+        
+        for characteristic in service.characteristics!
+        {
+            print("キャラクタリスティク発見:%@",characteristic)
+            peripheral.setNotifyValue(true, for: characteristic)
+            
+            if (characteristic.value == nil) {
+                
+                let a = 0
+                characteristic.setValue(a, forKey: "")
+                
+            }
+            
+            switch characteristic.uuid{
+            case (CHAR_UUIDs["leftMotor"]?.uuid)!:
+                leftMotorCharacteristic = characteristic
+                break
+            case (CHAR_UUIDs["rightMotor"]?.uuid)!:
+                rightMotorCharacteristic = characteristic
+                break
+            case (CHAR_UUIDs["LED"]?.uuid)!:
+                ledCharacteristic = characteristic
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    // キャラクタリスティクのデータ更新時の処理
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        if (error != nil){
+            print("データ更新エラー:%@", error!)
+            return
+        }
+    }
+}
+    
+// MARK:- CBCentralManagerからのコールバック
+extension ViewController: CBCentralManagerDelegate {
     // Bluetooth状態遷移時の処理
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state{
@@ -136,7 +236,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.view.backgroundColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1)
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
- 
+    
     // Periphralとの接続時の処理
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // print("ペリフェラルとの接続成功:%@",peripheral.name!)
@@ -147,68 +247,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
     }
-    
-    // サービス発見時の処理
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if (error != nil){
-            print("サービス発見時エラー:%@", error!)
-            return
-        }
-        print("サービス発見:%@",peripheral.services!)
-        peripheral.discoverCharacteristics([], for: (peripheral.services?.first)!)
-    }
-    
-    // キャラクタリスティック発見時の処理
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if (error != nil){
-            print("キャラクタリスティック発見時エラー:%@", error!)
-            return
-        }
-        
-        for characteristic in service.characteristics!
-        {
-            print("キャラクタリスティク発見:%@",characteristic)
-            peripheral.setNotifyValue(true, for: characteristic)
-            
-            if (characteristic.value == nil) {
-                
-                let a = 0
-                characteristic.setValue(a, forKey: "")
-                
-            }
+}
 
-            switch characteristic.uuid{
-            case (CHAR_UUIDs["leftMotor"]?.uuid)!:
-                leftMotorCharacteristic = characteristic
-                break
-            case (CHAR_UUIDs["rightMotor"]?.uuid)!:
-                rightMotorCharacteristic = characteristic
-                break
-            case (CHAR_UUIDs["LED"]?.uuid)!:
-                ledCharacteristic = characteristic
-                break
-            default:
-                break
-            }
-        }
-    }
-    
-    // キャラクタリスティクのデータ更新時の処理
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if (error != nil){
-            print("データ更新エラー:%@", error!)
-            return
-        }
-    }
-    
-    // 文字列の読み上げ
-    func speak(word: String) {
-        let utterance = AVSpeechUtterance(string: word)
-        utterance.rate = VOICE_RATE
-        utterance.pitchMultiplier = VOICE_PITCH
-        self.synthesizer.speak(utterance)
-    }
-    
+// MARK:- MCBrowserViewControllerからのコールバック
+extension ViewController: MCBrowserViewControllerDelegate {
     // P2P通信接続完了時の処理
     func browserViewControllerDidFinish(
         _ browserViewController: MCBrowserViewController)  {
@@ -225,6 +267,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+// MARK:- MCSessionからのコールバック
+extension ViewController: MCSessionDelegate {
     
     // P2P通信にて相手からNSDataが送られてきたとき(sendメソッドによりおくられる)
     func session(_ session: MCSession, didReceive data: Data,
@@ -276,51 +322,18 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             case "c":
                 var bytes = self.formatRGB(str: val)
                 self.displayColorChange(red: bytes[0], green: bytes[1], blue: bytes[2])
-//                if(self.peripheral != nil){
-//                    let data = NSData(bytes: &bytes, length: 3)
-//                    self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
-//                        CBCharacteristicWriteType.withResponse)
-//                    
-//                }
+                //                if(self.peripheral != nil){
+                //                    let data = NSData(bytes: &bytes, length: 3)
+                //                    self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
+                //                        CBCharacteristicWriteType.withResponse)
+                //
+                //                }
                 break
             default:
                 break
             }
         }
         
-    }
-    
-    // ディスプレイの色変更
-    func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
-        print(CGFloat(r))
-        self.view.backgroundColor = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
-        
-    }
-    
-    // 文字列のRGBを1byte整数配列に変換
-    func formatRGB(str: String) -> [UInt8]{
-        var rgb = ""
-        var subStr = str
-        var rgbData : [UInt8] = []
-        
-        for i in 0..<str.characters.count {
-            
-            subStr = str.substring(from: str.index(str.startIndex, offsetBy: i))
-            
-            if (String(subStr[subStr.startIndex]) == ","){
-                
-                rgbData.append(UInt8(rgb)!)
-                rgb = ""
-            
-            } else {
-            
-                rgb = rgb + String(subStr[subStr.startIndex])
-                print(rgb)
-            }
-            
-        }
-        rgbData.append(UInt8(rgb)!)
-        return rgbData
     }
     
     // P2P通信にてピアからファイル受信開始した時の処理
