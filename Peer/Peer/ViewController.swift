@@ -13,48 +13,71 @@ import AVFoundation
 
 class ViewController: UIViewController, MCBrowserViewControllerDelegate,
 MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDelegate {
+    /** 構造体 **/
     // キャラクタリスティックの構造体
     struct Characteristic{
+        // UUID
         let uuid: CBUUID
+        // キャラクタリスティック名
         let name: String
+        // 送受信データのバイト数
         let byte: Int
     }
     
+    /** 定数 **/
+    // P2P通信のサービス名
     let serviceType = "LCOC-Chat"
     
-    // 音声パラメータ
-    let VOICE_RATE = Float(0.5) // 0.1-1.0
-    let VOICE_PITCH = Float(1.3) // 0.5-2.0
+    // 音声の速度(0.1-1.0)
+    let VOICE_RATE = Float(0.5)
+    // 音声の高さ(0.5-2.0)
+    let VOICE_PITCH = Float(1.3)
     
     // BLE UUID
     let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
+    // 使用するキャラクタリスティックの配列
     let CHAR_UUIDs:[String:Characteristic] = [
         "leftMotor":Characteristic(uuid: CBUUID(string: "6C680001-F374-4D39-9FD8-A7DBB54CD6EB"), name: "leftMotor", byte: 4),
         "rightMotor":Characteristic(uuid: CBUUID(string: "6C680002-F374-4D39-9FD8-A7DBB54CD6EB"), name: "rightMotor", byte: 4),
-//        "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
+        // "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
     ]
     
+    /** 変数 **/
     // MultiConnectivity関連
-    var browser : MCBrowserViewController!   //
-    var assistant : MCAdvertiserAssistant!   //
-    var session : MCSession!                 //セッション
-    var peerID: MCPeerID!                    //接続先の名前
+    // MultiConnectivityのViewController
+    var browser : MCBrowserViewController!
+    // アドバタイズのアシスタント
+    var assistant : MCAdvertiserAssistant!
+    // セッション
+    var session : MCSession!
+    // 接続先のID
+    var peerID: MCPeerID!
     
     // Bluetooth関連
+    // セントラルの管理
     var centralManager: CBCentralManager!
-    var peripheral: CBPeripheral! // BLEペリフェラル
+    // ペリフェラル
+    var peripheral: CBPeripheral!
+    // 左モータを表すキャラクタリスティック
     var leftMotorCharacteristic : CBCharacteristic?
+    // 右モータを表すキャラクタリスティック
     var rightMotorCharacteristic : CBCharacteristic?
+    // LEDを表すキャラクタリスティック
     var ledCharacteristic : CBCharacteristic?
     
     // ユーザデータ
-    var leftValue : Int!                     //左の数値
-    var rightValue : Int!                    //右の数値
-    var synthesizer = AVSpeechSynthesizer() // 音声生成
+    // 左モータの値
+    var leftValue : Int!
+    // 右モータの値
+    var rightValue : Int!
+    // 音声出力のシンセサイザー
+    var synthesizer = AVSpeechSynthesizer()
 
+    // 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
     
-    // Viewの読込完了時
+    /** メソッド **/
+    // Viewの読込完了時の処理
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 255,green: 255, blue: 0, alpha:1)
@@ -81,7 +104,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
-    // Bluetooth状態遷移時
+    // Bluetooth状態遷移時の処理
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state{
         case .poweredOn:
@@ -92,7 +115,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         }
     }
     
-    // Peripheral発見時
+    // Peripheral発見時の処理
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.peripheral = peripheral
         // print("ペリフェラル発見:%@",peripheral.name!)
@@ -101,7 +124,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         central.connect(peripheral, options: nil)
     }
     
-    // Peripheralとの接続切断時
+    // Peripheralとの接続切断時の処理
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if (error != nil){
             print("Peripheral切断時エラー:%@", error!)
@@ -113,7 +136,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
  
-    // Periphralとの接続時
+    // Periphralとの接続時の処理
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // print("ペリフェラルとの接続成功:%@",peripheral.name!)
         self.peripheral = peripheral
@@ -124,7 +147,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         peripheral.discoverServices([SERVICE_UUID])
     }
     
-    // サービス発見時
+    // サービス発見時の処理
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if (error != nil){
             print("サービス発見時エラー:%@", error!)
@@ -134,7 +157,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         peripheral.discoverCharacteristics([], for: (peripheral.services?.first)!)
     }
     
-    // キャラクタリスティック発見時
+    // キャラクタリスティック発見時の処理
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if (error != nil){
             print("キャラクタリスティック発見時エラー:%@", error!)
@@ -169,7 +192,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         }
     }
     
-    // キャラクタリスティクのデータ更新時
+    // キャラクタリスティクのデータ更新時の処理
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if (error != nil){
             print("データ更新エラー:%@", error!)
@@ -177,7 +200,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         }
     }
     
-    // 文章の読み上げ
+    // 文字列の読み上げ
     func speak(word: String) {
         let utterance = AVSpeechUtterance(string: word)
         utterance.rate = VOICE_RATE
@@ -185,7 +208,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.synthesizer.speak(utterance)
     }
     
-    
+    // P2P通信接続完了時の処理
     func browserViewControllerDidFinish(
         _ browserViewController: MCBrowserViewController)  {
         // Called when the browser view controller is dismissed (ie the Done
@@ -194,6 +217,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.dismiss(animated: true, completion: nil)
     }
     
+    // P2P通信接続キャンセル時の処理
     func browserViewControllerWasCancelled(
         _ browserViewController: MCBrowserViewController)  {
         // Called when the browser view controller is cancelled
@@ -201,13 +225,11 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.dismiss(animated: true, completion: nil)
     }
     
-    // 相手からNSDataが送られてきたとき(sendメソッドによりおくられる)
+    // P2P通信にて相手からNSDataが送られてきたとき(sendメソッドによりおくられる)
     func session(_ session: MCSession, didReceive data: Data,
                  fromPeer peerID: MCPeerID)  {
         
         DispatchQueue.main.async() {
-            
-            
             let str = String(data: data, encoding: .utf8)!
             print(str)
             let prefix = str[str.startIndex]
@@ -216,7 +238,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             // ラベルの更新(左右の判定)左の数値は1000足された値
             switch prefix {
             case "l":
-                self.leftValue = Int(val);
+                self.leftValue = Int(val)
                 var byte = Int8(Int(val)!)
                 let data = String(self.leftValue).data(using: .utf8)!
                 // let data = NSData(bytes: &byte, length: 1)
@@ -225,15 +247,15 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
                 }
                 break
             case "r":
-                self.rightValue = Int(val);
+                self.rightValue = Int(val)
                 let data = String(self.rightValue).data(using: .utf8)!
                 if (self.peripheral != nil){
                     self.peripheral.writeValue(data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
             case "d":
-                self.rightValue = Int(val);
-                self.leftValue = Int(val);
+                self.rightValue = Int(val)
+                self.leftValue = Int(val)
                 var byte = Int8(val)
                 // let rdata = NSData(bytes: &byte, length: 1)
                 let rdata = String(self.leftValue).data(using: .utf8)!
@@ -267,12 +289,14 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         
     }
     
+    // ディスプレイの色変更
     func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
         print(CGFloat(r))
         self.view.backgroundColor = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
         
     }
     
+    // 文字列のRGBを1byte整数配列に変換
     func formatRGB(str: String) -> [UInt8]{
         var rgb = ""
         var subStr = str
@@ -297,32 +321,32 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         rgbData.append(UInt8(rgb)!)
         return rgbData
     }
-    // The following methods do nothing, but the MCSessionDelegate protocol
-    // requires that we implement them.
+    
+    // P2P通信にてピアからファイル受信開始した時の処理
     func session(_ session: MCSession,
                  didStartReceivingResourceWithName resourceName: String,
                  fromPeer peerID: MCPeerID, with progress: Progress)  {
         
-        // Called when a peer starts sending a file to us
+        // 何もしない
     }
     
+    // P2P通信にてピアからファイル受信完了した時の処理
     func session(_ session: MCSession,
                  didFinishReceivingResourceWithName resourceName: String,
                  fromPeer peerID: MCPeerID,
                  at localURL: URL, withError error: Error?)  {
-        // Called when a file has finished transferring from another peer
+        // 何もしない
     }
     
+    // P2P通信にてピアからストリーム受信した時の処理
     func session(_ session: MCSession, didReceive stream: InputStream,
                  withName streamName: String, fromPeer peerID: MCPeerID)  {
-        // Called when a peer establishes a stream with us
+        // 何もしない
     }
     
+    // P2P通信にてピアの状態が変化した時の処理
     func session(_ session: MCSession, peer peerID: MCPeerID,
                  didChange state: MCSessionState)  {
-        // Called when a connected peer changes state (for example, goes offline)
+        // 何もしない
     }
-    
-    
-    
 }
