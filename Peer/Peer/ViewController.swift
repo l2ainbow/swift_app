@@ -58,13 +58,7 @@ class ViewController: UIViewController {
     // LEDを表すキャラクタリスティック
     var ledCharacteristic : CBCharacteristic?
     
-    // ユーザデータ
-    // 左モータの値
-    var leftMotorValue : Int!
-    // 右モータの値
-    var rightMotorValue : Int!
-    
-    // 音声出力のシンセサイザー
+    // 音声スピーカー
     var speaker = Speaker()
 
     // 状態を表すテキスト
@@ -75,24 +69,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 255,green: 255, blue: 0, alpha:1)
+        
         // P2P通信の初期化
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
         self.session = MCSession(peer: peerID)
         self.session.delegate = self
         
-        // create the browser viewcontroller with a unique service name
+        // P2P通信接続用のViewControllerの初期化
         self.browser = MCBrowserViewController(serviceType:SERVICE_TYPE,
                                                session:self.session)
         self.browser.delegate = self;
+        
+        // P2P通信のアドバタイザの初期化
         self.assistant = MCAdvertiserAssistant(serviceType:SERVICE_TYPE,
                                                discoveryInfo:nil, session:self.session)
-        
-        // tell the assistant to start advertising our fabulous chat
         self.assistant.start()
-        
-        // 数値初期化
-        self.leftMotorValue = 0
-        self.rightMotorValue = 0
         
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -102,7 +93,6 @@ class ViewController: UIViewController {
     func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
         print(CGFloat(r))
         self.view.backgroundColor = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
-        
     }
     
     // 文字列のRGBを1byte整数配列に変換
@@ -130,7 +120,57 @@ class ViewController: UIViewController {
         rgbData.append(UInt8(rgb)!)
         return rgbData
     }
+    
+    func RotateleftMotor(pwm: Int){
+        
+    }
 
+}
+
+// MARK:- CBCentralManagerからのコールバック
+extension ViewController: CBCentralManagerDelegate {
+    // Bluetooth状態遷移時の処理
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        switch central.state{
+        case .poweredOn:
+            centralManager.scanForPeripherals(withServices: [SERVICE_UUID]) // Peripheralのスキャン開始
+            print("state=powerOn, start to scan\(SERVICE_UUID)")
+        default:
+            break
+        }
+    }
+    
+    // Peripheral発見時の処理
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        self.peripheral = peripheral
+        // print("ペリフェラル発見:%@",peripheral.name!)
+        centralManager.stopScan()
+        
+        central.connect(peripheral, options: nil)
+    }
+    
+    // Peripheralとの接続切断時の処理
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        if (error != nil){
+            print("Peripheral切断時エラー:%@", error!)
+            return
+        }
+        print("ペリフェラル切断:%@",peripheral.name!)
+        conditionText.text = "Bluetooth接続が切断されました。"
+        self.view.backgroundColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1)
+        centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
+    }
+    
+    // Periphralとの接続時の処理
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        // print("ペリフェラルとの接続成功:%@",peripheral.name!)
+        self.peripheral = peripheral
+        centralManager.stopScan()
+        self.view.backgroundColor = UIColor(red: 0, green: 255, blue: 0, alpha: 1)
+        conditionText.text = "Bluetooth接続しました。"
+        peripheral.delegate = self
+        peripheral.discoverServices([SERVICE_UUID])
+    }
 }
 
 // MARK:- CBPeripheralからのコールバック
@@ -188,52 +228,6 @@ extension ViewController: CBPeripheralDelegate {
         }
     }
 }
-    
-// MARK:- CBCentralManagerからのコールバック
-extension ViewController: CBCentralManagerDelegate {
-    // Bluetooth状態遷移時の処理
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        switch central.state{
-        case .poweredOn:
-            centralManager.scanForPeripherals(withServices: [SERVICE_UUID]) // Peripheralのスキャン開始
-            print("state=powerOn, start to scan\(SERVICE_UUID)")
-        default:
-            break
-        }
-    }
-    
-    // Peripheral発見時の処理
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        self.peripheral = peripheral
-        // print("ペリフェラル発見:%@",peripheral.name!)
-        centralManager.stopScan()
-        
-        central.connect(peripheral, options: nil)
-    }
-    
-    // Peripheralとの接続切断時の処理
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        if (error != nil){
-            print("Peripheral切断時エラー:%@", error!)
-            return
-        }
-        print("ペリフェラル切断:%@",peripheral.name!)
-        conditionText.text = "Bluetooth接続が切断されました。"
-        self.view.backgroundColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1)
-        centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
-    }
-    
-    // Periphralとの接続時の処理
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        // print("ペリフェラルとの接続成功:%@",peripheral.name!)
-        self.peripheral = peripheral
-        centralManager.stopScan()
-        self.view.backgroundColor = UIColor(red: 0, green: 255, blue: 0, alpha: 1)
-        conditionText.text = "Bluetooth接続しました。"
-        peripheral.delegate = self
-        peripheral.discoverServices([SERVICE_UUID])
-    }
-}
 
 // MARK:- MCBrowserViewControllerからのコールバック
 extension ViewController: MCBrowserViewControllerDelegate {
@@ -268,32 +262,31 @@ extension ViewController: MCSessionDelegate {
             let prefix = str[str.startIndex]
             let val = str.substring(from: str.index(str.startIndex, offsetBy: 1))
             
-            // ラベルの更新(左右の判定)左の数値は1000足された値
             switch prefix {
             case "l":
-                self.leftMotorValue = Int(val)
-                var byte = Int8(Int(val)!)
-                let data = String(self.leftMotorValue).data(using: .utf8)!
+                let leftMotorValue:Int = Int(val)!
+                let data = String(leftMotorValue).data(using: .utf8)!
+                // var byte = Int8(Int(val)!)
                 // let data = NSData(bytes: &byte, length: 1)
                 if (self.peripheral != nil){
                     self.peripheral.writeValue(data as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
             case "r":
-                self.rightMotorValue = Int(val)
-                let data = String(self.rightMotorValue).data(using: .utf8)!
+                let rightMotorValue:Int = Int(val)!
+                let data = String(rightMotorValue).data(using: .utf8)!
                 if (self.peripheral != nil){
                     self.peripheral.writeValue(data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
             case "d":
-                self.rightMotorValue = Int(val)
-                self.leftMotorValue = Int(val)
-                var byte = Int8(val)
+                let rightMotorValue:Int = Int(val)!
+                let leftMotorValue:Int = Int(val)!
+                //var byte = Int8(val)
                 // let rdata = NSData(bytes: &byte, length: 1)
-                let rdata = String(self.leftMotorValue).data(using: .utf8)!
+                let rdata = String(rightMotorValue).data(using: .utf8)!
                 // let ldata = NSData(bytes: &byte, length: 1)
-                let ldata = String(self.leftMotorValue).data(using: .utf8)!
+                let ldata = String(leftMotorValue).data(using: .utf8)!
                 if (self.peripheral != nil){
                     self.peripheral.writeValue(rdata as Data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
