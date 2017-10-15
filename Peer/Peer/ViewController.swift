@@ -26,7 +26,7 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     /** 定数 **/
     // P2P通信のサービス名
-    let serviceType = "LCOC-Chat"
+    let SERVICE_TYPE = "LCOC-Chat"
     
     // 音声の速度(0.1-1.0)
     let VOICE_RATE = Float(0.5)
@@ -67,9 +67,10 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
     
     // ユーザデータ
     // 左モータの値
-    var leftValue : Int!
+    var leftMotorValue : Int!
     // 右モータの値
-    var rightValue : Int!
+    var rightMotorValue : Int!
+    
     // 音声出力のシンセサイザー
     var synthesizer = AVSpeechSynthesizer()
 
@@ -87,18 +88,18 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
         self.session.delegate = self
         
         // create the browser viewcontroller with a unique service name
-        self.browser = MCBrowserViewController(serviceType:serviceType,
+        self.browser = MCBrowserViewController(serviceType:SERVICE_TYPE,
                                                session:self.session)
         self.browser.delegate = self;
-        self.assistant = MCAdvertiserAssistant(serviceType:serviceType,
+        self.assistant = MCAdvertiserAssistant(serviceType:SERVICE_TYPE,
                                                discoveryInfo:nil, session:self.session)
         
         // tell the assistant to start advertising our fabulous chat
         self.assistant.start()
         
         // 数値初期化
-        self.leftValue = 0
-        self.rightValue = 0
+        self.leftMotorValue = 0
+        self.rightMotorValue = 0
         
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -238,29 +239,29 @@ MCSessionDelegate, UITextFieldDelegate, CBCentralManagerDelegate, CBPeripheralDe
             // ラベルの更新(左右の判定)左の数値は1000足された値
             switch prefix {
             case "l":
-                self.leftValue = Int(val)
+                self.leftMotorValue = Int(val)
                 var byte = Int8(Int(val)!)
-                let data = String(self.leftValue).data(using: .utf8)!
+                let data = String(self.leftMotorValue).data(using: .utf8)!
                 // let data = NSData(bytes: &byte, length: 1)
                 if (self.peripheral != nil){
                     self.peripheral.writeValue(data as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
             case "r":
-                self.rightValue = Int(val)
-                let data = String(self.rightValue).data(using: .utf8)!
+                self.rightMotorValue = Int(val)
+                let data = String(self.rightMotorValue).data(using: .utf8)!
                 if (self.peripheral != nil){
                     self.peripheral.writeValue(data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
                 break
             case "d":
-                self.rightValue = Int(val)
-                self.leftValue = Int(val)
+                self.rightMotorValue = Int(val)
+                self.leftMotorValue = Int(val)
                 var byte = Int8(val)
                 // let rdata = NSData(bytes: &byte, length: 1)
-                let rdata = String(self.leftValue).data(using: .utf8)!
+                let rdata = String(self.leftMotorValue).data(using: .utf8)!
                 // let ldata = NSData(bytes: &byte, length: 1)
-                let ldata = String(self.leftValue).data(using: .utf8)!
+                let ldata = String(self.leftMotorValue).data(using: .utf8)!
                 if (self.peripheral != nil){
                     self.peripheral.writeValue(rdata as Data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
                 }
