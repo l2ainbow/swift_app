@@ -68,7 +68,7 @@ class ViewController: UIViewController {
     // Viewの読込完了時の処理
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 255,green: 255, blue: 0, alpha:1)
+        self.displayColorChange(red: 255, green: 255, blue: 0)
         
         // P2P通信の初期化
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
@@ -121,8 +121,20 @@ class ViewController: UIViewController {
         return rgbData
     }
     
-    func RotateleftMotor(pwm: Int){
-        
+    // 左モータの回転
+    func rotateLeftMotor(pwm: Int){
+        let data = String(pwm).data(using: .utf8)!
+        if (self.peripheral != nil){
+            self.peripheral.writeValue(data as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        }
+    }
+    
+    // 右モータの回転
+    func rotateRightMotor(pwm: Int){
+        let data = String(pwm).data(using: .utf8)!
+        if (self.peripheral != nil){
+            self.peripheral.writeValue(data as Data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        }
     }
 
 }
@@ -157,7 +169,7 @@ extension ViewController: CBCentralManagerDelegate {
         }
         print("ペリフェラル切断:%@",peripheral.name!)
         conditionText.text = "Bluetooth接続が切断されました。"
-        self.view.backgroundColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1)
+        self.displayColorChange(red: 255, green: 0, blue: 0)
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
     
@@ -166,7 +178,7 @@ extension ViewController: CBCentralManagerDelegate {
         // print("ペリフェラルとの接続成功:%@",peripheral.name!)
         self.peripheral = peripheral
         centralManager.stopScan()
-        self.view.backgroundColor = UIColor(red: 0, green: 255, blue: 0, alpha: 1)
+        self.displayColorChange(red: 0, green: 255, blue: 0)
         conditionText.text = "Bluetooth接続しました。"
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
@@ -198,10 +210,8 @@ extension ViewController: CBPeripheralDelegate {
             peripheral.setNotifyValue(true, for: characteristic)
             
             if (characteristic.value == nil) {
-                
                 let a = 0
                 characteristic.setValue(a, forKey: "")
-                
             }
             
             switch characteristic.uuid{
@@ -264,35 +274,14 @@ extension ViewController: MCSessionDelegate {
             
             switch prefix {
             case "l":
-                let leftMotorValue:Int = Int(val)!
-                let data = String(leftMotorValue).data(using: .utf8)!
-                // var byte = Int8(Int(val)!)
-                // let data = NSData(bytes: &byte, length: 1)
-                if (self.peripheral != nil){
-                    self.peripheral.writeValue(data as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-                }
+                self.rotateLeftMotor(pwm: Int(val)!)
                 break
             case "r":
-                let rightMotorValue:Int = Int(val)!
-                let data = String(rightMotorValue).data(using: .utf8)!
-                if (self.peripheral != nil){
-                    self.peripheral.writeValue(data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-                }
+                self.rotateRightMotor(pwm: Int(val)!)
                 break
             case "d":
-                let rightMotorValue:Int = Int(val)!
-                let leftMotorValue:Int = Int(val)!
-                //var byte = Int8(val)
-                // let rdata = NSData(bytes: &byte, length: 1)
-                let rdata = String(rightMotorValue).data(using: .utf8)!
-                // let ldata = NSData(bytes: &byte, length: 1)
-                let ldata = String(leftMotorValue).data(using: .utf8)!
-                if (self.peripheral != nil){
-                    self.peripheral.writeValue(rdata as Data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-                }
-                if (self.peripheral != nil){
-                    self.peripheral.writeValue(ldata as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-                }
+                self.rotateLeftMotor(pwm: Int(val)!)
+                self.rotateRightMotor(pwm: Int(val)!)
                 break
             case "s":
                 self.speaker.speak(word: val)
