@@ -9,7 +9,6 @@
 import UIKit
 import MultipeerConnectivity
 import CoreBluetooth
-import AVFoundation
 
 class ViewController: UIViewController {
     /** 構造体 **/
@@ -26,11 +25,6 @@ class ViewController: UIViewController {
     /** 定数 **/
     // P2P通信のサービス名
     let SERVICE_TYPE = "LCOC-Chat"
-    
-    // 音声の速度(0.1-1.0)
-    let VOICE_RATE = Float(0.5)
-    // 音声の高さ(0.5-2.0)
-    let VOICE_PITCH = Float(1.3)
     
     // BLE UUID
     let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
@@ -71,7 +65,7 @@ class ViewController: UIViewController {
     var rightMotorValue : Int!
     
     // 音声出力のシンセサイザー
-    var synthesizer = AVSpeechSynthesizer()
+    var speaker = Speaker()
 
     // 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
@@ -102,14 +96,6 @@ class ViewController: UIViewController {
         
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
-    }
-    
-    // 文字列の読み上げ
-    func speak(word: String) {
-        let utterance = AVSpeechUtterance(string: word)
-        utterance.rate = VOICE_RATE
-        utterance.pitchMultiplier = VOICE_PITCH
-        self.synthesizer.speak(utterance)
     }
 
     // ディスプレイの色変更
@@ -316,7 +302,7 @@ extension ViewController: MCSessionDelegate {
                 }
                 break
             case "s":
-                self.speak(word: val)
+                self.speaker.speak(word: val)
                 self.conditionText.text = val
                 break
             case "c":
