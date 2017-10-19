@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     var ledCharacteristic : CBCharacteristic?
     
     // 音声スピーカー
-    var speaker = Speaker()
+    var speaker = SpeakerImpl()
 
     // 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
@@ -284,7 +284,7 @@ extension ViewController: MCSessionDelegate {
                 self.rotateRightMotor(pwm: Int(val)!)
                 break
             case "s":
-                self.speaker.speak(word: val)
+                self.speaker.speak(message: val)
                 self.conditionText.text = val
                 break
             case "c":
