@@ -16,7 +16,9 @@ public class ColorDisplayImpl: ColorDisplay
     }
 
     // ˅
-    
+    public func display(color: Color)
+    {
+    }
     // ˄
 }
 
