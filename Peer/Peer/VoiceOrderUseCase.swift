@@ -5,7 +5,7 @@
 public class VoiceOrderUseCase: VoiceOrderUseCaseIF
 {
     // ˅
-    init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, searcher: KeywordSearcher, weatherInformUC: WeatherInformUseCase){
+    init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, weatherInformUC: WeatherInformUseCase){
         self.colorDisplay = colorDisplay
         self.voiceDetector = voiceDetector
         self.voiceRecognizer = voiceRecognizer

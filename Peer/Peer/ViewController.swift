@@ -87,6 +87,9 @@ class ViewController: UIViewController {
         
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
+        
+        let usecase = Initializer.initialize()
+        usecase.start()
     }
 
     // ディスプレイの色変更

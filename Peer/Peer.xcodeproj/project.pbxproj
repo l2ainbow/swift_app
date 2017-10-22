@@ -32,6 +32,7 @@
 		DB1DAF3F1F9C9AAC000F8450 /* MockCurrentLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF3E1F9C9AAC000F8450 /* MockCurrentLocator.swift */; };
 		DB1DAF411F9C9C10000F8450 /* MockSpeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF401F9C9C10000F8450 /* MockSpeaker.swift */; };
 		DB1DAF431F9C9C8D000F8450 /* MockWeatherProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF421F9C9C8D000F8450 /* MockWeatherProvider.swift */; };
+		DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF441F9CAA5A000F8450 /* Initializer.swift */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -65,6 +66,7 @@
 		DB1DAF3E1F9C9AAC000F8450 /* MockCurrentLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCurrentLocator.swift; sourceTree = "<group>"; };
 		DB1DAF401F9C9C10000F8450 /* MockSpeaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSpeaker.swift; sourceTree = "<group>"; };
 		DB1DAF421F9C9C8D000F8450 /* MockWeatherProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockWeatherProvider.swift; sourceTree = "<group>"; };
+		DB1DAF441F9CAA5A000F8450 /* Initializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				F98954EA1F21315200B24DC0 /* Assets.xcassets */,
 				F98954EC1F21315200B24DC0 /* LaunchScreen.storyboard */,
 				F98954EF1F21315200B24DC0 /* Info.plist */,
+				DB1DAF441F9CAA5A000F8450 /* Initializer.swift */,
 			);
 			path = Peer;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				DB1DAF251F98E82A000F8450 /* Location.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				DB1DAF2A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift in Sources */,
+				DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */,
 				DB1DAF281F98E82A000F8450 /* VoiceDetectorImpl.swift in Sources */,
 				DB1DAF291F98E82A000F8450 /* VoiceOrderUseCase.swift in Sources */,
 				DB1DAF211F98E82A000F8450 /* ColorDisplay.swift in Sources */,
