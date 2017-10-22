@@ -61,8 +61,10 @@ class ViewController: UIViewController {
     // 音声スピーカー
     var speaker = SpeakerImpl()
     
-    // 
+    // カラー表示
     var colorDisplay : ColorDisplay!
+    
+    var voiceOrderUC: VoiceOrderUseCase!
 
     // 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
@@ -90,8 +92,11 @@ class ViewController: UIViewController {
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
         
-        let usecase = Initializer.initialize(delegate: self)
-        usecase.start()
+        self.voiceOrderUC = Initializer.initialize(delegate: self)
+    }
+    
+    func startUC(){
+        self.voiceOrderUC.start()
     }
     
     // 文字列のRGBを1byte整数配列に変換
@@ -227,6 +232,7 @@ extension ViewController: CBPeripheralDelegate {
                 break
             }
         }
+        self.startUC()
     }
     
     // キャラクタリスティクのデータ更新時の処理
