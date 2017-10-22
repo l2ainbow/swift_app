@@ -98,6 +98,17 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
     }
     
+    // LEDの色変更
+    func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8){
+        if(self.peripheral != nil){
+            var bytes : [UInt8] = [r, g, b]
+            let data = NSData(bytes: &bytes, length: 3)
+            self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
+                CBCharacteristicWriteType.withResponse)
+            
+        }
+    }
+    
     // 文字列のRGBを1byte整数配列に変換
     func formatRGB(str: String) -> [UInt8]{
         var rgb = ""
@@ -293,12 +304,7 @@ extension ViewController: MCSessionDelegate {
             case "c":
                 var bytes = self.formatRGB(str: val)
                 self.displayColorChange(red: bytes[0], green: bytes[1], blue: bytes[2])
-                if(self.peripheral != nil){
-                    let data = NSData(bytes: &bytes, length: 3)
-                    self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
-                        CBCharacteristicWriteType.withResponse)
-                    
-                }
+                self.ledColorChange(red: bytes[0], green: bytes[1], blue: bytes[2])
                 break
             default:
                 break
