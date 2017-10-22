@@ -26,7 +26,7 @@ public class WeatherInformUseCase
 
     private var location: Location?
 
-    public func informWeather(daysAgo: Int)
+    public func start(daysAgo: Int)
     {
         // ˅
         var location = currentLocator.locate()
@@ -37,9 +37,14 @@ public class WeatherInformUseCase
         colorDisplay.display(color)
         // ˄
     }
+    
+    public func start()
+    {
+      start(daysAgo: 0)
+    }
 
     // ˅
-    private func getMessage(weather:Weather) -> String{
+    private func getMessage(weather: Weather) -> String{
       var message = ""
       switch weather.type {
       case Clear:

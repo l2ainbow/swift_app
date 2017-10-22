@@ -18,7 +18,7 @@ public class SpeakerImpl: Speaker
     let VOICE_PITCH = Float(1.3)
     
     // 音声出力のシンセサイザー
-    var synthesizer = AVSpeechSynthesizer()    
+    let synthesizer = AVSpeechSynthesizer()    
     // ˄
 
     public func speak(message: String)

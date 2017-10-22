@@ -16,7 +16,7 @@ public protocol Speaker
     // ˅
     
     // ˄
-} 
+}
 
 // ˅
 
