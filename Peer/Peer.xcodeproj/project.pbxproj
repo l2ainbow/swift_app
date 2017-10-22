@@ -73,6 +73,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB1DAF351F9C93F1000F8450 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
+				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
+				DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */,
+				DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */,
+				DB1DAF1C1F98E82A000F8450 /* VoiceRecognizerImpl.swift */,
+				DB1DAF201F98E82A000F8450 /* WeatherProviderImpl.swift */,
+			);
+			name = interface;
+			sourceTree = "<group>";
+		};
+		DB1DAF361F9C9472000F8450 /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				DB1DAF311F9C4AE0000F8450 /* Color.swift */,
+				DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */,
+				DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */,
+				DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */,
+				DB1DAF151F98E82A000F8450 /* Location.swift */,
+				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
+				DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */,
+				DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */,
+				DB1DAF1A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift */,
+				DB1DAF1B1F98E82A000F8450 /* VoiceRecognizer.swift */,
+				DB1DAF1D1F98E82A000F8450 /* Weather.swift */,
+				DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */,
+				DB1DAF1F1F98E82A000F8450 /* WeatherProvider.swift */,
+			);
+			name = domain;
+			sourceTree = "<group>";
+		};
 		F98954D71F21315200B24DC0 = {
 			isa = PBXGroup;
 			children = (
@@ -92,25 +125,8 @@
 		F98954E21F21315200B24DC0 /* Peer */ = {
 			isa = PBXGroup;
 			children = (
-				DB1DAF311F9C4AE0000F8450 /* Color.swift */,
-				DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */,
-				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
-				DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */,
-				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
-				DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */,
-				DB1DAF151F98E82A000F8450 /* Location.swift */,
-				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
-				DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */,
-				DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */,
-				DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */,
-				DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */,
-				DB1DAF1A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift */,
-				DB1DAF1B1F98E82A000F8450 /* VoiceRecognizer.swift */,
-				DB1DAF1C1F98E82A000F8450 /* VoiceRecognizerImpl.swift */,
-				DB1DAF1D1F98E82A000F8450 /* Weather.swift */,
-				DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */,
-				DB1DAF1F1F98E82A000F8450 /* WeatherProvider.swift */,
-				DB1DAF201F98E82A000F8450 /* WeatherProviderImpl.swift */,
+				DB1DAF361F9C9472000F8450 /* domain */,
+				DB1DAF351F9C93F1000F8450 /* interface */,
 				F98954E31F21315200B24DC0 /* AppDelegate.swift */,
 				F98954E51F21315200B24DC0 /* ViewController.swift */,
 				F98954E71F21315200B24DC0 /* Main.storyboard */,
