@@ -60,6 +60,9 @@ class ViewController: UIViewController {
     
     // 音声スピーカー
     var speaker = SpeakerImpl()
+    
+    // 
+    var colorDisplay : ColorDisplay!
 
     // 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
@@ -68,7 +71,6 @@ class ViewController: UIViewController {
     // Viewの読込完了時の処理
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.displayColorChange(red: 255, green: 255, blue: 0)
         
         // P2P通信の初期化
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
@@ -90,22 +92,6 @@ class ViewController: UIViewController {
         
         let usecase = Initializer.initialize(delegate: self)
         usecase.start()
-    }
-
-    // ディスプレイの色変更
-    func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
-        self.view.backgroundColor = UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1)
-    }
-    
-    // LEDの色変更
-    func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8){
-        if(self.peripheral != nil){
-            var bytes : [UInt8] = [r, g, b]
-            let data = NSData(bytes: &bytes, length: 3)
-            self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
-                CBCharacteristicWriteType.withResponse)
-            
-        }
     }
     
     // 文字列のRGBを1byte整数配列に変換
@@ -182,7 +168,7 @@ extension ViewController: CBCentralManagerDelegate {
         }
         print("ペリフェラル切断:%@",peripheral.name!)
         conditionText.text = "Bluetooth接続が切断されました。"
-        self.displayColorChange(red: 255, green: 0, blue: 0)
+        self.colorDisplay.display(R: 255, G: 0, B: 0)
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
     
@@ -191,7 +177,7 @@ extension ViewController: CBCentralManagerDelegate {
         // print("ペリフェラルとの接続成功:%@",peripheral.name!)
         self.peripheral = peripheral
         centralManager.stopScan()
-        self.displayColorChange(red: 0, green: 255, blue: 0)
+        self.colorDisplay.display(R: 0, G: 255, B: 0)
         conditionText.text = "Bluetooth接続しました。"
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
@@ -302,8 +288,7 @@ extension ViewController: MCSessionDelegate {
                 break
             case "c":
                 var bytes = self.formatRGB(str: val)
-                self.displayColorChange(red: bytes[0], green: bytes[1], blue: bytes[2])
-                self.ledColorChange(red: bytes[0], green: bytes[1], blue: bytes[2])
+                self.colorDisplay.display(R: bytes[0], G: bytes[1], B: bytes[2])
                 break
             default:
                 break
