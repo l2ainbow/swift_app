@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     let CHAR_UUIDs:[String:Characteristic] = [
         "leftMotor":Characteristic(uuid: CBUUID(string: "6C680001-F374-4D39-9FD8-A7DBB54CD6EB"), name: "leftMotor", byte: 4),
         "rightMotor":Characteristic(uuid: CBUUID(string: "6C680002-F374-4D39-9FD8-A7DBB54CD6EB"), name: "rightMotor", byte: 4),
-        // "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
+        "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
     ]
     
     /** 変数 **/
@@ -290,12 +290,12 @@ extension ViewController: MCSessionDelegate {
             case "c":
                 var bytes = self.formatRGB(str: val)
                 self.displayColorChange(red: bytes[0], green: bytes[1], blue: bytes[2])
-                //                if(self.peripheral != nil){
-                //                    let data = NSData(bytes: &bytes, length: 3)
-                //                    self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
-                //                        CBCharacteristicWriteType.withResponse)
-                //
-                //                }
+                if(self.peripheral != nil){
+                    let data = NSData(bytes: &bytes, length: 3)
+                    self.peripheral.writeValue(data as Data, for: self.ledCharacteristic!, type:
+                        CBCharacteristicWriteType.withResponse)
+                    
+                }
                 break
             default:
                 break

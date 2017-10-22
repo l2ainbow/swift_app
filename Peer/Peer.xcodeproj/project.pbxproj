@@ -97,6 +97,7 @@
 				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
 				DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */,
 				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
+				DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */,
 				DB1DAF151F98E82A000F8450 /* Location.swift */,
 				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
 				DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */,
@@ -116,7 +117,6 @@
 				F98954EA1F21315200B24DC0 /* Assets.xcassets */,
 				F98954EC1F21315200B24DC0 /* LaunchScreen.storyboard */,
 				F98954EF1F21315200B24DC0 /* Info.plist */,
-				DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */,
 			);
 			path = Peer;
 			sourceTree = "<group>";
