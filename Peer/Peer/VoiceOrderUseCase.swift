@@ -52,7 +52,7 @@ public class VoiceOrderUseCase: VoiceOrderUseCaseIF
             }
             
             if (day >= 0){
-                weatherInformUC.start(daysAgo: 1)
+                weatherInformUC.start(daysAgo: day)
             }
             else{
                 weatherInformUC.start()

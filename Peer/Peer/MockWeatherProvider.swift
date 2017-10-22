@@ -10,7 +10,7 @@ public class MockWeatherProvider: WeatherProvider
 {
     public func askWeather(daysAgo: Int, location: Location) -> Weather?
     {
-        print("daysAgo: \(daysAgo), location: \(location)")
+        print("daysAgo: \(daysAgo), location: \(location.latitude), longitude: \(location.longitude)")
         return Weather.Clear
     }
 }
