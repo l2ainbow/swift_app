@@ -68,7 +68,7 @@ class ViewController: UIViewController {
     // Viewの読込完了時の処理
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.displayColorChange(red: 255, green: 255, blue: 0)
+        //self.displayColorChange(red: 255, green: 255, blue: 0)
         
         // P2P通信の初期化
         self.peerID = MCPeerID(displayName: UIDevice.current.name)
@@ -88,14 +88,13 @@ class ViewController: UIViewController {
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
         
-        let usecase = Initializer.initialize()
+        let usecase = Initializer.initialize(delegate: self)
         usecase.start()
     }
 
     // ディスプレイの色変更
     func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
-        print(CGFloat(r))
-        self.view.backgroundColor = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
+        self.view.backgroundColor = UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1)
     }
     
     // LEDの色変更

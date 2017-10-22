@@ -7,8 +7,8 @@
 //
 
 class Initializer {
-    static func initialize() -> VoiceOrderUseCase{
-        let colorDisplay = MockColorDisplay()
+    static func initialize(delegate: ViewController) -> VoiceOrderUseCase{
+        let colorDisplay = ColorDisplayImpl(view: delegate.view, peripheral: delegate.peripheral, characteristic: delegate.ledCharacteristic)
         let voiceDetector = MockVoiceDetector()
         let voiceRecognizer = MockVoiceRecognizer()
         let speaker = SpeakerImpl()
