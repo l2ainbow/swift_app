@@ -2,14 +2,10 @@
 
 // ˄
 
-public class Color
+public enum Color
 {
-    // ˅
-    enum ColorName{
-      case White, Black, Orange, Blue, Green, Red, LightBlue, Yellow, Gray, LightGray
-    }
+    case White, Black, Orange, Blue, Green, Red, LightBlue, Yellow, Gray, LightGray
     // ˄
-    let name: ColorName
     // ˅
     
     // ˄

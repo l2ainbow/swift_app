@@ -24,6 +24,8 @@
 		DB1DAF2E1F98E82A000F8450 /* WeatherInformUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */; };
 		DB1DAF2F1F98E82A000F8450 /* WeatherProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF1F1F98E82A000F8450 /* WeatherProvider.swift */; };
 		DB1DAF301F98E82A000F8450 /* WeatherProviderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF201F98E82A000F8450 /* WeatherProviderImpl.swift */; };
+		DB1DAF321F9C4AE0000F8450 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF311F9C4AE0000F8450 /* Color.swift */; };
+		DB1DAF341F9C51EB000F8450 /* KeywordSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -49,6 +51,8 @@
 		DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInformUseCase.swift; sourceTree = "<group>"; };
 		DB1DAF1F1F98E82A000F8450 /* WeatherProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherProvider.swift; sourceTree = "<group>"; };
 		DB1DAF201F98E82A000F8450 /* WeatherProviderImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherProviderImpl.swift; sourceTree = "<group>"; };
+		DB1DAF311F9C4AE0000F8450 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeywordSearcher.swift; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,11 +92,13 @@
 		F98954E21F21315200B24DC0 /* Peer */ = {
 			isa = PBXGroup;
 			children = (
+				DB1DAF311F9C4AE0000F8450 /* Color.swift */,
 				DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */,
 				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
 				DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */,
 				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
 				DB1DAF151F98E82A000F8450 /* Location.swift */,
+				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
 				DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */,
 				DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */,
 				DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */,
@@ -110,7 +116,7 @@
 				F98954EA1F21315200B24DC0 /* Assets.xcassets */,
 				F98954EC1F21315200B24DC0 /* LaunchScreen.storyboard */,
 				F98954EF1F21315200B24DC0 /* Info.plist */,
-				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
+				DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */,
 			);
 			path = Peer;
 			sourceTree = "<group>";
@@ -191,6 +197,7 @@
 			files = (
 				DB1DAF231F98E82A000F8450 /* CurrentLocator.swift in Sources */,
 				DB1DAF101F937058000F8450 /* Speaker.swift in Sources */,
+				DB1DAF341F9C51EB000F8450 /* KeywordSearcher.swift in Sources */,
 				DB1DAF251F98E82A000F8450 /* Location.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				DB1DAF2A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift in Sources */,
@@ -202,6 +209,7 @@
 				F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */,
 				DB1DAF2C1F98E82A000F8450 /* VoiceRecognizerImpl.swift in Sources */,
 				DB1DAF241F98E82A000F8450 /* CurrentLocatorImpl.swift in Sources */,
+				DB1DAF321F9C4AE0000F8450 /* Color.swift in Sources */,
 				DB1DAF2F1F98E82A000F8450 /* WeatherProvider.swift in Sources */,
 				DB1DAF2B1F98E82A000F8450 /* VoiceRecognizer.swift in Sources */,
 				DB1DAF261F98E82A000F8450 /* SpeakerImpl.swift in Sources */,

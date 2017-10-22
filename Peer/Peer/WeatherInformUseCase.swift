@@ -29,12 +29,12 @@ public class WeatherInformUseCase
     public func start(daysAgo: Int)
     {
         // ˅
-        var location = currentLocator.locate()
-        var weather = weatherProvider.askWeather(daysAgo: daysAgo, location: location)
-        var message = self.getMessage(weather: weather)
-        var color = self.getColor(weather: weather)
-        speaker.speak(message)
-        colorDisplay.display(color)
+        let location = currentLocator.locate()
+        let weather = weatherProvider.askWeather(daysAgo: daysAgo, location: location!)
+        let message = self.getMessage(weather: weather!)
+        let color = self.getColor(weather: weather!)
+        speaker.speak(message: message)
+        colorDisplay.display(color: color)
         // ˄
     }
     
@@ -46,22 +46,22 @@ public class WeatherInformUseCase
     // ˅
     private func getMessage(weather: Weather) -> String{
       var message = ""
-      switch weather.type {
-      case Clear:
+      switch weather {
+      case Weather.Clear:
         message = "晴れどす"
-      case Cloudy:
+      case Weather.Cloudy:
         message = "曇りどす"
-      case Rain:
+      case Weather.Rain:
         message = "雨どす"
-      case Snow:
+      case Weather.Snow:
         message = "雪どす"
-      case Thunderstorm:
+      case Weather.Thunderstorm:
         message = "雷どす"
-      case Drizzle:
+      case Weather.Drizzle:
         message = "霧どす"
-      case Tornado:
+      case Weather.Tornado:
         message = "竜巻どす"
-      case Other:
+      case Weather.Others:
         message = "いろいろどす"
       default:
         message = "不明どす"
@@ -70,28 +70,28 @@ public class WeatherInformUseCase
     }
     
     private func getColor(weather:Weather) -> Color{
-      var colorName: ColorName = nil
-      switch weather.type {
-      case Clear:
-        colorName = Orange
-      case Cloudy:
-        colorName = Gray
-      case Rain:
-        colorName = Blue
-      case Snow:
-        colorName = White
-      case Thunderstorm:
-        colorName = Yellow
-      case Drizzle:
-        colorName = LightGray
-      case Tornado:
-        colorName = LightBlue
-      case Other:
-        colorName = Red
+      var color: Color = Color.Black
+      switch weather {
+      case Weather.Clear:
+        color = Color.Orange
+      case Weather.Cloudy:
+        color = Color.Gray
+      case Weather.Rain:
+        color = Color.Blue
+      case Weather.Snow:
+        color = Color.White
+      case Weather.Thunderstorm:
+        color = Color.Yellow
+      case Weather.Drizzle:
+        color = Color.LightGray
+      case Weather.Tornado:
+        color = Color.LightBlue
+      case Weather.Others:
+        color = Color.Red
       default:
-        colorName = Black
+        color = Color.Black
       }
-      return Color(colorName)
+      return color
     }
     // ˄
 }

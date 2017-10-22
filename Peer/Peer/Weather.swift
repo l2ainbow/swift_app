@@ -2,16 +2,12 @@
 
 // ˄
 
-public class Weather
+public enum Weather
 {
     // ˅
-    enum WeatherType{
-      case Clear, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, Others
-    }
+    case Clear, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, Others
     // ˄
-    let type: WeatherType
     // ˅
-    
     // ˄
 }
 
