@@ -64,6 +64,10 @@ class ViewController: UIViewController {
     // カラー表示
     var colorDisplay : ColorDisplay!
     
+    // メッセージ表示
+    var messageDisplay: MessageDisplay!
+    
+    // 音声指令ユースケース
     var voiceOrderUC: VoiceOrderUseCase!
 
     // 状態を表すテキスト
@@ -92,9 +96,11 @@ class ViewController: UIViewController {
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
         
+        // ユースケースの初期化
         self.voiceOrderUC = Initializer.initialize(delegate: self)
     }
     
+    // ユースケース開始
     func startUC(){
         self.voiceOrderUC.start()
     }
