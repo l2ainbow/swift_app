@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     var ledCharacteristic : CBCharacteristic?
     
     // 音声スピーカー
-    var speaker = SpeakerImpl()
+    var speaker : Speaker!
     
     // カラー表示
     var colorDisplay : ColorDisplay!
@@ -299,7 +299,7 @@ extension ViewController: MCSessionDelegate {
                 break
             case "s":
                 self.speaker.speak(message: val)
-                self.conditionText.text = val
+                self.messageDisplay(val)
                 break
             case "c":
                 var bytes = self.formatRGB(str: val)

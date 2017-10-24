@@ -10,10 +10,10 @@ class Initializer {
     static func initialize(delegate: ViewController) -> VoiceOrderUseCase{
         delegate.colorDisplay = ColorDisplayImpl(view: delegate.view, peripheral: delegate.peripheral, characteristic: delegate.ledCharacteristic)
         delegate.messageDisplay = MessageDisplayImpl(label: delegate.conditionText)
+        delegate.speaker = SpeakerImpl()
         
         let voiceDetector = MockVoiceDetector()
         let voiceRecognizer = MockVoiceRecognizer()
-        let speaker = SpeakerImpl()
         let locator = MockCurrentLocator()
         let provider = MockWeatherProvider()
         
