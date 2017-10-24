@@ -2,7 +2,7 @@
 
 // ˄
 
-public class VoiceOrderUseCase: VoiceOrderUseCaseIF
+public class VoiceOrderUseCase
 {
     // ˅
     init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, weatherInformUC: WeatherInformUseCase){

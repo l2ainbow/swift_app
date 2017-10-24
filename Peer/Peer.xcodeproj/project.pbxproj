@@ -17,7 +17,6 @@
 		DB1DAF271F98E82A000F8450 /* VoiceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */; };
 		DB1DAF281F98E82A000F8450 /* VoiceDetectorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */; };
 		DB1DAF291F98E82A000F8450 /* VoiceOrderUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */; };
-		DB1DAF2A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF1A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift */; };
 		DB1DAF2B1F98E82A000F8450 /* VoiceRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF1B1F98E82A000F8450 /* VoiceRecognizer.swift */; };
 		DB1DAF2C1F98E82A000F8450 /* VoiceRecognizerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF1C1F98E82A000F8450 /* VoiceRecognizerImpl.swift */; };
 		DB1DAF2D1F98E82A000F8450 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF1D1F98E82A000F8450 /* Weather.swift */; };
@@ -53,7 +52,6 @@
 		DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceDetector.swift; sourceTree = "<group>"; };
 		DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceDetectorImpl.swift; sourceTree = "<group>"; };
 		DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceOrderUseCase.swift; sourceTree = "<group>"; };
-		DB1DAF1A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceOrderUseCaseIF.swift; sourceTree = "<group>"; };
 		DB1DAF1B1F98E82A000F8450 /* VoiceRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceRecognizer.swift; sourceTree = "<group>"; };
 		DB1DAF1C1F98E82A000F8450 /* VoiceRecognizerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceRecognizerImpl.swift; sourceTree = "<group>"; };
 		DB1DAF1D1F98E82A000F8450 /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
 				DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */,
 				DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */,
-				DB1DAF1A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift */,
 				DB1DAF1B1F98E82A000F8450 /* VoiceRecognizer.swift */,
 				DB1DAF1D1F98E82A000F8450 /* Weather.swift */,
 				DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */,
@@ -139,6 +136,16 @@
 			name = test;
 			sourceTree = "<group>";
 		};
+		DB1DAF4A1F9F7BAA000F8450 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				F98954E31F21315200B24DC0 /* AppDelegate.swift */,
+				F98954E51F21315200B24DC0 /* ViewController.swift */,
+				DB1DAF441F9CAA5A000F8450 /* Initializer.swift */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
 		F98954D71F21315200B24DC0 = {
 			isa = PBXGroup;
 			children = (
@@ -158,16 +165,14 @@
 		F98954E21F21315200B24DC0 /* Peer */ = {
 			isa = PBXGroup;
 			children = (
-				DB1DAF371F9C969D000F8450 /* test */,
-				DB1DAF361F9C9472000F8450 /* domain */,
+				DB1DAF4A1F9F7BAA000F8450 /* view */,
 				DB1DAF351F9C93F1000F8450 /* interface */,
-				F98954E31F21315200B24DC0 /* AppDelegate.swift */,
-				F98954E51F21315200B24DC0 /* ViewController.swift */,
+				DB1DAF361F9C9472000F8450 /* domain */,
+				DB1DAF371F9C969D000F8450 /* test */,
 				F98954E71F21315200B24DC0 /* Main.storyboard */,
 				F98954EA1F21315200B24DC0 /* Assets.xcassets */,
 				F98954EC1F21315200B24DC0 /* LaunchScreen.storyboard */,
 				F98954EF1F21315200B24DC0 /* Info.plist */,
-				DB1DAF441F9CAA5A000F8450 /* Initializer.swift */,
 			);
 			path = Peer;
 			sourceTree = "<group>";
@@ -254,7 +259,6 @@
 				DB1DAF251F98E82A000F8450 /* Location.swift in Sources */,
 				DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
-				DB1DAF2A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift in Sources */,
 				DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */,
 				DB1DAF281F98E82A000F8450 /* VoiceDetectorImpl.swift in Sources */,
 				DB1DAF291F98E82A000F8450 /* VoiceOrderUseCase.swift in Sources */,
