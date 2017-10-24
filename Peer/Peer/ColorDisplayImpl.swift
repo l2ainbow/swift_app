@@ -56,7 +56,7 @@ public class ColorDisplayImpl: ColorDisplay
 
     // LEDの色変更
     func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8){
-        if(self.peripheral != nil){
+        if(self.peripheral != nil && self.ledCharacteristic != nil){
             var bytes : [UInt8] = [r, g, b]
             let data = NSData(bytes: &bytes, length: 3)
             self.peripheral?.writeValue(data as Data, for: self.ledCharacteristic!, type:

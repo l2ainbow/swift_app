@@ -98,13 +98,17 @@ class ViewController: UIViewController {
         
         // ユースケースの初期化
         self.voiceOrderUC = Initializer.initialize(delegate: self)
+        
+        // 接続中の表示
+        self.colorDisplay.display(R: 255, G: 0, B: 0)
+        self.messageDisplay.display("接続中...")
     }
     
-    // ユースケース開始
-    func startUC(){
-        self.voiceOrderUC.start()
+    // Viewの表示完了時の処理
+    override func viewDidAppear() {
+      self.voiceOrderUC.start()
     }
-    
+        
     // 文字列のRGBを1byte整数配列に変換
     func formatRGB(str: String) -> [UInt8]{
         var rgb = ""
@@ -178,7 +182,7 @@ extension ViewController: CBCentralManagerDelegate {
             return
         }
         print("ペリフェラル切断:%@",peripheral.name!)
-        conditionText.text = "Bluetooth接続が切断されました。"
+        self.messageDisplay.display("Bluetooth接続が切断されました。")
         self.colorDisplay.display(R: 255, G: 0, B: 0)
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
@@ -189,7 +193,7 @@ extension ViewController: CBCentralManagerDelegate {
         self.peripheral = peripheral
         centralManager.stopScan()
         self.colorDisplay.display(R: 0, G: 255, B: 0)
-        conditionText.text = "Bluetooth接続しました。"
+        self.messageDisplay.display("Bluetooth接続しました。")
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
     }
@@ -238,7 +242,6 @@ extension ViewController: CBPeripheralDelegate {
                 break
             }
         }
-        self.startUC()
     }
     
     // キャラクタリスティクのデータ更新時の処理
