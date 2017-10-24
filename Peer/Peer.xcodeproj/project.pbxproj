@@ -33,6 +33,8 @@
 		DB1DAF411F9C9C10000F8450 /* MockSpeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF401F9C9C10000F8450 /* MockSpeaker.swift */; };
 		DB1DAF431F9C9C8D000F8450 /* MockWeatherProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF421F9C9C8D000F8450 /* MockWeatherProvider.swift */; };
 		DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF441F9CAA5A000F8450 /* Initializer.swift */; };
+		DB1DAF471F9F6191000F8450 /* MessageDisplayImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF461F9F6191000F8450 /* MessageDisplayImpl.swift */; };
+		DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -67,6 +69,8 @@
 		DB1DAF401F9C9C10000F8450 /* MockSpeaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSpeaker.swift; sourceTree = "<group>"; };
 		DB1DAF421F9C9C8D000F8450 /* MockWeatherProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockWeatherProvider.swift; sourceTree = "<group>"; };
 		DB1DAF441F9CAA5A000F8450 /* Initializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
+		DB1DAF461F9F6191000F8450 /* MessageDisplayImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDisplayImpl.swift; sourceTree = "<group>"; };
+		DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 		DB1DAF351F9C93F1000F8450 /* interface */ = {
 			isa = PBXGroup;
 			children = (
+				DB1DAF461F9F6191000F8450 /* MessageDisplayImpl.swift */,
 				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
 				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
 				DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */,
@@ -103,6 +108,7 @@
 		DB1DAF361F9C9472000F8450 /* domain */ = {
 			isa = PBXGroup;
 			children = (
+				DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */,
 				DB1DAF311F9C4AE0000F8450 /* Color.swift */,
 				DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */,
 				DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */,
@@ -246,6 +252,7 @@
 				DB1DAF341F9C51EB000F8450 /* KeywordSearcher.swift in Sources */,
 				DB1DAF3B1F9C97A6000F8450 /* MockVoiceRecognizer.swift in Sources */,
 				DB1DAF251F98E82A000F8450 /* Location.swift in Sources */,
+				DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				DB1DAF2A1F98E82A000F8450 /* VoiceOrderUseCaseIF.swift in Sources */,
 				DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */,
@@ -264,6 +271,7 @@
 				DB1DAF2F1F98E82A000F8450 /* WeatherProvider.swift in Sources */,
 				DB1DAF2B1F98E82A000F8450 /* VoiceRecognizer.swift in Sources */,
 				DB1DAF261F98E82A000F8450 /* SpeakerImpl.swift in Sources */,
+				DB1DAF471F9F6191000F8450 /* MessageDisplayImpl.swift in Sources */,
 				DB1DAF271F98E82A000F8450 /* VoiceDetector.swift in Sources */,
 				DB1DAF3F1F9C9AAC000F8450 /* MockCurrentLocator.swift in Sources */,
 				DB1DAF301F98E82A000F8450 /* WeatherProviderImpl.swift in Sources */,

@@ -1,14 +1,14 @@
 import UIKit
 
-public class MessageDisplayImpl
+public class MessageDisplayImpl : MessageDisplay
 {
-    private messageText: UILabel!
+    private var messageText : UILabel
     
     init(label: UILabel){
       self.messageText = label
     }
     
-    func display(message: String){
+    public func display(message: String){
       self.messageText.text = message
     }
 } 

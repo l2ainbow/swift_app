@@ -101,14 +101,14 @@ class ViewController: UIViewController {
         
         // 接続中の表示
         self.colorDisplay.display(R: 255, G: 0, B: 0)
-        self.messageDisplay.display("接続中...")
+        self.messageDisplay.display(message: "接続中...")
     }
     
     // Viewの表示完了時の処理
-    override func viewDidAppear() {
-      self.voiceOrderUC.start()
+    override func viewDidAppear(_ animated: Bool) {
+        self.voiceOrderUC.start()
     }
-        
+    
     // 文字列のRGBを1byte整数配列に変換
     func formatRGB(str: String) -> [UInt8]{
         var rgb = ""
@@ -182,7 +182,7 @@ extension ViewController: CBCentralManagerDelegate {
             return
         }
         print("ペリフェラル切断:%@",peripheral.name!)
-        self.messageDisplay.display("Bluetooth接続が切断されました。")
+        self.messageDisplay.display(message: "Bluetooth接続が切断されました。")
         self.colorDisplay.display(R: 255, G: 0, B: 0)
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
@@ -193,7 +193,7 @@ extension ViewController: CBCentralManagerDelegate {
         self.peripheral = peripheral
         centralManager.stopScan()
         self.colorDisplay.display(R: 0, G: 255, B: 0)
-        self.messageDisplay.display("Bluetooth接続しました。")
+        self.messageDisplay.display(message: "Bluetooth接続しました。")
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
     }
@@ -299,7 +299,7 @@ extension ViewController: MCSessionDelegate {
                 break
             case "s":
                 self.speaker.speak(message: val)
-                self.messageDisplay(val)
+                self.messageDisplay.display(message: val)
                 break
             case "c":
                 var bytes = self.formatRGB(str: val)

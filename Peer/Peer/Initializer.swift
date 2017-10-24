@@ -17,7 +17,7 @@ class Initializer {
         let locator = MockCurrentLocator()
         let provider = MockWeatherProvider()
         
-        let weatherInformUC = WeatherInformUseCase(speaker: speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)
+        let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)
         let voiceOrderUseCase = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer, weatherInformUC: weatherInformUC)
         
         return voiceOrderUseCase
