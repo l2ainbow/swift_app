@@ -7,7 +7,25 @@
 //
 
 // 天気
-public enum Weather
+public enum Weather : Int
 {
-    case Clear, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, Others
+    case Clear = 0, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, Others
+    
+    static func all()-> AnySequence<Weather>{
+        return AnySequence{
+            return WeathersGenerator()
+        }
+    }
+    
+    struct WeathersGenerator: IteratorProtocol{
+        var current = 0
+        
+        mutating func next() -> Weather?{
+            guard let item = Weather(rawValue: current) else {
+                return nil
+            }
+            current += 1
+            return item
+        }
+    }
 }
