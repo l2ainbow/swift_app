@@ -6,13 +6,10 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
-public class Location
+public struct Location
 {
+    // 緯度
     let latitude: Double
+    // 経度
     let longitude: Double
-    
-    init(latitude: Double, longitude: Double) {
-        self.latitude = latitude
-        self.longitude = longitude
-    }
 }

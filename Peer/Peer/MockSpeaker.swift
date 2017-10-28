@@ -8,8 +8,8 @@
 
 public class MockSpeaker: Speaker
 {
-    public func speak(message: String)
+    public func speak(voice: String)
     {
-        print("SpeakMessage: " + message)
+        print("SpeakVoice: " + voice)
     }
 }

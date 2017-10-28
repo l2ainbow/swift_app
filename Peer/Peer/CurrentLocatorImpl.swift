@@ -8,6 +8,8 @@
 
 public class CurrentLocatorImpl: CurrentLocator
 {
+    // 現在位置を検出する
+    // -> 現在位置
     public func locate() -> Location?
     {
         return nil

@@ -6,6 +6,7 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
+// 天気
 public enum Weather
 {
     case Clear, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, Others

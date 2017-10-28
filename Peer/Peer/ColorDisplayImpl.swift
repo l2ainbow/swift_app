@@ -21,12 +21,18 @@ public class ColorDisplayImpl: ColorDisplay
         self.ledCharacteristic = characteristic
     }
     
+    // 色を表示する
+    // R: 表示色のR(0-255)
+    // G: 表示色のG(0-255)
+    // B: 表示色のB(0-255)
     public func display(R: UInt8, G: UInt8, B: UInt8)
     {
         displayColorChange(red: R, green: G, blue: B)
         ledColorChange(red: R, green: G, blue: B)
     }
     
+    // 色を表示する
+    // color: 表示色
     public func display(color: Color)
     {
         var rgb : [UInt8]
@@ -57,12 +63,12 @@ public class ColorDisplayImpl: ColorDisplay
         display(R: rgb[0], G: rgb[1], B: rgb[2])
     }
     
-    // ディスプレイの色変更
+    // ディスプレイの色を変更する
     func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
         self.view.backgroundColor = UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1)
     }
 
-    // LEDの色変更
+    // LEDの色を変更する
     func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8){
         if(self.peripheral != nil && self.ledCharacteristic != nil){
             var bytes : [UInt8] = [r, g, b]

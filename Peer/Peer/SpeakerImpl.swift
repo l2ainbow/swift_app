@@ -18,9 +18,11 @@ public class SpeakerImpl: Speaker
     // 音声出力のシンセサイザー
     let synthesizer = AVSpeechSynthesizer()    
 
-    public func speak(message: String)
+    // 音声を出力する
+    // message: 出力音声メッセージ
+    public func speak(voice: String)
     {
-        let utterance = AVSpeechUtterance(string: message)
+        let utterance = AVSpeechUtterance(string: voice)
         utterance.rate = VOICE_RATE
         utterance.pitchMultiplier = VOICE_PITCH
         self.synthesizer.speak(utterance)

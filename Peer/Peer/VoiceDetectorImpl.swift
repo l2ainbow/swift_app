@@ -8,6 +8,8 @@
 
 public class VoiceDetectorImpl: VoiceDetector
 {
+    // 音声を検出する
+    // -> 検出可否(true: 検出した, false: 未検出)
     public func detect() -> Bool
     {
         return false

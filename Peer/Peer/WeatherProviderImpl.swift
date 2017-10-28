@@ -14,6 +14,10 @@ public class WeatherProviderImpl: WeatherProvider
     let OPEN_WEATHER_MAP_URL = "https://api.openweathermap.org/data/2.5/forecast?"
     let API_KEY = "01f33ec55ee44e079c0b1e2b2ec043e4"
     
+    // 天気を問い合わせる
+    // dayAgo: 知りたい日（何日前か）
+    // location: 知りたい場所
+    // -> その日その場所の天気
     public func askWeather(daysAgo: Int, location: Location) -> Weather?
     {
         if (daysAgo > MAX_DAYS){

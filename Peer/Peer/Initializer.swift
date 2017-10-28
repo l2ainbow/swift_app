@@ -6,7 +6,11 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
+// 初期化のためのクラス
 class Initializer {
+    
+    // 初期化を行う
+    // delegate: 初期化する呼び出し元のViewController
     static func initialize(delegate: ViewController){
         delegate.colorDisplay = ColorDisplayImpl(view: delegate.view, peripheral: delegate.peripheral, characteristic: delegate.ledCharacteristic)
         delegate.messageDisplay = MessageDisplayImpl(label: delegate.conditionText)

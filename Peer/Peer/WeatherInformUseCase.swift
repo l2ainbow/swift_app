@@ -10,6 +10,13 @@ import UIKit
 
 public class WeatherInformUseCase
 {
+    private var speaker: Speaker
+    private var colorDisplay: ColorDisplay
+    private var currentLocator: CurrentLocator
+    private var weatherProvider: WeatherProvider
+    private var weather: Weather?
+    private var location: Location?
+
     init(speaker:Speaker , colorDisplay:ColorDisplay , currentLocator:CurrentLocator , weatherProvider:WeatherProvider )
     {
         self.speaker = speaker
@@ -17,19 +24,9 @@ public class WeatherInformUseCase
         self.currentLocator = currentLocator
         self.weatherProvider = weatherProvider
     }
-
-    private var speaker: Speaker
-
-    private var colorDisplay: ColorDisplay
-
-    private var currentLocator: CurrentLocator
-
-    private var weatherProvider: WeatherProvider
-
-    private var weather: Weather?
-
-    private var location: Location?
-
+    
+    // ユースケースを開始する
+    // voiceString: 音声文字列
     public func start(voiceString : String)
     {
         var day = -1
@@ -58,37 +55,43 @@ public class WeatherInformUseCase
         
         let location = currentLocator.locate()
         let weather = weatherProvider.askWeather(daysAgo: day, location: location!)
-        let message = self.getMessage(weather: weather!)
+        let voice = self.getVoice(weather: weather!)
         let color = self.getColor(weather: weather!)
-        speaker.speak(message: message)
+        speaker.speak(voice: voice)
         colorDisplay.display(color: color)
     }
 
-    private func getMessage(weather: Weather) -> String{
-      var message = ""
+    // 出力する音声を取得する
+    // weather: 天気
+    // -> 出力音声文字列
+    private func getVoice(weather: Weather) -> String{
+      var voice = ""
       switch weather {
       case Weather.Clear:
-        message = "晴れどす"
+        voice = "晴れどす"
       case Weather.Cloudy:
-        message = "曇りどす"
+        voice = "曇りどす"
       case Weather.Rain:
-        message = "雨どす"
+        voice = "雨どす"
       case Weather.Snow:
-        message = "雪どす"
+        voice = "雪どす"
       case Weather.Thunderstorm:
-        message = "雷どす"
+        voice = "雷どす"
       case Weather.Drizzle:
-        message = "霧どす"
+        voice = "霧どす"
       case Weather.Tornado:
-        message = "竜巻どす"
+        voice = "竜巻どす"
       case Weather.Others:
-        message = "いろいろどす"
+        voice = "いろいろどす"
       default:
-        message = "不明どす"
+        voice = "不明どす"
       }
-      return message
+      return voice
     }
     
+    // 表示する色を取得する
+    // weather: 天気
+    // -> 表示色
     private func getColor(weather:Weather) -> Color{
       var color: Color = Color.Black
       switch weather {

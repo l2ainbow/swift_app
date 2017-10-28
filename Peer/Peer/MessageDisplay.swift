@@ -8,5 +8,7 @@
 
 public protocol MessageDisplay
 {
+    // メッセージを表示する
+    // message: 表示メッセージ文字列
     func display(message: String)
 }

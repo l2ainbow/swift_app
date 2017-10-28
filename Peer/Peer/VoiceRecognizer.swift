@@ -8,6 +8,7 @@
 
 public protocol VoiceRecognizer
 {
-
+    // 音声を認識する
+    // -> 認識した音声文字列
     func recognize() -> String
 }

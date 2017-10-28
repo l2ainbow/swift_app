@@ -8,6 +8,11 @@
 
 public class VoiceOrderUseCase
 {
+    private var voiceRecognizer: VoiceRecognizer
+    private var voiceDetector: VoiceDetector
+    private var colorDisplay: ColorDisplay
+    private var weatherInformUC: WeatherInformUseCase
+    
     init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, weatherInformUC: WeatherInformUseCase){
         self.colorDisplay = colorDisplay
         self.voiceDetector = voiceDetector
@@ -15,11 +20,8 @@ public class VoiceOrderUseCase
         self.weatherInformUC = weatherInformUC
     }
     
-    private var voiceRecognizer: VoiceRecognizer
-    private var voiceDetector: VoiceDetector
-    private var colorDisplay: ColorDisplay
-    private var weatherInformUC: WeatherInformUseCase
-    
+    // ユースケースを開始する
+    // -> 音声指令
     public func start() -> VoiceOrder
     {
         colorDisplay.display(color: Color.Green)

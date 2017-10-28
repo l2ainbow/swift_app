@@ -298,7 +298,7 @@ extension ViewController: MCSessionDelegate {
                 self.rotateRightMotor(pwm: Int(val)!)
                 break
             case "s":
-                self.speaker.speak(message: val)
+                self.speaker.speak(voice: val)
                 self.messageDisplay.display(message: val)
                 break
             case "c":
