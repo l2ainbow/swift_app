@@ -8,6 +8,6 @@
 
 class MockVoiceRecognizer : VoiceRecognizer{
     func recognize() -> String {
-        return "今日の天気はどうですか"
+        return "弥な明後日の天気はどうですか"
     }
 }

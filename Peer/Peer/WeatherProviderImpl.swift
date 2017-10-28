@@ -79,11 +79,11 @@ public class WeatherProviderImpl: WeatherProvider
             cntWeather.updateValue(0, forKey: w)
         }
         
-        let now = Date()
+        let date = Date(timeIntervalSinceNow: TimeInterval(daysAgo * 24 * 60 * 60))
         let calendar = Calendar(identifier: Calendar.Identifier.japanese)
         for id in weatherIds{
             let weatherDate = Date(timeIntervalSince1970: TimeInterval(id.key))
-            if calendar.isDate(weatherDate, inSameDayAs: now){
+            if calendar.isDate(weatherDate, inSameDayAs: date){
                 let w = convertIdToWeather(id: id.value)
                 cntWeather[w] = cntWeather[w]! + 1
             }
