@@ -24,6 +24,7 @@ public class VoiceOrderUseCase
     // -> 音声指令
     public func start() -> VoiceOrder
     {
+        // TODO: 【外村】必要があればstart()の内容を修正する
         colorDisplay.display(color: Color.Green)
         while(!voiceDetector.detect()){
         }

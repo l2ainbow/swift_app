@@ -12,6 +12,7 @@ public class VoiceDetectorImpl: VoiceDetector
     // -> 検出可否(true: 検出した, false: 未検出)
     public func detect() -> Bool
     {
+        // TODO: 【外村】ここを実装する
         return false
     }
 }

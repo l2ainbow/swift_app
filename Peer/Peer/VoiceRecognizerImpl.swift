@@ -12,6 +12,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     // -> 認識した音声文字列
     public func recognize() -> String
     {
+        // TODO: 【外村】ここを実装する
         return ""
     }
 }

@@ -16,10 +16,12 @@ class Initializer {
         delegate.messageDisplay = MessageDisplayImpl(label: delegate.conditionText)
         delegate.speaker = SpeakerImpl()
         
+        // TODO: 【外村】VoiceDetectorImplをテストする際に、以下のMockVoiceDetectorをVoiceDetectorImplに変える
         let voiceDetector = MockVoiceDetector()
+        // TODO: 【外村】VoiceRecognizerImplをテストする際に、以下のMockVoiceRecognizerをVoiceRecognizerImplに変える
         let voiceRecognizer = MockVoiceRecognizer()
         let locator = MockCurrentLocator()
-        let provider = WeatherProviderImpl()
+        let provider = MockWeatherProvider()
         
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)
         let voiceOrderUseCase = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer, weatherInformUC: weatherInformUC)
