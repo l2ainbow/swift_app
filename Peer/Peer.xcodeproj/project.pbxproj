@@ -100,6 +100,7 @@
 				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
 				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
 				DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */,
+				DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */,
 				DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */,
 				DB1DAF1C1F98E82A000F8450 /* VoiceRecognizerImpl.swift */,
 				DB1DAF201F98E82A000F8450 /* WeatherProviderImpl.swift */,
@@ -123,7 +124,6 @@
 				DB1DAF1D1F98E82A000F8450 /* Weather.swift */,
 				DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */,
 				DB1DAF1F1F98E82A000F8450 /* WeatherProvider.swift */,
-				DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */,
 				DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */,
 			);
 			name = domain;

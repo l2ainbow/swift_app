@@ -11,13 +11,11 @@ public class VoiceOrderUseCase
     private var voiceRecognizer: VoiceRecognizer
     private var voiceDetector: VoiceDetector
     private var colorDisplay: ColorDisplay
-    private var weatherInformUC: WeatherInformUseCase
     
-    init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, weatherInformUC: WeatherInformUseCase){
+    init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer){
         self.colorDisplay = colorDisplay
         self.voiceDetector = voiceDetector
         self.voiceRecognizer = voiceRecognizer
-        self.weatherInformUC = weatherInformUC
     }
     
     // ユースケースを開始する
