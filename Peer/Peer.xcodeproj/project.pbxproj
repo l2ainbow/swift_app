@@ -147,7 +147,6 @@
 			children = (
 				F98954E31F21315200B24DC0 /* AppDelegate.swift */,
 				F98954E51F21315200B24DC0 /* ViewController.swift */,
-				DB1DAF441F9CAA5A000F8450 /* Initializer.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -171,6 +170,7 @@
 		F98954E21F21315200B24DC0 /* Peer */ = {
 			isa = PBXGroup;
 			children = (
+				DB1DAF441F9CAA5A000F8450 /* Initializer.swift */,
 				DB1DAF4A1F9F7BAA000F8450 /* view */,
 				DB1DAF351F9C93F1000F8450 /* interface */,
 				DB1DAF361F9C9472000F8450 /* domain */,
