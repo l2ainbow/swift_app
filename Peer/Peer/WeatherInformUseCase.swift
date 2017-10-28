@@ -1,10 +1,15 @@
-// ˅
+//
+//  WeatherInformUseCase.swift
+//  Peer
+//
+//  Created by Yu Iijima on 2017/10/22.
+//  Copyright © 2017年 Shingo. All rights reserved.
+//
+
 import UIKit
-// ˄
 
 public class WeatherInformUseCase
 {
-    // ˅
     init(speaker:Speaker , colorDisplay:ColorDisplay , currentLocator:CurrentLocator , weatherProvider:WeatherProvider )
     {
         self.speaker = speaker
@@ -12,7 +17,6 @@ public class WeatherInformUseCase
         self.currentLocator = currentLocator
         self.weatherProvider = weatherProvider
     }
-    // ˄
 
     private var speaker: Speaker
 
@@ -28,14 +32,12 @@ public class WeatherInformUseCase
 
     public func start(daysAgo: Int)
     {
-        // ˅
         let location = currentLocator.locate()
         let weather = weatherProvider.askWeather(daysAgo: daysAgo, location: location!)
         let message = self.getMessage(weather: weather!)
         let color = self.getColor(weather: weather!)
         speaker.speak(message: message)
         colorDisplay.display(color: color)
-        // ˄
     }
     
     public func start()
@@ -43,7 +45,6 @@ public class WeatherInformUseCase
       start(daysAgo: 0)
     }
 
-    // ˅
     private func getMessage(weather: Weather) -> String{
       var message = ""
       switch weather {
@@ -93,9 +94,4 @@ public class WeatherInformUseCase
       }
       return color
     }
-    // ˄
 }
-
-// ˅
-
-// ˄

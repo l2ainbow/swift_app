@@ -1,17 +1,19 @@
-// ˅
-
-// ˄
+//
+//  VoiceOrderUseCase.swift
+//  Peer
+//
+//  Created by Yu Iijima on 2017/10/22.
+//  Copyright © 2017年 Shingo. All rights reserved.
+//
 
 public class VoiceOrderUseCase
 {
-    // ˅
     init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, weatherInformUC: WeatherInformUseCase){
         self.colorDisplay = colorDisplay
         self.voiceDetector = voiceDetector
         self.voiceRecognizer = voiceRecognizer
         self.weatherInformUC = weatherInformUC
     }
-    // ˄
     
     private var voiceRecognizer: VoiceRecognizer
     private var voiceDetector: VoiceDetector
@@ -20,7 +22,6 @@ public class VoiceOrderUseCase
     
     public func start()
     {
-        // ˅
         colorDisplay.display(color: Color.Green)
         while(!voiceDetector.detect()){
         }
@@ -58,14 +59,5 @@ public class VoiceOrderUseCase
                 weatherInformUC.start()
             }
         }
-        // ˄
     }
-    
-    // ˅
-    
-    // ˄
 }
-
-// ˅
-
-// ˄

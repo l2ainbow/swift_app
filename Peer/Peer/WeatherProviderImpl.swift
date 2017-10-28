@@ -1,3 +1,13 @@
+//
+//  WeatherProviderImpl.swift
+//  Peer
+//
+//  Created by Yu Iijima on 2017/10/22.
+//  Copyright © 2017年 Shingo. All rights reserved.
+//
+
+import Foundation
+
 public class WeatherProviderImpl: WeatherProvider
 {
     let MAX_DAYS = 5
