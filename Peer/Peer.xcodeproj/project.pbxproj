@@ -34,6 +34,8 @@
 		DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF441F9CAA5A000F8450 /* Initializer.swift */; };
 		DB1DAF471F9F6191000F8450 /* MessageDisplayImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF461F9F6191000F8450 /* MessageDisplayImpl.swift */; };
 		DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */; };
+		DB1DAF4C1FA43284000F8450 /* UseCaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */; };
+		DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -69,6 +71,8 @@
 		DB1DAF441F9CAA5A000F8450 /* Initializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
 		DB1DAF461F9F6191000F8450 /* MessageDisplayImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDisplayImpl.swift; sourceTree = "<group>"; };
 		DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
+		DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseController.swift; sourceTree = "<group>"; };
+		DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceOrder.swift; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				DB1DAF1D1F98E82A000F8450 /* Weather.swift */,
 				DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */,
 				DB1DAF1F1F98E82A000F8450 /* WeatherProvider.swift */,
+				DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */,
+				DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */,
 			);
 			name = domain;
 			sourceTree = "<group>";
@@ -260,6 +266,7 @@
 				DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */,
+				DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */,
 				DB1DAF281F98E82A000F8450 /* VoiceDetectorImpl.swift in Sources */,
 				DB1DAF291F98E82A000F8450 /* VoiceOrderUseCase.swift in Sources */,
 				DB1DAF211F98E82A000F8450 /* ColorDisplay.swift in Sources */,
@@ -270,6 +277,7 @@
 				DB1DAF431F9C9C8D000F8450 /* MockWeatherProvider.swift in Sources */,
 				DB1DAF2C1F98E82A000F8450 /* VoiceRecognizerImpl.swift in Sources */,
 				DB1DAF241F98E82A000F8450 /* CurrentLocatorImpl.swift in Sources */,
+				DB1DAF4C1FA43284000F8450 /* UseCaseController.swift in Sources */,
 				DB1DAF3D1F9C99B0000F8450 /* MockColorDisplay.swift in Sources */,
 				DB1DAF321F9C4AE0000F8450 /* Color.swift in Sources */,
 				DB1DAF2F1F98E82A000F8450 /* WeatherProvider.swift in Sources */,

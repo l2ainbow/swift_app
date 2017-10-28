@@ -7,7 +7,7 @@
 //
 
 class Initializer {
-    static func initialize(delegate: ViewController) -> VoiceOrderUseCase{
+    static func initialize(delegate: ViewController){
         delegate.colorDisplay = ColorDisplayImpl(view: delegate.view, peripheral: delegate.peripheral, characteristic: delegate.ledCharacteristic)
         delegate.messageDisplay = MessageDisplayImpl(label: delegate.conditionText)
         delegate.speaker = SpeakerImpl()
@@ -20,6 +20,6 @@ class Initializer {
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)
         let voiceOrderUseCase = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer, weatherInformUC: weatherInformUC)
         
-        return voiceOrderUseCase
+        delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUseCase, weatherInformUC: weatherInformUC)
     }
 }

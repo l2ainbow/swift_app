@@ -67,8 +67,8 @@ class ViewController: UIViewController {
     // メッセージ表示
     var messageDisplay: MessageDisplay!
     
-    // 音声指令ユースケース
-    var voiceOrderUC: VoiceOrderUseCase!
+    // ユースケース制御
+    var useCaseController: UseCaseController!
 
     // 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
         
         // ユースケースの初期化
-        self.voiceOrderUC = Initializer.initialize(delegate: self)
+        Initializer.initialize(delegate: self)
         
         // 接続中の表示
         self.colorDisplay.display(R: 255, G: 0, B: 0)
@@ -106,7 +106,7 @@ class ViewController: UIViewController {
     
     // Viewの表示完了時の処理
     override func viewDidAppear(_ animated: Bool) {
-        self.voiceOrderUC.start()
+        self.useCaseController.listenVoiceOrder()
     }
     
     // 文字列のRGBを1byte整数配列に変換
