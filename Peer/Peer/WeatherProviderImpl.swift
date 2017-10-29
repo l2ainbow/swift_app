@@ -11,17 +11,18 @@ import Dispatch
 
 public class WeatherProviderImpl: WeatherProvider
 {
+    // 天気取得可能な最大日数（何日後までか）
     let MAX_DAYS = 5
     let OPEN_WEATHER_MAP_URL = "https://api.openweathermap.org/data/2.5/forecast?"
     let API_KEY = "01f33ec55ee44e079c0b1e2b2ec043e4"
     
     // 天気を問い合わせる
-    // dayAgo: 知りたい日（何日前か）
+    // dayAgo: 知りたい日（何日後か）
     // location: 知りたい場所
-    // -> その日その場所の天気
-    public func askWeather(daysAgo: Int, location: Location) -> Weather?
+    // -> 知りたい日知りたい場所の天気
+    public func askWeather(daysLater: Int, location: Location) -> Weather?
     {
-        if (daysAgo > MAX_DAYS){
+        if (daysLater > MAX_DAYS){
             return nil
         }
         let urlStr = OPEN_WEATHER_MAP_URL + "lat=" + String(location.latitude) + "&lon=" + String(location.longitude) + "&APPID=" + API_KEY
@@ -41,11 +42,14 @@ public class WeatherProviderImpl: WeatherProvider
         semaphore.wait()
         
         let ids = parse(json: json)
-        let weather = getWeather(daysAgo: daysAgo, weatherIds: ids)
+        let weather = getWeather(daysLater: daysLater, weatherIds: ids)
         
         return weather
     }
     
+    // JSONを解析する
+    // json: JSON文字列
+    // -> (key = UNIX時刻, value = 天気ID)のDictionary型
     private func parse(json: Any?) -> Dictionary<Int, Int>{
         var weatherIds : Dictionary<Int, Int> = [:]
         if let root = json as?[String: Any]{
@@ -70,7 +74,11 @@ public class WeatherProviderImpl: WeatherProvider
         return weatherIds
     }
     
-    private func getWeather(daysAgo: Int, weatherIds: Dictionary<Int, Int>) -> Weather{
+    // 天気を取得する
+    // daysLater: 知りたい日（何日後か）
+    // weatherIds: (key = UNIX時刻, value = 天気ID)のDictionary型
+    // -> 知りたい日の天気
+    private func getWeather(daysLater: Int, weatherIds: Dictionary<Int, Int>) -> Weather{
         var weather = Weather.Others
         
         var cntWeather = Dictionary<Weather, Int>()
@@ -79,7 +87,7 @@ public class WeatherProviderImpl: WeatherProvider
             cntWeather.updateValue(0, forKey: w)
         }
         
-        let date = Date(timeIntervalSinceNow: TimeInterval(daysAgo * 24 * 60 * 60))
+        let date = Date(timeIntervalSinceNow: TimeInterval(daysLater * 24 * 60 * 60))
         let calendar = Calendar(identifier: Calendar.Identifier.japanese)
         for id in weatherIds{
             let weatherDate = Date(timeIntervalSince1970: TimeInterval(id.key))
@@ -100,6 +108,9 @@ public class WeatherProviderImpl: WeatherProvider
         return weather
     }
     
+    // 天気IDを天気に変換する
+    // id: 天気ID
+    // -> 天気
     private func convertIdToWeather(id: Int) -> Weather{
         var weather : Weather
         let group = Int(id/100)

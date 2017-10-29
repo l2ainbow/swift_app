@@ -9,8 +9,8 @@
 public protocol WeatherProvider
 {
     // 天気を問い合わせる
-    // dayAgo: 知りたい日（何日前か）
+    // daysLater: 知りたい日（何日前か）
     // location: 知りたい場所
     // -> その日その場所の天気
-    func askWeather(daysAgo: Int, location: Location) -> Weather?
+    func askWeather(daysLater: Int, location: Location) -> Weather?
 }

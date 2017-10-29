@@ -29,36 +29,39 @@ public class WeatherInformUseCase
     // voiceString: 音声文字列
     public func start(voiceString : String)
     {
-        var day = -1
-        if (KeywordSearcher.search(string: voiceString, keywords: ["今日", "本日"])){
-            day = 0
-        }
-        else if (KeywordSearcher.search(string: voiceString, keywords: ["一日後", "明日"])){
-            day = 1
-        }
-        else if (KeywordSearcher.search(string: voiceString, keywords: ["二日後", "明後日"])){
-            day = 2
-        }
-        else if (KeywordSearcher.search(string: voiceString, keywords: ["三日後", "明々後日"])){
-            day = 3
-        }
-        else if (KeywordSearcher.search(string: voiceString, keywords: ["四日後", "弥な明後日", "弥明後日"])){
-            day = 4
-        }
-        else if (KeywordSearcher.search(string: voiceString, keywords: ["五日後"])){
-            day = 5
-        }
-        
-        if (day < 0){
-            day = 0
-        }
-        
+        let day = self.getDay(string: voiceString)
         let location = currentLocator.locate()
-        let weather = weatherProvider.askWeather(daysAgo: day, location: location!)
+        let weather = weatherProvider.askWeather(daysLater: day, location: location!)
         let voice = self.getVoice(weather: weather!)
         let color = self.getColor(weather: weather!)
         speaker.speak(voice: voice)
         colorDisplay.display(color: color)
+    }
+    
+    // 天気を知りたい日を取得する
+    // string: 音声文字列
+    // -> 天気を知りたい日（何日後か）
+    private func getDay(string: String) -> Int{
+        var day = 0
+        if (KeywordSearcher.search(string: string, keywords: ["今日", "本日"])){
+            day = 0
+        }
+        else if (KeywordSearcher.search(string: string, keywords: ["一日後", "明日"])){
+            day = 1
+        }
+        else if (KeywordSearcher.search(string: string, keywords: ["二日後", "明後日"])){
+            day = 2
+        }
+        else if (KeywordSearcher.search(string: string, keywords: ["三日後", "明々後日"])){
+            day = 3
+        }
+        else if (KeywordSearcher.search(string: string, keywords: ["四日後", "弥な明後日", "弥明後日"])){
+            day = 4
+        }
+        else if (KeywordSearcher.search(string: string, keywords: ["五日後"])){
+            day = 5
+        }
+        return day
     }
 
     // 出力する音声を取得する

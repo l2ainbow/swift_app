@@ -11,13 +11,15 @@ public enum Weather : Int
 {
     case Clear = 0, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, Others
     
+    // 天気を全て取得する
+    // -> 全ての天気
     static func all()-> AnySequence<Weather>{
         return AnySequence{
             return WeathersGenerator()
         }
     }
     
-    struct WeathersGenerator: IteratorProtocol{
+    private struct WeathersGenerator: IteratorProtocol{
         var current = 0
         
         mutating func next() -> Weather?{
