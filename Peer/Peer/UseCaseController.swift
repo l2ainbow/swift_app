@@ -15,7 +15,7 @@ public class UseCaseController {
         self.weatherInformUC = weatherInformUC
     }
     
-    // 音声指令を待ち受ける
+    /// 音声指令を待ち受ける
     func listenVoiceOrder(){
         let order = voiceOrderUC.start()
         if (order.order == "WeatherInform"){

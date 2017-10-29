@@ -11,15 +11,18 @@ import Dispatch
 
 public class WeatherProviderImpl: WeatherProvider
 {
-    // 天気取得可能な最大日数（何日後までか）
+    /// 天気取得可能な最大日数（何日後までか）
     let MAX_DAYS = 5
+    /// OpenWeatherMapのURL
     let OPEN_WEATHER_MAP_URL = "https://api.openweathermap.org/data/2.5/forecast?"
+    /// APIキー
     let API_KEY = "01f33ec55ee44e079c0b1e2b2ec043e4"
     
-    // 天気を問い合わせる
-    // dayAgo: 知りたい日（何日後か）
-    // location: 知りたい場所
-    // -> 知りたい日知りたい場所の天気
+    /// 天気を問い合わせる
+    /// - Parameters:
+    ///   - daysLater: 知りたい日（何日後か）
+    ///   - location: 知りたい場所
+    /// - Returns: 知りたい日知りたい場所の天気
     public func askWeather(daysLater: Int, location: Location) -> Weather?
     {
         if (daysLater > MAX_DAYS){
@@ -47,9 +50,9 @@ public class WeatherProviderImpl: WeatherProvider
         return weather
     }
     
-    // JSONを解析する
-    // json: JSON文字列
-    // -> (key = UNIX時刻, value = 天気ID)のDictionary型
+    /// JSONを解析する
+    /// - Parameter json: JSON文字列
+    /// - Returns: (key = UNIX時刻, value = 天気ID)のDictionary型
     private func parse(json: Any?) -> Dictionary<Int, Int>{
         var weatherIds : Dictionary<Int, Int> = [:]
         if let root = json as?[String: Any]{
@@ -74,10 +77,11 @@ public class WeatherProviderImpl: WeatherProvider
         return weatherIds
     }
     
-    // 天気を取得する
-    // daysLater: 知りたい日（何日後か）
-    // weatherIds: (key = UNIX時刻, value = 天気ID)のDictionary型
-    // -> 知りたい日の天気
+    /// 天気を取得する
+    /// - Parameters:
+    ///   - daysLater: 知りたい日（何日後か）
+    ///   - weatherIds: (key = UNIX時刻, value = 天気ID)のDictionary型
+    /// - Returns: 知りたい日の天気
     private func getWeather(daysLater: Int, weatherIds: Dictionary<Int, Int>) -> Weather{
         var weather = Weather.Others
         
@@ -108,9 +112,9 @@ public class WeatherProviderImpl: WeatherProvider
         return weather
     }
     
-    // 天気IDを天気に変換する
-    // id: 天気ID
-    // -> 天気
+    /// 天気IDを天気に変換する
+    /// - Parameter id: 天気ID
+    /// - Returns: 天気
     private func convertIdToWeather(id: Int) -> Weather{
         var weather : Weather
         let group = Int(id/100)

@@ -25,8 +25,8 @@ public class WeatherInformUseCase
         self.weatherProvider = weatherProvider
     }
     
-    // ユースケースを開始する
-    // voiceString: 音声文字列
+    /// ユースケースを開始する
+    /// - Parameter voiceString: 音声文字列
     public func start(voiceString : String)
     {
         let day = self.getDay(string: voiceString)
@@ -38,9 +38,9 @@ public class WeatherInformUseCase
         colorDisplay.display(color: color)
     }
     
-    // 天気を知りたい日を取得する
-    // string: 音声文字列
-    // -> 天気を知りたい日（何日後か）
+    /// 天気を知りたい日を取得する
+    /// - Parameter string: 音声文字列
+    /// - Returns: 天気を知りたい日（何日後か）
     private func getDay(string: String) -> Int{
         var day = 0
         if (KeywordSearcher.search(string: string, keywords: ["今日", "本日"])){
@@ -64,9 +64,9 @@ public class WeatherInformUseCase
         return day
     }
 
-    // 出力する音声を取得する
-    // weather: 天気
-    // -> 出力音声文字列
+    /// 出力する音声を取得する
+    /// - Parameter weather: 天気
+    /// - Returns: 出力音声文字列
     private func getVoice(weather: Weather) -> String{
       var voice = ""
       switch weather {
@@ -92,9 +92,9 @@ public class WeatherInformUseCase
       return voice
     }
     
-    // 表示する色を取得する
-    // weather: 天気
-    // -> 表示色
+    /// 表示する色を取得する
+    /// - Parameter weather: 天気
+    /// - Returns: 表示色
     private func getColor(weather:Weather) -> Color{
       var color: Color = Color.Black
       switch weather {

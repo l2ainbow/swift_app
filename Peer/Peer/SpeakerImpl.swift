@@ -10,16 +10,16 @@ import AVFoundation
 
 public class SpeakerImpl: Speaker
 {
-    // 音声の速度(0.1-1.0)
+    /// 音声の速度(0.1-1.0)
     let VOICE_RATE = Float(0.5)
-    // 音声の高さ(0.5-2.0)
+    /// 音声の高さ(0.5-2.0)
     let VOICE_PITCH = Float(1.3)
     
-    // 音声出力のシンセサイザー
+    /// 音声出力のシンセサイザー
     let synthesizer = AVSpeechSynthesizer()    
 
-    // 音声を出力する
-    // message: 出力音声メッセージ
+    /// 音声を出力する
+    /// - Parameter voice: 出力音声メッセージ
     public func speak(voice: String)
     {
         let utterance = AVSpeechUtterance(string: voice)

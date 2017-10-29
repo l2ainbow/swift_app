@@ -8,9 +8,8 @@
 
 public protocol Speaker
 {
-    
-    // 音声を出力する
-    // message: 出力音声メッセージ
+    /// 音声を出力する
+    /// - Parameter voice: 出力音声メッセージ
     func speak(voice: String)
 }
 

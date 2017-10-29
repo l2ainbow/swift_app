@@ -8,8 +8,8 @@
 
 public struct Location
 {
-    // 緯度
+    /// 緯度
     let latitude: Double
-    // 経度
+    /// 経度
     let longitude: Double
 }

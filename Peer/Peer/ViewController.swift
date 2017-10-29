@@ -11,70 +11,69 @@ import MultipeerConnectivity
 import CoreBluetooth
 
 class ViewController: UIViewController {
-    /** 構造体 **/
-    // キャラクタリスティックの構造体
+    //-- 構造体 --//
+    /// キャラクタリスティックの構造体
     struct Characteristic{
-        // UUID
+        /// UUID
         let uuid: CBUUID
-        // キャラクタリスティック名
+        /// キャラクタリスティック名
         let name: String
-        // 送受信データのバイト数
+        /// 送受信データのバイト数
         let byte: Int
     }
     
-    /** 定数 **/
-    // P2P通信のサービス名
+    //-- 定数 --//
+    /// P2P通信のサービス名
     let SERVICE_TYPE = "LCOC-Chat"
     
-    // BLE UUID
+    /// BLE UUID
     let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
-    // 使用するキャラクタリスティックの配列
+    /// 使用するキャラクタリスティックの配列
     let CHAR_UUIDs:[String:Characteristic] = [
         "leftMotor":Characteristic(uuid: CBUUID(string: "6C680001-F374-4D39-9FD8-A7DBB54CD6EB"), name: "leftMotor", byte: 4),
         "rightMotor":Characteristic(uuid: CBUUID(string: "6C680002-F374-4D39-9FD8-A7DBB54CD6EB"), name: "rightMotor", byte: 4),
         "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
     ]
     
-    /** 変数 **/
-    // MultiConnectivity関連
-    // MultiConnectivityのViewController
+    //-- 変数 --//
+    // <MultiConnectivity関連>
+    /// MultiConnectivityのViewController
     var browser : MCBrowserViewController!
-    // アドバタイズのアシスタント
+    /// アドバタイズのアシスタント
     var assistant : MCAdvertiserAssistant!
-    // セッション
+    /// セッション
     var session : MCSession!
-    // 接続先のID
+    /// 接続先のID
     var peerID: MCPeerID!
     
-    // Bluetooth関連
-    // セントラルの管理
+    // <Bluetooth関連>
+    /// セントラルの管理
     var centralManager: CBCentralManager!
-    // ペリフェラル
+    /// ペリフェラル
     var peripheral: CBPeripheral!
-    // 左モータを表すキャラクタリスティック
+    /// 左モータを表すキャラクタリスティック
     var leftMotorCharacteristic : CBCharacteristic?
-    // 右モータを表すキャラクタリスティック
+    /// 右モータを表すキャラクタリスティック
     var rightMotorCharacteristic : CBCharacteristic?
-    // LEDを表すキャラクタリスティック
+    /// LEDを表すキャラクタリスティック
     var ledCharacteristic : CBCharacteristic?
     
-    // 音声スピーカー
-    var speaker : Speaker!
-    
-    // カラー表示
-    var colorDisplay : ColorDisplay!
-    
-    // メッセージ表示
-    var messageDisplay: MessageDisplay!
-    
-    // ユースケース制御
-    var useCaseController: UseCaseController!
-
-    // 状態を表すテキスト
+    // <UI関連>
+    /// 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
     
-    /** メソッド **/
-    // Viewの読込完了時の処理
+    // <その他>
+    /// 音声スピーカー
+    var speaker : Speaker!
+    /// カラー表示
+    var colorDisplay : ColorDisplay!
+    /// メッセージ表示
+    var messageDisplay: MessageDisplay!
+    /// ユースケース制御
+    var useCaseController: UseCaseController!
+
+    //-- メソッド --//
+    /// Viewの読込完了時の処理
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,12 +103,14 @@ class ViewController: UIViewController {
         self.messageDisplay.display(message: "接続中...")
     }
     
-    // Viewの表示完了時の処理
+    /// Viewの表示完了時の処理
     override func viewDidAppear(_ animated: Bool) {
         self.useCaseController.listenVoiceOrder()
     }
     
-    // 文字列のRGBを1byte整数配列に変換
+    /// 文字列のRGBを1byte整数配列に変換する
+    /// - Parameter str: RGB文字列
+    /// - Returns: RGB(0-255)の配列
     func formatRGB(str: String) -> [UInt8]{
         var rgb = ""
         var subStr = str
@@ -135,7 +136,8 @@ class ViewController: UIViewController {
         return rgbData
     }
     
-    // 左モータの回転
+    /// 左モータを回転する
+    /// - Parameter pwm: 左モータのPWM
     func rotateLeftMotor(pwm: Int){
         let data = String(pwm).data(using: .utf8)!
         if (self.peripheral != nil){
@@ -143,7 +145,8 @@ class ViewController: UIViewController {
         }
     }
     
-    // 右モータの回転
+    /// 右モータを回転する
+    /// - Parameter pwm: 右モータのPWM
     func rotateRightMotor(pwm: Int){
         let data = String(pwm).data(using: .utf8)!
         if (self.peripheral != nil){
@@ -155,7 +158,7 @@ class ViewController: UIViewController {
 
 // MARK:- CBCentralManagerからのコールバック
 extension ViewController: CBCentralManagerDelegate {
-    // Bluetooth状態遷移時の処理
+    /// Bluetooth状態遷移時の処理
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state{
         case .poweredOn:
@@ -166,7 +169,7 @@ extension ViewController: CBCentralManagerDelegate {
         }
     }
     
-    // Peripheral発見時の処理
+    /// Peripheral発見時の処理
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.peripheral = peripheral
         // print("ペリフェラル発見:%@",peripheral.name!)
@@ -175,7 +178,7 @@ extension ViewController: CBCentralManagerDelegate {
         central.connect(peripheral, options: nil)
     }
     
-    // Peripheralとの接続切断時の処理
+    /// Peripheralとの接続切断時の処理
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if (error != nil){
             print("Peripheral切断時エラー:%@", error!)
@@ -187,7 +190,7 @@ extension ViewController: CBCentralManagerDelegate {
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
     
-    // Periphralとの接続時の処理
+    /// Periphralとの接続時の処理
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // print("ペリフェラルとの接続成功:%@",peripheral.name!)
         self.peripheral = peripheral
@@ -201,7 +204,7 @@ extension ViewController: CBCentralManagerDelegate {
 
 // MARK:- CBPeripheralからのコールバック
 extension ViewController: CBPeripheralDelegate {
-    // サービス発見時の処理
+    /// サービス発見時の処理
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if (error != nil){
             print("サービス発見時エラー:%@", error!)
@@ -211,7 +214,7 @@ extension ViewController: CBPeripheralDelegate {
         peripheral.discoverCharacteristics([], for: (peripheral.services?.first)!)
     }
     
-    // キャラクタリスティック発見時の処理
+    /// キャラクタリスティック発見時の処理
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if (error != nil){
             print("キャラクタリスティック発見時エラー:%@", error!)
@@ -244,7 +247,7 @@ extension ViewController: CBPeripheralDelegate {
         }
     }
     
-    // キャラクタリスティクのデータ更新時の処理
+    /// キャラクタリスティクのデータ更新時の処理
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if (error != nil){
             print("データ更新エラー:%@", error!)
@@ -255,7 +258,7 @@ extension ViewController: CBPeripheralDelegate {
 
 // MARK:- MCBrowserViewControllerからのコールバック
 extension ViewController: MCBrowserViewControllerDelegate {
-    // P2P通信接続完了時の処理
+    /// P2P通信接続完了時の処理
     func browserViewControllerDidFinish(
         _ browserViewController: MCBrowserViewController)  {
         // Called when the browser view controller is dismissed (ie the Done
@@ -264,7 +267,7 @@ extension ViewController: MCBrowserViewControllerDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // P2P通信接続キャンセル時の処理
+    /// P2P通信接続キャンセル時の処理
     func browserViewControllerWasCancelled(
         _ browserViewController: MCBrowserViewController)  {
         // Called when the browser view controller is cancelled
@@ -276,7 +279,7 @@ extension ViewController: MCBrowserViewControllerDelegate {
 // MARK:- MCSessionからのコールバック
 extension ViewController: MCSessionDelegate {
     
-    // P2P通信にて相手からNSDataが送られてきたとき(sendメソッドによりおくられる)
+    /// P2P通信にて相手からNSDataが送られてきたとき(sendメソッドによりおくられる)
     func session(_ session: MCSession, didReceive data: Data,
                  fromPeer peerID: MCPeerID)  {
         
@@ -312,7 +315,7 @@ extension ViewController: MCSessionDelegate {
         
     }
     
-    // P2P通信にてピアからファイル受信開始した時の処理
+    /// P2P通信にてピアからファイル受信開始した時の処理
     func session(_ session: MCSession,
                  didStartReceivingResourceWithName resourceName: String,
                  fromPeer peerID: MCPeerID, with progress: Progress)  {
@@ -320,7 +323,7 @@ extension ViewController: MCSessionDelegate {
         // 何もしない
     }
     
-    // P2P通信にてピアからファイル受信完了した時の処理
+    /// P2P通信にてピアからファイル受信完了した時の処理
     func session(_ session: MCSession,
                  didFinishReceivingResourceWithName resourceName: String,
                  fromPeer peerID: MCPeerID,
@@ -328,13 +331,13 @@ extension ViewController: MCSessionDelegate {
         // 何もしない
     }
     
-    // P2P通信にてピアからストリーム受信した時の処理
+    /// P2P通信にてピアからストリーム受信した時の処理
     func session(_ session: MCSession, didReceive stream: InputStream,
                  withName streamName: String, fromPeer peerID: MCPeerID)  {
         // 何もしない
     }
     
-    // P2P通信にてピアの状態が変化した時の処理
+    /// P2P通信にてピアの状態が変化した時の処理
     func session(_ session: MCSession, peer peerID: MCPeerID,
                  didChange state: MCSessionState)  {
         // 何もしない

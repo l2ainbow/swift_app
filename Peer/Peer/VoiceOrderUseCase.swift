@@ -18,8 +18,8 @@ public class VoiceOrderUseCase
         self.voiceRecognizer = voiceRecognizer
     }
     
-    // ユースケースを開始する
-    // -> 音声指令
+    /// ユースケースを開始する
+    /// - Returns: 音声指令
     public func start() -> VoiceOrder
     {
         // TODO: 【外村】必要があればstart()の内容を修正する

@@ -10,15 +10,15 @@ import UIKit
 
 public class MessageDisplayImpl : MessageDisplay
 {
-    // メッセージを表示するためのテキストラベル
+    /// メッセージを表示するためのテキストラベル
     private var messageText : UILabel
     
     init(label: UILabel){
       self.messageText = label
     }
     
-    // メッセージを表示する
-    // message: 表示メッセージ文字列
+    /// メッセージを表示する
+    /// - Parameter message: 表示メッセージ文字列
     public func display(message: String){
       self.messageText.text = message
     }

@@ -8,9 +8,8 @@
 
 public struct VoiceOrder {
     
-    // 音声指令
+    /// 音声指令
     var order : String
-    
-    // 音声文字列
+    /// 音声文字列
     var voiceString : String
 }

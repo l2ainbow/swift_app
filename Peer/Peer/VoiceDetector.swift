@@ -8,7 +8,7 @@
 
 public protocol VoiceDetector
 {
-    // 音声を検出する
-    // -> 検出可否(true: 検出した, false: 未検出)
+    /// 音声を検出する
+    /// - Returns: 検出可否(true: 検出した, false: 未検出)
     func detect() -> Bool
 }
