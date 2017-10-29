@@ -20,7 +20,8 @@ class Initializer {
         let voiceDetector = MockVoiceDetector()
         // TODO: 【外村】VoiceRecognizerImplをテストする際に、以下のMockVoiceRecognizerをVoiceRecognizerImplに変える
         let voiceRecognizer = MockVoiceRecognizer()
-        let locator = MockCurrentLocator()
+        //let locator = MockCurrentLocator()
+        let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()
         
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)

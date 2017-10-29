@@ -10,5 +10,5 @@ public protocol CurrentLocator
 {
     /// 現在位置を検出する
     /// - Returns: 現在位置
-    func locate() -> Location?
+    func locate() -> Location
 }

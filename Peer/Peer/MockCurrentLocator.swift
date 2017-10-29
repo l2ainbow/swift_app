@@ -8,7 +8,7 @@
 
 public class MockCurrentLocator: CurrentLocator
 {
-    public func locate() -> Location?
+    public func locate() -> Location
     {
         let loc = Location(latitude: 36.407107, longitude: 140.446383)
         return loc

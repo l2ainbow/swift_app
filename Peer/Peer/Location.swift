@@ -9,7 +9,7 @@
 public struct Location
 {
     /// 緯度
-    let latitude: Double
+    var latitude: Double
     /// 経度
-    let longitude: Double
+    var longitude: Double
 }

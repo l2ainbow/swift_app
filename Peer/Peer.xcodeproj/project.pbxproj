@@ -36,6 +36,7 @@
 		DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */; };
 		DB1DAF4C1FA43284000F8450 /* UseCaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */; };
 		DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */; };
+		DB1DAF511FA56D16000F8450 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1DAF501FA56D16000F8450 /* CoreLocation.framework */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -73,6 +74,7 @@
 		DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseController.swift; sourceTree = "<group>"; };
 		DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceOrder.swift; sourceTree = "<group>"; };
+		DB1DAF501FA56D16000F8450 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB1DAF511FA56D16000F8450 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,11 +154,20 @@
 			name = view;
 			sourceTree = "<group>";
 		};
+		DB1DAF4F1FA56D16000F8450 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB1DAF501FA56D16000F8450 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F98954D71F21315200B24DC0 = {
 			isa = PBXGroup;
 			children = (
 				F98954E21F21315200B24DC0 /* Peer */,
 				F98954E11F21315200B24DC0 /* Products */,
+				DB1DAF4F1FA56D16000F8450 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

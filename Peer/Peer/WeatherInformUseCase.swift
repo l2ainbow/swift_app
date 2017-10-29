@@ -31,7 +31,7 @@ public class WeatherInformUseCase
     {
         let day = self.getDay(string: voiceString)
         let location = currentLocator.locate()
-        let weather = weatherProvider.askWeather(daysLater: day, location: location!)
+        let weather = weatherProvider.askWeather(daysLater: day, location: location)
         let voice = self.getVoice(weather: weather!)
         let color = self.getColor(weather: weather!)
         speaker.speak(voice: voice)

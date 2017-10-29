@@ -36,7 +36,6 @@ public class WeatherProviderImpl: WeatherProvider
         let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, error in
             if let data = data {
                 json = try? JSONSerialization.jsonObject(with: data, options: [])
-                print(json!)
             }
             semaphore.signal()
         })
