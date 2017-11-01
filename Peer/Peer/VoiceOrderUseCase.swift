@@ -24,7 +24,14 @@ public class VoiceOrderUseCase
     {
         // TODO: 【外村】必要があればstart()の内容を修正する
         colorDisplay.display(color: Color.Green)
-        while(!voiceDetector.detect()){
+        print("\n")
+        print("=============start============")
+        print("\n")
+        if(voiceDetector.detect()){
+            print("\n")
+            print("=============detect===========")
+            print("\n")
+            
         }
         
         colorDisplay.display(color: Color.Yellow)
