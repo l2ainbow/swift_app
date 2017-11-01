@@ -34,12 +34,9 @@ public class VoiceDetectorImpl: VoiceDetector
     public func detect() -> Bool
     {
         // TODO: 【外村】ここを実装する
+        
         self.startUpdatingVolume()
-        if (!self.isDetect) {
-            
-            stopUpdatingVolume()
-            
-        }
+        
         return self.isDetect
 
     }
@@ -79,7 +76,7 @@ public class VoiceDetectorImpl: VoiceDetector
         var enabledLevelMeter: UInt32 = 1
         AudioQueueSetProperty(self.queue, kAudioQueueProperty_EnableLevelMetering, &enabledLevelMeter, UInt32(MemoryLayout<UInt32>.size))
         
-        self.timer = Timer.scheduledTimer(timeInterval: 0.5,
+        self.timer = Timer.scheduledTimer(timeInterval: 10,
                                           target: self,
                                           selector: #selector(VoiceDetectorImpl.detectVolume(_:)),
                                           userInfo: nil,
@@ -111,12 +108,13 @@ public class VoiceDetectorImpl: VoiceDetector
         if (levelMeter.mPeakPower >= -10.0) {
             
             self.isDetect = true
+            print("===========detect============")
             self.stopUpdatingVolume()
             
         } else {
             
             self.isDetect = false
-            self.startUpdatingVolume()
+        
         }
         
     }

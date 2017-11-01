@@ -27,12 +27,9 @@ public class VoiceOrderUseCase
         print("\n")
         print("=============start============")
         print("\n")
-        if(voiceDetector.detect()){
-            print("\n")
-            print("=============detect===========")
-            print("\n")
+        
+        voiceDetector.detect()
             
-        }
         
         colorDisplay.display(color: Color.Yellow)
         

@@ -324,7 +324,7 @@ extension ViewController: MCSessionDelegate {
     func session(_ session: MCSession,
                  didFinishReceivingResourceWithName resourceName: String,
                  fromPeer peerID: MCPeerID,
-                 at localURL: URL, withError error: Error?)  {
+                 at localURL: URL?, withError error: Error?)  {
         // 何もしない
     }
     
