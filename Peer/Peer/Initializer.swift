@@ -23,10 +23,13 @@ class Initializer {
         //let locator = MockCurrentLocator()
         let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()
+        let runner = MockRunner()
+        let follower = Follower(runner: runner)
         
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)
         let voiceOrderUC = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer)
+        let followMasterUC = FollowMasterUseCase(colorDisplay: delegate.colorDisplay, masterRecognizer: MockMasterRecognizer(), follower: follower)
         
-        delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUC, weatherInformUC: weatherInformUC)
+        delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUC, weatherInformUC: weatherInformUC, followMasterUC: followMasterUC)
     }
 }

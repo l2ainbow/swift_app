@@ -6,13 +6,16 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
-public class MockMasterRecognizer
+import Foundation
+
+public class MockMasterRecognizer: MasterRecognizer
 {
     /// マスターの位置を認識する
     /// - Returns: マスターの位置
-    func recognize() -> Position {
+    public func recognize() -> Position {
         let distance = Double(arc4random_uniform(100)) / 100.0 * 5.0
-        let angle = Double(arc4random_uniform(360)) / 180.0 * PI - PI
-        return Postion(distance, angle)
+        
+        let angle = Double(arc4random_uniform(360)) / 180.0 * Double.pi - Double.pi
+        return Position(distance: distance, angle: angle)
     }
 }

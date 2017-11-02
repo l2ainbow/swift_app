@@ -9,12 +9,12 @@
 public class UseCaseController {
     private var voiceOrderUC: VoiceOrderUseCase!
     private var weatherInformUC: WeatherInformUseCase!
-    private var masterFollowUC: MasterFollowUseCase!
+    private var followMasterUC: FollowMasterUseCase!
     
-    init(voiceOrderUC: VoiceOrderUseCase, weatherInformUC: WeatherInformUseCase, masterFollowUC: MasterFollowUseCase){
+    init(voiceOrderUC: VoiceOrderUseCase, weatherInformUC: WeatherInformUseCase, followMasterUC: FollowMasterUseCase){
         self.voiceOrderUC = voiceOrderUC
         self.weatherInformUC = weatherInformUC
-        self.masterFollowUC = masterFollowUC
+        self.followMasterUC = followMasterUC
     }
     
     /// 音声指令を待ち受ける
@@ -24,7 +24,7 @@ public class UseCaseController {
             weatherInformUC.start(voiceString: order.voiceString)
         }
         else if(order.order == "MasterFollow"){
-            masterFollowUC.start()
+            followMasterUC.start()
         }
     }
 }

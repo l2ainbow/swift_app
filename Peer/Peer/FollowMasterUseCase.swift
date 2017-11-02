@@ -13,7 +13,7 @@ public class FollowMasterUseCase
     private var colorDisplay: ColorDisplay
     
     init (colorDisplay: ColorDisplay, masterRecognizer: MasterRecognizer, follower: Follower){
-        self.masterRecognizer = recognizer
+        self.masterRecognizer = masterRecognizer
         self.follower = follower
         self.colorDisplay = colorDisplay
     }
@@ -22,9 +22,10 @@ public class FollowMasterUseCase
     public func start()
     {
         colorDisplay.display(color: Color.Blue)
-        do{
-          let position = masterRecognizer.recognize()
+        var position = Position(distance: 0, angle: 0)
+        repeat{
+            position = masterRecognizer.recognize()
         }
-        while(follower.follow(position))
+        while(follower.follow(position: position))
     }
 }

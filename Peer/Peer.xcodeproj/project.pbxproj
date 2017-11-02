@@ -10,7 +10,6 @@
 		DB1DAF101F937058000F8450 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF0F1F937058000F8450 /* Speaker.swift */; };
 		DB1DAF211F98E82A000F8450 /* ColorDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */; };
 		DB1DAF221F98E82A000F8450 /* ColorDisplayImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */; };
-		DB1DAF231F98E82A000F8450 /* CurrentLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */; };
 		DB1DAF241F98E82A000F8450 /* CurrentLocatorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */; };
 		DB1DAF251F98E82A000F8450 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF151F98E82A000F8450 /* Location.swift */; };
 		DB1DAF261F98E82A000F8450 /* SpeakerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */; };
@@ -37,6 +36,14 @@
 		DB1DAF4C1FA43284000F8450 /* UseCaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */; };
 		DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */; };
 		DB1DAF511FA56D16000F8450 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1DAF501FA56D16000F8450 /* CoreLocation.framework */; };
+		DBD944F01FABD42A0040CA49 /* CurrentLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */; };
+		DBD944F81FABD44E0040CA49 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F11FABD44E0040CA49 /* Follower.swift */; };
+		DBD944F91FABD44E0040CA49 /* FollowMasterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */; };
+		DBD944FA1FABD44E0040CA49 /* MasterRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F31FABD44E0040CA49 /* MasterRecognizer.swift */; };
+		DBD944FB1FABD44E0040CA49 /* MockMasterRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F41FABD44E0040CA49 /* MockMasterRecognizer.swift */; };
+		DBD944FC1FABD44E0040CA49 /* MockRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F51FABD44E0040CA49 /* MockRunner.swift */; };
+		DBD944FD1FABD44E0040CA49 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F61FABD44E0040CA49 /* Position.swift */; };
+		DBD944FE1FABD44E0040CA49 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F71FABD44E0040CA49 /* Runner.swift */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -48,7 +55,6 @@
 		DB1DAF0F1F937058000F8450 /* Speaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
 		DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDisplay.swift; sourceTree = "<group>"; };
 		DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDisplayImpl.swift; sourceTree = "<group>"; };
-		DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentLocator.swift; sourceTree = "<group>"; };
 		DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentLocatorImpl.swift; sourceTree = "<group>"; };
 		DB1DAF151F98E82A000F8450 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeakerImpl.swift; sourceTree = "<group>"; };
@@ -75,6 +81,14 @@
 		DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseController.swift; sourceTree = "<group>"; };
 		DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceOrder.swift; sourceTree = "<group>"; };
 		DB1DAF501FA56D16000F8450 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentLocator.swift; sourceTree = "<group>"; };
+		DBD944F11FABD44E0040CA49 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
+		DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowMasterUseCase.swift; sourceTree = "<group>"; };
+		DBD944F31FABD44E0040CA49 /* MasterRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterRecognizer.swift; sourceTree = "<group>"; };
+		DBD944F41FABD44E0040CA49 /* MockMasterRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMasterRecognizer.swift; sourceTree = "<group>"; };
+		DBD944F51FABD44E0040CA49 /* MockRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRunner.swift; sourceTree = "<group>"; };
+		DBD944F61FABD44E0040CA49 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		DBD944F71FABD44E0040CA49 /* Runner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,20 +128,25 @@
 		DB1DAF361F9C9472000F8450 /* domain */ = {
 			isa = PBXGroup;
 			children = (
-				DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */,
 				DB1DAF311F9C4AE0000F8450 /* Color.swift */,
 				DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */,
-				DB1DAF131F98E82A000F8450 /* CurrentLocator.swift */,
+				DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */,
+				DBD944F11FABD44E0040CA49 /* Follower.swift */,
+				DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */,
 				DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */,
 				DB1DAF151F98E82A000F8450 /* Location.swift */,
+				DBD944F31FABD44E0040CA49 /* MasterRecognizer.swift */,
+				DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */,
+				DBD944F71FABD44E0040CA49 /* Runner.swift */,
 				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
+				DBD944F61FABD44E0040CA49 /* Position.swift */,
 				DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */,
 				DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */,
+				DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */,
 				DB1DAF1B1F98E82A000F8450 /* VoiceRecognizer.swift */,
 				DB1DAF1D1F98E82A000F8450 /* Weather.swift */,
 				DB1DAF1E1F98E82A000F8450 /* WeatherInformUseCase.swift */,
 				DB1DAF1F1F98E82A000F8450 /* WeatherProvider.swift */,
-				DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */,
 			);
 			name = domain;
 			sourceTree = "<group>";
@@ -135,6 +154,8 @@
 		DB1DAF371F9C969D000F8450 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				DBD944F41FABD44E0040CA49 /* MockMasterRecognizer.swift */,
+				DBD944F51FABD44E0040CA49 /* MockRunner.swift */,
 				DB1DAF381F9C9712000F8450 /* MockVoiceDetector.swift */,
 				DB1DAF3A1F9C97A6000F8450 /* MockVoiceRecognizer.swift */,
 				DB1DAF3C1F9C99B0000F8450 /* MockColorDisplay.swift */,
@@ -270,7 +291,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1DAF391F9C9712000F8450 /* MockVoiceDetector.swift in Sources */,
-				DB1DAF231F98E82A000F8450 /* CurrentLocator.swift in Sources */,
+				DBD944FE1FABD44E0040CA49 /* Runner.swift in Sources */,
+				DBD944F91FABD44E0040CA49 /* FollowMasterUseCase.swift in Sources */,
 				DB1DAF101F937058000F8450 /* Speaker.swift in Sources */,
 				DB1DAF341F9C51EB000F8450 /* KeywordSearcher.swift in Sources */,
 				DB1DAF3B1F9C97A6000F8450 /* MockVoiceRecognizer.swift in Sources */,
@@ -280,14 +302,19 @@
 				DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */,
 				DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */,
 				DB1DAF281F98E82A000F8450 /* VoiceDetectorImpl.swift in Sources */,
+				DBD944FA1FABD44E0040CA49 /* MasterRecognizer.swift in Sources */,
 				DB1DAF291F98E82A000F8450 /* VoiceOrderUseCase.swift in Sources */,
 				DB1DAF211F98E82A000F8450 /* ColorDisplay.swift in Sources */,
 				DB1DAF2E1F98E82A000F8450 /* WeatherInformUseCase.swift in Sources */,
+				DBD944FB1FABD44E0040CA49 /* MockMasterRecognizer.swift in Sources */,
 				DB1DAF2D1F98E82A000F8450 /* Weather.swift in Sources */,
+				DBD944FD1FABD44E0040CA49 /* Position.swift in Sources */,
 				DB1DAF411F9C9C10000F8450 /* MockSpeaker.swift in Sources */,
 				F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */,
 				DB1DAF431F9C9C8D000F8450 /* MockWeatherProvider.swift in Sources */,
 				DB1DAF2C1F98E82A000F8450 /* VoiceRecognizerImpl.swift in Sources */,
+				DBD944F01FABD42A0040CA49 /* CurrentLocator.swift in Sources */,
+				DBD944F81FABD44E0040CA49 /* Follower.swift in Sources */,
 				DB1DAF241F98E82A000F8450 /* CurrentLocatorImpl.swift in Sources */,
 				DB1DAF4C1FA43284000F8450 /* UseCaseController.swift in Sources */,
 				DB1DAF3D1F9C99B0000F8450 /* MockColorDisplay.swift in Sources */,
@@ -300,6 +327,7 @@
 				DB1DAF3F1F9C9AAC000F8450 /* MockCurrentLocator.swift in Sources */,
 				DB1DAF301F98E82A000F8450 /* WeatherProviderImpl.swift in Sources */,
 				DB1DAF221F98E82A000F8450 /* ColorDisplayImpl.swift in Sources */,
+				DBD944FC1FABD44E0040CA49 /* MockRunner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
