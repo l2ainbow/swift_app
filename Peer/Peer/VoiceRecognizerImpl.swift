@@ -5,14 +5,119 @@
 //  Created by Yu Iijima on 2017/10/22.
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
-
+import Speech
 public class VoiceRecognizerImpl: VoiceRecognizer
 {
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
+    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    private var recognitionTask: SFSpeechRecognitionTask?
+    private let audioEngine = AVAudioEngine()
+    private var text: String = ""
+    
     // 音声を認識する
     // -> 認識した音声文字列
     public func recognize() -> String
     {
         // TODO: 【外村】ここを実装する
-        return ""
+        print("==recognize() start")
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            
+        } else {
+            try! self.startRecording()
+        }
+        
+        
+        return self.text
     }
+    
+    func startRecording() throws {
+        print("start recognize")
+        // self.speechRecognizer.delegate
+        // Cancel the previous task if it's running.
+        if let recognitionTask = recognitionTask {
+            recognitionTask.cancel()
+            self.recognitionTask = nil
+        }
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        try audioSession.setCategory(AVAudioSessionCategoryRecord)
+        try audioSession.setMode(AVAudioSessionModeMeasurement)
+        try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
+        
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        
+        guard let inputNode : AVAudioInputNode = audioEngine.inputNode else {fatalError("Audio engine has no input node")}
+        
+        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object") }
+
+        // Configure request so that results are returned before audio recording is finished
+        recognitionRequest.shouldReportPartialResults = true
+        print("===before recognize")
+        // A recognition task represents a speech recognition session.
+        // We keep a reference to the task so that it can be cancelled.
+        recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
+            var isFinal = false
+            
+            if let result = result {
+                
+                print("recording")
+                self.text = result.bestTranscription.formattedString
+                print("===\(self.text)")
+                self.audioEngine.stop()
+                recognitionRequest.endAudio()
+                isFinal = result.isFinal
+                
+                
+            } else {
+                
+                print("====result else")
+                self.audioEngine.stop()
+                recognitionRequest.endAudio()
+                
+            }
+            
+            if error != nil || isFinal {
+                self.audioEngine.stop()
+                inputNode.removeTap(onBus: 0)
+                self.recognitionRequest = nil
+                self.recognitionTask = nil
+                
+                
+            }
+
+//            self.stopUpdatingVolume()
+//            self.startUpdatingVolume()
+        }
+        
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+            self.recognitionRequest?.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        
+        try audioEngine.start()
+        
+        
+    }
+    
+
+    public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+
+        if (available) {
+
+            print("=====available")
+
+        }else {
+
+            print("=====not available")
+
+        }
+
+    }
+    
 }
+
+
+
