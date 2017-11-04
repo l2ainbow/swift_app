@@ -34,7 +34,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     func startRecording() throws {
         print("start recognize")
         // self.speechRecognizer.delegate
-        // Cancel the previous task if it's running.
+        
         if let recognitionTask = recognitionTask {
             recognitionTask.cancel()
             self.recognitionTask = nil
@@ -50,17 +50,15 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         guard let inputNode : AVAudioInputNode = audioEngine.inputNode else {fatalError("Audio engine has no input node")}
         
         guard let recognitionRequest = recognitionRequest else { fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object") }
-
-        // Configure request so that results are returned before audio recording is finished
+        
         recognitionRequest.shouldReportPartialResults = true
-        print("===before recognize")
-        // A recognition task represents a speech recognition session.
-        // We keep a reference to the task so that it can be cancelled.
+        
+        /* 音声認識スタート */
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
             var isFinal = false
             
             if let result = result {
-                
+                /* ここで文字列を処理 */
                 print("recording")
                 self.text = result.bestTranscription.formattedString
                 print("===\(self.text)")
@@ -85,9 +83,9 @@ public class VoiceRecognizerImpl: VoiceRecognizer
                 
                 
             }
-
-//            self.stopUpdatingVolume()
-//            self.startUpdatingVolume()
+            
+            //            self.stopUpdatingVolume()
+            //            self.startUpdatingVolume()
         }
         
         let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -102,19 +100,19 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         
     }
     
-
+    
     public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
-
+        
         if (available) {
-
+            
             print("=====available")
-
+            
         }else {
-
+            
             print("=====not available")
-
+            
         }
-
+        
     }
     
 }
