@@ -16,19 +16,24 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     
     // 音声を認識する
     // -> 認識した音声文字列
-    public func recognize() -> String
+    public func recognize()
     {
         // TODO: 【外村】ここを実装する
-        if audioEngine.isRunning {
+        if (audioEngine.isRunning) {
             audioEngine.stop()
-            
-        } else {
-            try! self.startRecording()
+            recognitionRequest?.endAudio()
         }
         
-        return self.text
+        try! self.startRecording()
+        
     }
     
+    public func getText() -> String{
+        var result: String = self.text
+        self.text = "===return"
+        return result
+        
+    }
     func startRecording() throws {
         
         if let recognitionTask = recognitionTask {
@@ -47,42 +52,41 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         
         guard let recognitionRequest = recognitionRequest else { fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object") }
         
-        recognitionRequest.shouldReportPartialResults = true
+        //recognitionRequest.shouldReportPartialResults = true
         
         /* 音声認識スタート */
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
             var isFinal = false
-            
+
             if let result = result {
                 /* ここで文字列を処理 */
+                
                 self.text = result.bestTranscription.formattedString
-                
-                print("====\(self.text)")
-                
+                //print("====\(self.text)")
+
                 self.audioEngine.stop()
                 recognitionRequest.endAudio()
                 isFinal = result.isFinal
-                
-                
+
+
             } else {
-                
+
                 print("====result else")
                 self.audioEngine.stop()
                 recognitionRequest.endAudio()
-                
+
             }
-           
+
             if error != nil || isFinal {
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
-                
-                
+
+
             }
-           
-            print("\(self.text)")
-           
+
+
         }
         
         let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -94,23 +98,8 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         
         try audioEngine.start()
         
-        
     }
     
-    
-    public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
-        
-        if (available) {
-            
-            print("=====available")
-            
-        }else {
-            
-            print("=====not available")
-            
-        }
-        
-    }
     
 }
 

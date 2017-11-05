@@ -7,7 +7,10 @@
 //
 
 class MockVoiceRecognizer : VoiceRecognizer{
-    func recognize() -> String {
+    func recognize() {
+
+    }
+    func getText() -> String {
         return "今日の天気はどうですか"
     }
 }
