@@ -36,6 +36,7 @@
 		DB1DAF4C1FA43284000F8450 /* UseCaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */; };
 		DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */; };
 		DB1DAF511FA56D16000F8450 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1DAF501FA56D16000F8450 /* CoreLocation.framework */; };
+		DB2F6AD81FAECDAB00FCCFDC /* MasterRecognizerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F6AD71FAECDAB00FCCFDC /* MasterRecognizerImpl.swift */; };
 		DB41213D1FAEB098001D97D2 /* RunnerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */; };
 		DB41213F1FAEB19C001D97D2 /* Motor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41213E1FAEB19C001D97D2 /* Motor.swift */; };
 		DBD944F01FABD42A0040CA49 /* CurrentLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */; };
@@ -83,6 +84,7 @@
 		DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseController.swift; sourceTree = "<group>"; };
 		DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceOrder.swift; sourceTree = "<group>"; };
 		DB1DAF501FA56D16000F8450 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		DB2F6AD71FAECDAB00FCCFDC /* MasterRecognizerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterRecognizerImpl.swift; sourceTree = "<group>"; };
 		DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerImpl.swift; sourceTree = "<group>"; };
 		DB41213E1FAEB19C001D97D2 /* Motor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Motor.swift; sourceTree = "<group>"; };
 		DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentLocator.swift; sourceTree = "<group>"; };
@@ -117,16 +119,17 @@
 		DB1DAF351F9C93F1000F8450 /* interface */ = {
 			isa = PBXGroup;
 			children = (
-				DB1DAF461F9F6191000F8450 /* MessageDisplayImpl.swift */,
 				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
 				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
+				DB2F6AD71FAECDAB00FCCFDC /* MasterRecognizerImpl.swift */,
+				DB1DAF461F9F6191000F8450 /* MessageDisplayImpl.swift */,
+				DB41213E1FAEB19C001D97D2 /* Motor.swift */,
 				DB1DAF161F98E82A000F8450 /* SpeakerImpl.swift */,
 				DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */,
 				DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */,
 				DB1DAF1C1F98E82A000F8450 /* VoiceRecognizerImpl.swift */,
 				DB1DAF201F98E82A000F8450 /* WeatherProviderImpl.swift */,
 				DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */,
-				DB41213E1FAEB19C001D97D2 /* Motor.swift */,
 			);
 			name = interface;
 			sourceTree = "<group>";
@@ -143,9 +146,9 @@
 				DB1DAF151F98E82A000F8450 /* Location.swift */,
 				DBD944F31FABD44E0040CA49 /* MasterRecognizer.swift */,
 				DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */,
+				DBD944F61FABD44E0040CA49 /* Position.swift */,
 				DBD944F71FABD44E0040CA49 /* Runner.swift */,
 				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
-				DBD944F61FABD44E0040CA49 /* Position.swift */,
 				DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */,
 				DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */,
 				DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */,
@@ -160,13 +163,13 @@
 		DB1DAF371F9C969D000F8450 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				DBD944F41FABD44E0040CA49 /* MockMasterRecognizer.swift */,
-				DBD944F51FABD44E0040CA49 /* MockRunner.swift */,
-				DB1DAF381F9C9712000F8450 /* MockVoiceDetector.swift */,
-				DB1DAF3A1F9C97A6000F8450 /* MockVoiceRecognizer.swift */,
 				DB1DAF3C1F9C99B0000F8450 /* MockColorDisplay.swift */,
 				DB1DAF3E1F9C9AAC000F8450 /* MockCurrentLocator.swift */,
+				DBD944F41FABD44E0040CA49 /* MockMasterRecognizer.swift */,
+				DBD944F51FABD44E0040CA49 /* MockRunner.swift */,
 				DB1DAF401F9C9C10000F8450 /* MockSpeaker.swift */,
+				DB1DAF381F9C9712000F8450 /* MockVoiceDetector.swift */,
+				DB1DAF3A1F9C97A6000F8450 /* MockVoiceRecognizer.swift */,
 				DB1DAF421F9C9C8D000F8450 /* MockWeatherProvider.swift */,
 			);
 			name = test;
@@ -297,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1DAF391F9C9712000F8450 /* MockVoiceDetector.swift in Sources */,
+				DB2F6AD81FAECDAB00FCCFDC /* MasterRecognizerImpl.swift in Sources */,
 				DBD944FE1FABD44E0040CA49 /* Runner.swift in Sources */,
 				DBD944F91FABD44E0040CA49 /* FollowMasterUseCase.swift in Sources */,
 				DB1DAF101F937058000F8450 /* Speaker.swift in Sources */,

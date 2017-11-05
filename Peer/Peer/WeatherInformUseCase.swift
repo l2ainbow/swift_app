@@ -6,8 +6,6 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
-import UIKit
-
 public class WeatherInformUseCase
 {
     private var speaker: Speaker

@@ -10,10 +10,14 @@ import Foundation
 
 public class Follower
 {
-    let MIN_DISTANCE_TO_FOLLOW = 0.5 // [m]
-    let MIN_ANGLE_TO_SPIN = Double.pi / 2 // [rad]
-    let MAX_ANGLE_TO_GO_STRAIGHT	 = Double.pi / 12 // [rad]
-    let TIME_TO_STOP_FOLLOWING = 5 // [s]
+    /// 追走を行う最小距離 [m]
+    let MIN_DISTANCE_TO_FOLLOW = 0.5
+    /// 旋回する最小角度 [rad]
+    let MIN_ANGLE_TO_SPIN = Double.pi / 2
+    /// 前進する最大角度 [rad]
+    let MAX_ANGLE_TO_GO_STRAIGHT	 = Double.pi / 12
+    /// 停止を続けた場合に追走をやめる時間 [s]
+    let TIME_TO_STOP_FOLLOWING = 5
 
     private var runner: Runner
     
@@ -52,6 +56,11 @@ public class Follower
         return true
     }
     
+    /// 上限時間を過ぎているか確認する
+    /// - Parameters:
+    ///   - startDate: 開始時刻
+    ///   - limit: 上限時間 [s]
+    /// - Returns: 上限時間を過ぎているか(true: 過ぎている、false: 過ぎていない)
     private func isOver(startDate: Date, limit: Int) -> Bool{
         print(Date())
         return Date().addingTimeInterval(TimeInterval(-limit)) > startDate

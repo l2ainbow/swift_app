@@ -10,7 +10,9 @@ import Foundation
 
 public class MockMasterRecognizer: MasterRecognizer
 {
-    private let CONTROL_CYCLE = 0.5 // [s]
+    /// 制御周期 [s]
+    private let CONTROL_CYCLE = 0.5
+    
     private var cnt = 0;
     
     /// マスターの位置を認識する
@@ -27,6 +29,8 @@ public class MockMasterRecognizer: MasterRecognizer
         return pos
     }
     
+    /// ランダムに位置を取得する
+    /// - Returns: マスターの位置
     private func randomPosition() -> Position{
         let distance = Double(arc4random_uniform(100)) / 100.0 * 5.0
         let angle = Double(arc4random_uniform(360)) / 180.0 * Double.pi - Double.pi
