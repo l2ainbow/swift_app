@@ -102,20 +102,11 @@ class ViewController: UIViewController {
         
         // ユースケースの初期化
         Initializer.initialize(delegate: self)
-        
-        // 接続中の表示
-        self.colorDisplay.display(R: 255, G: 0, B: 0)
-        self.messageDisplay.display(message: "接続中...")
     }
     
     /// Viewの表示完了時の処理
     override func viewDidAppear(_ animated: Bool) {
-        let queue = DispatchQueue(label: "useCaseController.listenVoiceOrder")
-        queue.async{
-            while(true){
-                self.useCaseController.listenVoiceOrder()
-            }
-        }
+        self.useCaseController.listenVoiceOrder()
     }
     
     /// 文字列のRGBを1byte整数配列に変換する
@@ -176,8 +167,6 @@ extension ViewController: CBCentralManagerDelegate {
             return
         }
         print("ペリフェラル切断:%@",peripheral.name!)
-        self.messageDisplay.display(message: "Bluetooth接続が切断されました。")
-        self.colorDisplay.display(R: 255, G: 0, B: 0)
         centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
     }
     
@@ -186,8 +175,6 @@ extension ViewController: CBCentralManagerDelegate {
         // print("ペリフェラルとの接続成功:%@",peripheral.name!)
         self.peripheral = peripheral
         centralManager.stopScan()
-        self.colorDisplay.display(R: 0, G: 255, B: 0)
-        self.messageDisplay.display(message: "Bluetooth接続しました。")
         peripheral.delegate = self
         peripheral.discoverServices([SERVICE_UUID])
     }
