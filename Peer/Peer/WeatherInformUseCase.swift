@@ -6,21 +6,28 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
+import Foundation
+
 public class WeatherInformUseCase
 {
+    /// 天気予報を伝える際のスリープ時間 [s]
+    private let SLEEPING_TIME = 3
+    
     private var speaker: Speaker
     private var colorDisplay: ColorDisplay
     private var currentLocator: CurrentLocator
     private var weatherProvider: WeatherProvider
+    private var messageDisplay: MessageDisplay
     private var weather: Weather?
     private var location: Location?
 
-    init(speaker:Speaker , colorDisplay:ColorDisplay , currentLocator:CurrentLocator , weatherProvider:WeatherProvider )
+    init(speaker:Speaker , colorDisplay:ColorDisplay , currentLocator:CurrentLocator , weatherProvider:WeatherProvider, messageDisplay:MessageDisplay )
     {
         self.speaker = speaker
         self.colorDisplay = colorDisplay
         self.currentLocator = currentLocator
         self.weatherProvider = weatherProvider
+        self.messageDisplay = messageDisplay
     }
     
     /// ユースケースを開始する
@@ -32,8 +39,11 @@ public class WeatherInformUseCase
         let weather = weatherProvider.askWeather(daysLater: day, location: location)
         let voice = self.getVoice(weather: weather!)
         let color = self.getColor(weather: weather!)
+        let message = self.getMessage(weather: weather!)
         speaker.speak(voice: voice)
         colorDisplay.display(color: color)
+        messageDisplay.display(message: message)
+        Thread.sleep(forTimeInterval: TimeInterval(SLEEPING_TIME))
     }
     
     /// 天気を知りたい日を取得する
@@ -117,4 +127,33 @@ public class WeatherInformUseCase
       }
       return color
     }
+    
+    /// 表示するメッセージを取得する
+    /// - Parameter weather: 天気
+    /// - Returns: 表示メッセージ
+    private func getMessage(weather: Weather) -> String{
+        var message = ""
+        switch weather {
+        case Weather.Clear:
+            message += "晴れ"
+        case Weather.Cloudy:
+            message += "曇り"
+        case Weather.Rain:
+            message += "雨"
+        case Weather.Snow:
+            message += "雪"
+        case Weather.Thunderstorm:
+            message += "雷"
+        case Weather.Drizzle:
+            message += "霧"
+        case Weather.Tornado:
+            message += "竜巻"
+        case Weather.Others:
+            message += "いろいろ"
+        default:
+            message += "不明"
+        }
+        return message
+    }
+
 }
