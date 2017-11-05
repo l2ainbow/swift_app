@@ -36,6 +36,7 @@ public class Follower
             runner.stop()
             if (isStopping){
                 if(self.isOver(startDate: startDate, limit: TIME_TO_STOP_FOLLOWING)){
+                    isStopping = false
                     return false
                 }
             }

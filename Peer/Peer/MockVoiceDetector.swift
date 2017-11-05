@@ -6,8 +6,11 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
+import Foundation
+
 class MockVoiceDetector : VoiceDetector{
     func detect() -> Bool {
+        Thread.sleep(forTimeInterval: 1)
         return true;
     }
 }

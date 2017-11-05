@@ -23,6 +23,9 @@ public class MockMasterRecognizer: MasterRecognizer
         if (cnt < 5){
             pos = randomPosition()
         }
+        if (cnt == 10){
+            cnt = 0
+        }
         let deg = pos.angle * 180 / Double.pi
         print("distance=\(pos.distance), angle=\(pos.angle)(\(deg)deg))")
         cnt += 1

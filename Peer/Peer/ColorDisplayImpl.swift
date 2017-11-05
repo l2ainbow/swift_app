@@ -28,7 +28,14 @@ public class ColorDisplayImpl: ColorDisplay
     ///   - B: 表示色のB(0-255)
     public func display(R: UInt8, G: UInt8, B: UInt8)
     {
-        displayColorChange(red: R, green: G, blue: B)
+        if (Thread.isMainThread){
+            displayColorChange(red: R, green: G, blue: B)
+        }
+        else{
+            DispatchQueue.main.async {
+                self.displayColorChange(red: R, green: G, blue: B)
+            }
+        }
         ledColorChange(red: R, green: G, blue: B)
     }
     

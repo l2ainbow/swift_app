@@ -30,7 +30,7 @@ class Initializer {
         let follower = Follower(runner: runner)
         
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)
-        let voiceOrderUC = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer)
+        let voiceOrderUC = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer, messageDisplay: delegate.messageDisplay)
         let followMasterUC = FollowMasterUseCase(colorDisplay: delegate.colorDisplay, masterRecognizer: masterRecognizer, follower: follower, messageDisplay: delegate.messageDisplay)
         
         delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUC, weatherInformUC: weatherInformUC, followMasterUC: followMasterUC)

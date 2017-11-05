@@ -9,6 +9,7 @@
 import UIKit
 import MultipeerConnectivity
 import CoreBluetooth
+import Foundation
 
 class ViewController: UIViewController {
     //-- 構造体 --//
@@ -109,7 +110,12 @@ class ViewController: UIViewController {
     
     /// Viewの表示完了時の処理
     override func viewDidAppear(_ animated: Bool) {
-        self.useCaseController.listenVoiceOrder()
+        let queue = DispatchQueue(label: "useCaseController.listenVoiceOrder")
+        queue.async{
+            while(true){
+                self.useCaseController.listenVoiceOrder()
+            }
+        }
     }
     
     /// 文字列のRGBを1byte整数配列に変換する

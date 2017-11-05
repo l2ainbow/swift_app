@@ -11,11 +11,13 @@ public class VoiceOrderUseCase
     private var voiceRecognizer: VoiceRecognizer
     private var voiceDetector: VoiceDetector
     private var colorDisplay: ColorDisplay
+    private var messageDisplay: MessageDisplay
     
-    init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer){
+    init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, messageDisplay: MessageDisplay){
         self.colorDisplay = colorDisplay
         self.voiceDetector = voiceDetector
         self.voiceRecognizer = voiceRecognizer
+        self.messageDisplay = messageDisplay
     }
     
     /// ユースケースを開始する
@@ -24,10 +26,12 @@ public class VoiceOrderUseCase
     {
         // TODO: 【外村】必要があればstart()の内容を修正する
         colorDisplay.display(color: Color.Green)
+        messageDisplay.display(message: "音声検出中...")
         while(!voiceDetector.detect()){
         }
         
         colorDisplay.display(color: Color.Yellow)
+        messageDisplay.display(message: "音声認識中...")
         
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
         order.voiceString = voiceRecognizer.recognize()
