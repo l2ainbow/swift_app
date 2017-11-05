@@ -17,7 +17,7 @@ class Initializer {
         delegate.speaker = SpeakerImpl()
         
         // TODO: 【外村】VoiceDetectorImplをテストする際に、以下のMockVoiceDetectorをVoiceDetectorImplに変える
-        let voiceDetector = MockVoiceDetector()
+        let voiceDetector = VoiceDetectorImpl()
         // TODO: 【外村】VoiceRecognizerImplをテストする際に、以下のMockVoiceRecognizerをVoiceRecognizerImplに変える
         let voiceRecognizer = VoiceRecognizerImpl()
         let locator = MockCurrentLocator()

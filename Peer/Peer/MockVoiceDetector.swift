@@ -7,7 +7,11 @@
 //
 
 class MockVoiceDetector : VoiceDetector{
-    func detect() -> Bool {
-        return true;
+
+    func detect() {
+
+    }
+    func detectVolume() -> Bool{
+        return true
     }
 }

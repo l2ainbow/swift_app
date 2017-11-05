@@ -12,14 +12,13 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
-    private var text: String = ""
+    private var text: String = "===return"
     
     // 音声を認識する
     // -> 認識した音声文字列
     public func recognize() -> String
     {
         // TODO: 【外村】ここを実装する
-        print("==recognize() start")
         if audioEngine.isRunning {
             audioEngine.stop()
             
@@ -27,13 +26,10 @@ public class VoiceRecognizerImpl: VoiceRecognizer
             try! self.startRecording()
         }
         
-        
         return self.text
     }
     
     func startRecording() throws {
-        print("start recognize")
-        // self.speechRecognizer.delegate
         
         if let recognitionTask = recognitionTask {
             recognitionTask.cancel()
@@ -59,9 +55,10 @@ public class VoiceRecognizerImpl: VoiceRecognizer
             
             if let result = result {
                 /* ここで文字列を処理 */
-                print("recording")
                 self.text = result.bestTranscription.formattedString
-                print("===\(self.text)")
+                
+                print("====\(self.text)")
+                
                 self.audioEngine.stop()
                 recognitionRequest.endAudio()
                 isFinal = result.isFinal
@@ -74,7 +71,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
                 recognitionRequest.endAudio()
                 
             }
-            
+           
             if error != nil || isFinal {
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
@@ -83,9 +80,9 @@ public class VoiceRecognizerImpl: VoiceRecognizer
                 
                 
             }
-            
-            //            self.stopUpdatingVolume()
-            //            self.startUpdatingVolume()
+           
+            print("\(self.text)")
+           
         }
         
         let recordingFormat = inputNode.outputFormat(forBus: 0)

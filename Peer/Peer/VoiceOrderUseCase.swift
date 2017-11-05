@@ -5,7 +5,7 @@
 //  Created by Yu Iijima on 2017/10/22.
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
-import AudioToolbox
+
 
 public class VoiceOrderUseCase
 {
@@ -29,9 +29,10 @@ public class VoiceOrderUseCase
         print("\n")
         print("=============start============")
         print("\n")
+        voiceDetector.detect() // start
+        while(!voiceDetector.detectVolume()){} // volume get
         
-        //voiceDetector.detect()
-        voiceRecognizer.recognize()
+        //print("====\(voiceRecognizer.recognize())")
         colorDisplay.display(color: Color.Yellow)
         
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
@@ -42,4 +43,6 @@ public class VoiceOrderUseCase
         }
         return order
     }
+    
+    
 }
