@@ -23,7 +23,7 @@ public class UseCaseController {
         if (order.order == "WeatherInform"){
             weatherInformUC.start(voiceString: order.voiceString)
         }
-        else if(order.order == "MasterFollow"){
+        else if(order.order == "FollowMaster"){
             followMasterUC.start()
         }
     }

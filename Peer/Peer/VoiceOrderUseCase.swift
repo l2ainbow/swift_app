@@ -36,7 +36,7 @@ public class VoiceOrderUseCase
             order.order = "WeatherInform"
         }
         else if (KeywordSearcher.search(string: order.voiceString, keywords: ["ついてきて", "おいかけて", "ついてこい", "来て"])){
-            order.order = "MasterFollow"
+            order.order = "FollowMaster"
         }
         return order
     }
