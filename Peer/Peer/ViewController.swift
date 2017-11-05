@@ -71,6 +71,10 @@ class ViewController: UIViewController {
     var messageDisplay: MessageDisplay!
     /// ユースケース制御
     var useCaseController: UseCaseController!
+    /// 右モータ
+    var rightMotor: Motor!
+    /// 左モータ
+    var leftMotor: Motor!
 
     //-- メソッド --//
     /// Viewの読込完了時の処理
@@ -135,25 +139,6 @@ class ViewController: UIViewController {
         rgbData.append(UInt8(rgb)!)
         return rgbData
     }
-    
-    /// 左モータを回転する
-    /// - Parameter pwm: 左モータのPWM
-    func rotateLeftMotor(pwm: Int){
-        let data = String(pwm).data(using: .utf8)!
-        if (self.peripheral != nil){
-            self.peripheral.writeValue(data as Data, for: self.leftMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-        }
-    }
-    
-    /// 右モータを回転する
-    /// - Parameter pwm: 右モータのPWM
-    func rotateRightMotor(pwm: Int){
-        let data = String(pwm).data(using: .utf8)!
-        if (self.peripheral != nil){
-            self.peripheral.writeValue(data as Data, for: self.rightMotorCharacteristic!, type: CBCharacteristicWriteType.withResponse)
-        }
-    }
-
 }
 
 // MARK:- CBCentralManagerからのコールバック
@@ -291,14 +276,14 @@ extension ViewController: MCSessionDelegate {
             
             switch prefix {
             case "l":
-                self.rotateLeftMotor(pwm: Int(val)!)
+                self.leftMotor.rotate(pwm: Int(val)!)
                 break
             case "r":
-                self.rotateRightMotor(pwm: Int(val)!)
+                self.rightMotor.rotate(pwm: Int(val)!)
                 break
             case "d":
-                self.rotateLeftMotor(pwm: Int(val)!)
-                self.rotateRightMotor(pwm: Int(val)!)
+                self.leftMotor.rotate(pwm: Int(val)!)
+                self.rightMotor.rotate(pwm: Int(val)!)
                 break
             case "s":
                 self.speaker.speak(voice: val)

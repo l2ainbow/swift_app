@@ -36,6 +36,8 @@
 		DB1DAF4C1FA43284000F8450 /* UseCaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */; };
 		DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */; };
 		DB1DAF511FA56D16000F8450 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1DAF501FA56D16000F8450 /* CoreLocation.framework */; };
+		DB41213D1FAEB098001D97D2 /* RunnerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */; };
+		DB41213F1FAEB19C001D97D2 /* Motor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41213E1FAEB19C001D97D2 /* Motor.swift */; };
 		DBD944F01FABD42A0040CA49 /* CurrentLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */; };
 		DBD944F81FABD44E0040CA49 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F11FABD44E0040CA49 /* Follower.swift */; };
 		DBD944F91FABD44E0040CA49 /* FollowMasterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */; };
@@ -81,6 +83,8 @@
 		DB1DAF4B1FA43284000F8450 /* UseCaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseController.swift; sourceTree = "<group>"; };
 		DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceOrder.swift; sourceTree = "<group>"; };
 		DB1DAF501FA56D16000F8450 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerImpl.swift; sourceTree = "<group>"; };
+		DB41213E1FAEB19C001D97D2 /* Motor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Motor.swift; sourceTree = "<group>"; };
 		DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentLocator.swift; sourceTree = "<group>"; };
 		DBD944F11FABD44E0040CA49 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowMasterUseCase.swift; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 				DB1DAF181F98E82A000F8450 /* VoiceDetectorImpl.swift */,
 				DB1DAF1C1F98E82A000F8450 /* VoiceRecognizerImpl.swift */,
 				DB1DAF201F98E82A000F8450 /* WeatherProviderImpl.swift */,
+				DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */,
+				DB41213E1FAEB19C001D97D2 /* Motor.swift */,
 			);
 			name = interface;
 			sourceTree = "<group>";
@@ -297,6 +303,7 @@
 				DB1DAF341F9C51EB000F8450 /* KeywordSearcher.swift in Sources */,
 				DB1DAF3B1F9C97A6000F8450 /* MockVoiceRecognizer.swift in Sources */,
 				DB1DAF251F98E82A000F8450 /* Location.swift in Sources */,
+				DB41213F1FAEB19C001D97D2 /* Motor.swift in Sources */,
 				DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */,
@@ -324,6 +331,7 @@
 				DB1DAF261F98E82A000F8450 /* SpeakerImpl.swift in Sources */,
 				DB1DAF471F9F6191000F8450 /* MessageDisplayImpl.swift in Sources */,
 				DB1DAF271F98E82A000F8450 /* VoiceDetector.swift in Sources */,
+				DB41213D1FAEB098001D97D2 /* RunnerImpl.swift in Sources */,
 				DB1DAF3F1F9C9AAC000F8450 /* MockCurrentLocator.swift in Sources */,
 				DB1DAF301F98E82A000F8450 /* WeatherProviderImpl.swift in Sources */,
 				DB1DAF221F98E82A000F8450 /* ColorDisplayImpl.swift in Sources */,

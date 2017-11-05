@@ -15,6 +15,8 @@ class Initializer {
         delegate.colorDisplay = ColorDisplayImpl(view: delegate.view, peripheral: delegate.peripheral, characteristic: delegate.ledCharacteristic)
         delegate.messageDisplay = MessageDisplayImpl(label: delegate.conditionText)
         delegate.speaker = SpeakerImpl()
+        delegate.rightMotor = Motor(peripheral: delegate.peripheral, characteristic: delegate.rightMotorCharacteristic)
+        delegate.leftMotor = Motor(peripheral: delegate.peripheral, characteristic: delegate.leftMotorCharacteristic)
         
         // TODO: 【外村】VoiceDetectorImplをテストする際に、以下のMockVoiceDetectorをVoiceDetectorImplに変える
         let voiceDetector = MockVoiceDetector()
@@ -23,7 +25,7 @@ class Initializer {
         //let locator = MockCurrentLocator()
         let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()
-        let runner = MockRunner()
+        let runner = RunnerImpl(rightMotor: delegate.rightMotor, leftMotor: delegate.leftMotor)
         let follower = Follower(runner: runner)
         
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider)
