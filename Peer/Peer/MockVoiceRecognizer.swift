@@ -18,7 +18,7 @@ class MockVoiceRecognizer : VoiceRecognizer{
         //return "ついてきて"
         cnt += 1
         if (cnt % 2 == 0){
-            return "ラルクエンシエル"
+            return "青"
         }
         return "音楽再生"
     }

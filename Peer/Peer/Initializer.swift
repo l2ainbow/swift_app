@@ -29,7 +29,7 @@ class Initializer {
         let runner = RunnerImpl(rightMotor: delegate.rightMotor, leftMotor: delegate.leftMotor)
         let follower = Follower(runner: runner)
         // - TODO: MusicSearcherImplを実装する
-        let musicSearcher = MockMusicSearcher()
+        let musicSearcher = MusicSearcherImpl()
         // - TODO: MusicPlayerImplを実装する
         let musicPlayer = MockMusicPlayer()
         
