@@ -65,10 +65,16 @@ public class ColorDisplayImpl: ColorDisplay
             rgb = [128, 128, 128]
         case Color.LightGray:
             rgb = [200, 200, 200]
+        case Color.Purple:
+            rgb = [255, 0, 255]
         default:
             rgb = [0, 0, 0]
         }
         display(R: rgb[0], G: rgb[1], B: rgb[2])
+    }
+    
+    public func illuminate(interval: Int, colors: [Color], isRepeat: Bool) {
+        // -TODO: いずれ実装する
     }
     
     /// ディスプレイの色を変更する

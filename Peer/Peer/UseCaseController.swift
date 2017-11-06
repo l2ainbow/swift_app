@@ -34,10 +34,12 @@ public class UseCaseController {
     }
     
     func pauseMusic(){
+        // - TODO: 呼び出し元の実装
         jukeBoxUC.pauseMusic()
     }
     
     func terminateMusic(){
+        // - TODO: 呼び出し元の実装
         jukeBoxUC.terminate()
     }
 }

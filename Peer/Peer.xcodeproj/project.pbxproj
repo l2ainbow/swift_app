@@ -39,6 +39,12 @@
 		DB2F6AD81FAECDAB00FCCFDC /* MasterRecognizerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F6AD71FAECDAB00FCCFDC /* MasterRecognizerImpl.swift */; };
 		DB41213D1FAEB098001D97D2 /* RunnerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */; };
 		DB41213F1FAEB19C001D97D2 /* Motor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41213E1FAEB19C001D97D2 /* Motor.swift */; };
+		DBC3D0E91FB09A1B00E54670 /* JukeBoxUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3D0E51FB09A1B00E54670 /* JukeBoxUseCase.swift */; };
+		DBC3D0EA1FB09A1B00E54670 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3D0E61FB09A1B00E54670 /* Music.swift */; };
+		DBC3D0EB1FB09A1B00E54670 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3D0E71FB09A1B00E54670 /* MusicPlayer.swift */; };
+		DBC3D0EC1FB09A1B00E54670 /* MusicSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3D0E81FB09A1B00E54670 /* MusicSearcher.swift */; };
+		DBC3D0EE1FB09F3200E54670 /* MockMusicSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3D0ED1FB09F3200E54670 /* MockMusicSearcher.swift */; };
+		DBC3D0F01FB0A03B00E54670 /* MockMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC3D0EF1FB0A03B00E54670 /* MockMusicPlayer.swift */; };
 		DBD944F01FABD42A0040CA49 /* CurrentLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */; };
 		DBD944F81FABD44E0040CA49 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F11FABD44E0040CA49 /* Follower.swift */; };
 		DBD944F91FABD44E0040CA49 /* FollowMasterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */; };
@@ -87,6 +93,12 @@
 		DB2F6AD71FAECDAB00FCCFDC /* MasterRecognizerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterRecognizerImpl.swift; sourceTree = "<group>"; };
 		DB41213C1FAEB098001D97D2 /* RunnerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerImpl.swift; sourceTree = "<group>"; };
 		DB41213E1FAEB19C001D97D2 /* Motor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Motor.swift; sourceTree = "<group>"; };
+		DBC3D0E51FB09A1B00E54670 /* JukeBoxUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeBoxUseCase.swift; sourceTree = "<group>"; };
+		DBC3D0E61FB09A1B00E54670 /* Music.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		DBC3D0E71FB09A1B00E54670 /* MusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		DBC3D0E81FB09A1B00E54670 /* MusicSearcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearcher.swift; sourceTree = "<group>"; };
+		DBC3D0ED1FB09F3200E54670 /* MockMusicSearcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMusicSearcher.swift; sourceTree = "<group>"; };
+		DBC3D0EF1FB0A03B00E54670 /* MockMusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMusicPlayer.swift; sourceTree = "<group>"; };
 		DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentLocator.swift; sourceTree = "<group>"; };
 		DBD944F11FABD44E0040CA49 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowMasterUseCase.swift; sourceTree = "<group>"; };
@@ -142,10 +154,14 @@
 				DBD944EF1FABD42A0040CA49 /* CurrentLocator.swift */,
 				DBD944F11FABD44E0040CA49 /* Follower.swift */,
 				DBD944F21FABD44E0040CA49 /* FollowMasterUseCase.swift */,
+				DBC3D0E51FB09A1B00E54670 /* JukeBoxUseCase.swift */,
 				DB1DAF331F9C51EB000F8450 /* KeywordSearcher.swift */,
 				DB1DAF151F98E82A000F8450 /* Location.swift */,
 				DBD944F31FABD44E0040CA49 /* MasterRecognizer.swift */,
 				DB1DAF481F9F619A000F8450 /* MessageDisplay.swift */,
+				DBC3D0E61FB09A1B00E54670 /* Music.swift */,
+				DBC3D0E71FB09A1B00E54670 /* MusicPlayer.swift */,
+				DBC3D0E81FB09A1B00E54670 /* MusicSearcher.swift */,
 				DBD944F61FABD44E0040CA49 /* Position.swift */,
 				DBD944F71FABD44E0040CA49 /* Runner.swift */,
 				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
@@ -166,6 +182,8 @@
 				DB1DAF3C1F9C99B0000F8450 /* MockColorDisplay.swift */,
 				DB1DAF3E1F9C9AAC000F8450 /* MockCurrentLocator.swift */,
 				DBD944F41FABD44E0040CA49 /* MockMasterRecognizer.swift */,
+				DBC3D0EF1FB0A03B00E54670 /* MockMusicPlayer.swift */,
+				DBC3D0ED1FB09F3200E54670 /* MockMusicSearcher.swift */,
 				DBD944F51FABD44E0040CA49 /* MockRunner.swift */,
 				DB1DAF401F9C9C10000F8450 /* MockSpeaker.swift */,
 				DB1DAF381F9C9712000F8450 /* MockVoiceDetector.swift */,
@@ -299,6 +317,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBC3D0EE1FB09F3200E54670 /* MockMusicSearcher.swift in Sources */,
+				DBC3D0EA1FB09A1B00E54670 /* Music.swift in Sources */,
 				DB1DAF391F9C9712000F8450 /* MockVoiceDetector.swift in Sources */,
 				DB2F6AD81FAECDAB00FCCFDC /* MasterRecognizerImpl.swift in Sources */,
 				DBD944FE1FABD44E0040CA49 /* Runner.swift in Sources */,
@@ -309,6 +329,7 @@
 				DB1DAF251F98E82A000F8450 /* Location.swift in Sources */,
 				DB41213F1FAEB19C001D97D2 /* Motor.swift in Sources */,
 				DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */,
+				DBC3D0E91FB09A1B00E54670 /* JukeBoxUseCase.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
 				DB1DAF451F9CAA5A000F8450 /* Initializer.swift in Sources */,
 				DB1DAF4E1FA46BD5000F8450 /* VoiceOrder.swift in Sources */,
@@ -319,6 +340,7 @@
 				DB1DAF2E1F98E82A000F8450 /* WeatherInformUseCase.swift in Sources */,
 				DBD944FB1FABD44E0040CA49 /* MockMasterRecognizer.swift in Sources */,
 				DB1DAF2D1F98E82A000F8450 /* Weather.swift in Sources */,
+				DBC3D0EB1FB09A1B00E54670 /* MusicPlayer.swift in Sources */,
 				DBD944FD1FABD44E0040CA49 /* Position.swift in Sources */,
 				DB1DAF411F9C9C10000F8450 /* MockSpeaker.swift in Sources */,
 				F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */,
@@ -334,10 +356,12 @@
 				DB1DAF2B1F98E82A000F8450 /* VoiceRecognizer.swift in Sources */,
 				DB1DAF261F98E82A000F8450 /* SpeakerImpl.swift in Sources */,
 				DB1DAF471F9F6191000F8450 /* MessageDisplayImpl.swift in Sources */,
+				DBC3D0F01FB0A03B00E54670 /* MockMusicPlayer.swift in Sources */,
 				DB1DAF271F98E82A000F8450 /* VoiceDetector.swift in Sources */,
 				DB41213D1FAEB098001D97D2 /* RunnerImpl.swift in Sources */,
 				DB1DAF3F1F9C9AAC000F8450 /* MockCurrentLocator.swift in Sources */,
 				DB1DAF301F98E82A000F8450 /* WeatherProviderImpl.swift in Sources */,
+				DBC3D0EC1FB09A1B00E54670 /* MusicSearcher.swift in Sources */,
 				DB1DAF221F98E82A000F8450 /* ColorDisplayImpl.swift in Sources */,
 				DBD944FC1FABD44E0040CA49 /* MockRunner.swift in Sources */,
 			);

@@ -19,5 +19,5 @@
 /// - LightGray: 薄い灰色
 public enum Color
 {
-    case White, Black, Orange, Blue, Green, Red, LightBlue, Yellow, Gray, LightGray
+    case White, Black, Orange, Blue, Green, Red, LightBlue, Yellow, Gray, LightGray, Purple
 }

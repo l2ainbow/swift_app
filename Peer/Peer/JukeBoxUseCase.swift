@@ -33,29 +33,30 @@ public class JukeBoxUseCase
     /// ユースケースを開始する
     public func start()
     {
-        speaker.speak("どんな曲がええどすか")
+        speaker.speak(voice: "どんな曲がええどすか")
         let keyword = voiceRecognizer.recognize()
-        if (KeywordSearcher.search(keyword, ["特に無し","聞きたくない","やめる"])){
-            speaker.speak("もう呼ばんといて")
+        if (KeywordSearcher.search(string: keyword, keywords: ["特に無し","聞きたくない","やめる"])){
+            speaker.speak(voice: "もう呼ばんといて")
             return
         }
         
-        musics = musicSearcher.search(keyword)
+        musics = musicSearcher.search(keyword: keyword)
         if (musics.count == 0){
-            speaker.speak("そんな曲はないどすえ")
+            speaker.speak(voice: "そんな曲はないどすえ")
             return
         }
-        speaker.speak("わかりました")
+        speaker.speak(voice: "わかりました")
         
-        while ((music = self.shuffle(musics)) == nil){
-            musicPlayer.play(music)
-            colorDisplay.illuminate(3 , [Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.LightBlue, Color.Blue, Color.Purpul], true)
-            messageDisplay.display("\(music.artist):\(music.title)")
-            runner.spin(10000)
-            musicPlayer.waitForEnd()
-            colorDisplay.display(Color.White)
-            runner.stop()
+        while let music = self.shuffle(musics: &musics){
+            musicPlayer.play(music: music)
+            self.colorDisplay.illuminate(interval: 3 , colors: [Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.LightBlue, Color.Blue, Color.Purple], isRepeat: true)
+            messageDisplay.display(message: "\(music.artist): \(music.title)")
+            self.runner.spin(angle: 10000)
+            self.musicPlayer.waitForEnd()
+            self.colorDisplay.display(color: Color.White)
+            self.runner.stop()
         }
+        self.messageDisplay.display(message: "音楽再生終了")
     }
     
     public func pauseMusic(){
@@ -67,14 +68,14 @@ public class JukeBoxUseCase
         musicPlayer.terminate()
     }
     
-    private shuffle(inout musics: [Music]){
-        if (musics == nil || musics.count == 0){
+    private func shuffle(musics: inout [Music]) -> Music?{
+        if (musics.count == 0){
             return nil
         }
         
-        let select = arc4random_uniform(musics.count - 1)
+        let select = Int(arc4random_uniform(UInt32(musics.count - 1)))
         let music = musics[select]
-        musics.removeAtIndex(select)
+        musics.remove(at: select)
         return music
     }
 }

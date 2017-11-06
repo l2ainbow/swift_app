@@ -28,11 +28,16 @@ class Initializer {
         let masterRecognizer = MockMasterRecognizer()
         let runner = RunnerImpl(rightMotor: delegate.rightMotor, leftMotor: delegate.leftMotor)
         let follower = Follower(runner: runner)
+        // - TODO: MusicSearcherImplを実装する
+        let musicSearcher = MockMusicSearcher()
+        // - TODO: MusicPlayerImplを実装する
+        let musicPlayer = MockMusicPlayer()
         
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider, messageDisplay: delegate.messageDisplay)
         let voiceOrderUC = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer, messageDisplay: delegate.messageDisplay)
         let followMasterUC = FollowMasterUseCase(colorDisplay: delegate.colorDisplay, masterRecognizer: masterRecognizer, follower: follower, messageDisplay: delegate.messageDisplay)
+        let jukeBoxUC = JukeBoxUseCase(speaker: delegate.speaker, voiceRecognizer: voiceRecognizer, musicSearcher: musicSearcher, musicPlayer: musicPlayer, colorDisplay: delegate.colorDisplay, messageDisplay: delegate.messageDisplay, runner: runner)
         
-        delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUC, weatherInformUC: weatherInformUC, followMasterUC: followMasterUC)
+        delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUC, weatherInformUC: weatherInformUC, followMasterUC: followMasterUC, jukeBoxUC: jukeBoxUC)
     }
 }
