@@ -28,7 +28,6 @@ public class CurrentLocatorImpl: NSObject, CurrentLocator
     /// - Returns: 現在位置
     public func locate() -> Location
     {
-        // - TODO: 現在位置の検出を実現する
         print("lat=\(self.location.latitude), lon=\(self.location.longitude)")
         return self.location
     }

@@ -17,6 +17,7 @@
 /// - Others: その他
 public enum Weather : Int
 {
+    // TODO: 「雨のち晴れ」等のバリエーションを増やす
     case Clear = 0, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, Others
     
     /// 天気を全て取得する
