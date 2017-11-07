@@ -16,6 +16,7 @@ public class CurrentLocatorImpl: NSObject, CurrentLocator
     static let DEFAULT_LONGITUDE = 140.446383
     
     var locationManager: CLLocationManager = CLLocationManager()
+    /// 現在位置
     var location : Location = Location(latitude: DEFAULT_LATITUDE, longitude: DEFAULT_LONGITUDE)
     
     override init(){

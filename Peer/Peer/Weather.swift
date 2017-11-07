@@ -28,6 +28,7 @@ public enum Weather : Int
         }
     }
     
+    /// 天気を全て取得するための構造体
     private struct WeathersGenerator: IteratorProtocol{
         var current = 0
         

@@ -21,7 +21,9 @@ public class Follower
 
     private var runner: Runner
     
+    ///  停止中か(true:停止中 , false: 停止中でない)
     private var isStopping = false
+    /// 停止開始時刻
     private var startDate = Date()
     
     init(runner: Runner){

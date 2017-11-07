@@ -8,11 +8,17 @@
 
 public protocol MusicPlayer
 {
+    /// 音楽を再生する
+    /// - Parameters:
+    ///   - music: 再生する音楽
     func play(music: Music)
     
+    /// 音楽を一時停止する
     func pause()
     
+    /// 音楽再生を終了する
     func terminate()
     
+    /// 音楽が終了するまで待つ
     func waitForEnd()
 }

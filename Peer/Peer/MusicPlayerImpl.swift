@@ -14,7 +14,10 @@ public class MusicPlayerImpl: NSObject, MusicPlayer
     var audioPlayer : AVAudioPlayer?
     
     let semaphore = DispatchSemaphore(value: 0)
-
+    
+    /// 音楽を再生する
+    /// - Parameters:
+    ///   - music: 再生する音楽
     public func play(music: Music){
         let property = MPMediaPropertyPredicate(value: music.id, forProperty: MPMediaItemPropertyPersistentID)
         let query = MPMediaQuery()
@@ -34,6 +37,7 @@ public class MusicPlayerImpl: NSObject, MusicPlayer
         }
     }
     
+    /// 音楽を一時停止する
     public func pause(){
         if (audioPlayer != nil) {
             if (audioPlayer?.isPlaying)!{
@@ -45,18 +49,22 @@ public class MusicPlayerImpl: NSObject, MusicPlayer
         }
     }
     
+    /// 音楽再生を終了する
     public func terminate(){
+        // - TOOD: 一時停止の処理になっているので、音楽再生を終了するように変更
         if (audioPlayer != nil) {
             audioPlayer?.stop()
         }
     }
     
+    /// 音楽が終了するまで待つ
     public func waitForEnd(){
         semaphore.wait()
     }
 }
 
 extension MusicPlayerImpl: AVAudioPlayerDelegate {
+    /// 音楽が終了した時の処理
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         semaphore.signal()
     }

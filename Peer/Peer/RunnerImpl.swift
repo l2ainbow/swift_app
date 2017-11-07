@@ -7,8 +7,10 @@
 //
 
 public class RunnerImpl: Runner
-{    
+{
+    /// 右モータ
     var rightMotor: Motor
+    /// 左モータ
     var leftMotor: Motor
     
     init(rightMotor: Motor, leftMotor: Motor){

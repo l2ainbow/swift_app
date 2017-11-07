@@ -129,15 +129,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         }
     }
     
+    /// Viewがタップされた時の処理
     @objc func tapped(_ sender: UITapGestureRecognizer){
         if sender.state == .ended {
-            self.useCaseController.viewDidTapped()
+            self.useCaseController.displayDidTapped()
         }
     }
     
+    /// Viewが長押しされた時の処理
     @objc func longPressed(_ sender: UILongPressGestureRecognizer){
         if sender.state == .ended {
-            self.useCaseController.viewDidLongPressed()
+            self.useCaseController.displayDidLongPressed()
         }
     }
     

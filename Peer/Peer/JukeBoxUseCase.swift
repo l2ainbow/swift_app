@@ -59,15 +59,21 @@ public class JukeBoxUseCase
         self.messageDisplay.display(message: "音楽再生終了")
     }
     
+    /// 音楽を一時停止する
     public func pauseMusic(){
         musicPlayer.pause()
     }
     
+    /// ユースケースを終了する
     public func terminate(){
         musics.removeAll()
         musicPlayer.terminate()
     }
     
+    /// 音楽をシャッフル選択する（選択された音楽は配列からは除外する）
+    /// - Parameters: 
+    ///   - musics: 音楽の配列
+    /// - Returns: 選択された音楽
     private func shuffle(musics: inout [Music]) -> Music?{
         if (musics.count == 0){
             return nil

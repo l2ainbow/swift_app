@@ -16,7 +16,9 @@ public class ColorDisplayImpl: ColorDisplay
     private var peripheral: CBPeripheral?
     private var ledCharacteristic: CBCharacteristic?
     
+    /// イルミネーションの繰り返し中か
     private var isRepeatIllumination = false
+    /// イルミネーションを終了予定か
     private var willFinishIllumination = true
     
     private let semaphore = DispatchSemaphore(value: 1)
@@ -48,6 +50,11 @@ public class ColorDisplayImpl: ColorDisplay
         display(R: rgb[0], G: rgb[1], B: rgb[2])
     }
     
+    /// イルミネーションのように色を変化させながらゆっくり点滅を繰り返す
+    /// - Parameter
+    ///   - interval: 色を変える間隔 [s]
+    ///   - colors: 表示色（複数指定可能；要素順で表示）
+    ///   - isRepeat: 最後の色まで到達したら先頭の色に戻って繰り返すか（true: 繰り返す、false: 繰り返さない）
     public func illuminate(interval: Double, colors: [Color], isRepeat: Bool) {
         let queue = DispatchQueue(label: "colordisplayimpl.illuminate")
         queue.async{
@@ -103,6 +110,10 @@ public class ColorDisplayImpl: ColorDisplay
         }
     }
     
+    /// 色をRGBに変換する
+    /// - Parameters:
+    ///   - color: 色
+    /// - Returns: RGB(0-255)の配列
     private func convertColorToRGB(color: Color) -> [UInt8]{
         var rgb : [UInt8]
         switch color {

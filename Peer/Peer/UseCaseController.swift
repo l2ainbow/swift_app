@@ -37,13 +37,15 @@ public class UseCaseController {
         }
     }
     
-    func viewDidTapped(){
+    /// 画面がタップされた時の処理
+    func displayDidTapped(){
         if (currentUseCase == "JukeBox"){
             jukeBoxUC.pauseMusic()
         }
     }
     
-    func viewDidLongPressed(){
+    /// 画面が長押しされた時の処理
+    func displayDidLongPressed(){
         if (currentUseCase == "JukeBox"){
             jukeBoxUC.terminate()
         }
