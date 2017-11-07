@@ -15,6 +15,8 @@ public class ColorDisplayImpl: ColorDisplay
     private var peripheral: CBPeripheral?
     private var ledCharacteristic: CBCharacteristic?
     
+    private var isRepeatIllumination = false
+    
     init(view: UIView, peripheral: CBPeripheral?, characteristic: CBCharacteristic?){
         self.view = view
         self.peripheral = peripheral
@@ -28,21 +30,73 @@ public class ColorDisplayImpl: ColorDisplay
     ///   - B: 表示色のB(0-255)
     public func display(R: UInt8, G: UInt8, B: UInt8)
     {
-        if (Thread.isMainThread){
-            displayColorChange(red: R, green: G, blue: B)
+        if (isRepeatIllumination){
+            isRepeatIllumination = false
         }
-        else{
-            DispatchQueue.main.async {
-                self.displayColorChange(red: R, green: G, blue: B)
-            }
-        }
-        ledColorChange(red: R, green: G, blue: B)
+        self.displayColorChange(red: R, green: G, blue: B)
+        self.ledColorChange(red: R, green: G, blue: B)
     }
     
     /// 色を表示する
     /// - Parameter color: 表示色
     public func display(color: Color)
     {
+        let rgb = convertColorToRGB(color: color)
+        display(R: rgb[0], G: rgb[1], B: rgb[2])
+    }
+    
+    public func illuminate(interval: Double, colors: [Color], isRepeat: Bool) {
+        let semaphore = DispatchSemaphore(value: 1)
+        let queue = DispatchQueue(label: "colordisplayimpl.illuminate")
+        self.isRepeatIllumination = false
+        semaphore.wait()
+        self.isRepeatIllumination = isRepeat
+        queue.async{
+            repeat{
+                for color in colors {
+                    let rgb = convertColorToRGB(color)
+                    self.displayColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
+                    // - TODO: LEDの点滅を繰り返すように修正する（Arduino側の修正も必要）
+                    self.ledColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
+                    Thread.sleep(interval)
+                }
+            }while(isRepeatIllumination)
+            semaphore.signal()
+        }
+    }
+    
+    /// ディスプレイの色を変更する
+    /// - Parameters:
+    ///   - r: RGBのR(0-255)
+    ///   - g: RGBのG(0-255)
+    ///   - b: RGBのB(0-255)
+    private func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
+        if (Thread.isMainThread){
+            self.view.backgroundColor = UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1)
+        }
+        else {
+            DispatchQueue.main.async{
+                self.view.backgroundColor = UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1)
+            }
+        }
+    }
+
+    /// LEDの色を変更する
+    /// - Parameters:
+    ///   - r: RGBのR(0-255)
+    ///   - g: RGBのG(0-255)
+    ///   - b: RGBのB(0-255)
+    private func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8){
+        if(self.peripheral != nil && self.ledCharacteristic != nil){
+            var bytes : [UInt8] = [r, g, b]
+            let data = NSData(bytes: &bytes, length: 3)
+            self.peripheral?.writeValue(data as Data, for: self.ledCharacteristic!, type:
+                CBCharacteristicWriteType.withResponse)
+            
+        }
+    }
+    
+    private func convertColorToRGB(color: Color) -> [UInt8]{
         var rgb : [UInt8]
         switch color {
         case Color.White:
@@ -70,34 +124,6 @@ public class ColorDisplayImpl: ColorDisplay
         default:
             rgb = [0, 0, 0]
         }
-        display(R: rgb[0], G: rgb[1], B: rgb[2])
-    }
-    
-    public func illuminate(interval: Int, colors: [Color], isRepeat: Bool) {
-        // -TODO: いずれ実装する
-    }
-    
-    /// ディスプレイの色を変更する
-    /// - Parameters:
-    ///   - r: RGBのR(0-255)
-    ///   - g: RGBのG(0-255)
-    ///   - b: RGBのB(0-255)
-    private func displayColorChange(red r: UInt8, green g: UInt8, blue b: UInt8) {
-        self.view.backgroundColor = UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1)
-    }
-
-    /// LEDの色を変更する
-    /// - Parameters:
-    ///   - r: RGBのR(0-255)
-    ///   - g: RGBのG(0-255)
-    ///   - b: RGBのB(0-255)
-    private func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8){
-        if(self.peripheral != nil && self.ledCharacteristic != nil){
-            var bytes : [UInt8] = [r, g, b]
-            let data = NSData(bytes: &bytes, length: 3)
-            self.peripheral?.writeValue(data as Data, for: self.ledCharacteristic!, type:
-                CBCharacteristicWriteType.withResponse)
-            
-        }
+        return rgb
     }
 }
