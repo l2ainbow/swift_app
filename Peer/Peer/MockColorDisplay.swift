@@ -16,7 +16,7 @@ public class MockColorDisplay: ColorDisplay
     {
         print("Color: \(color)")
     }
-    public func illuminate(interval: Int, colors: [Color], isRepeat: Bool) {
+    public func illuminate(interval: Double, colors: [Color], isRepeat: Bool) {
         print("Illuminate: interval=\(interval), isRepeat=\(isRepeat)")
         for color in colors {
             print("\(color)")

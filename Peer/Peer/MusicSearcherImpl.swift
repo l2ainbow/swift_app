@@ -16,7 +16,7 @@ public class MusicSearcherImpl: MusicSearcher{
         var musics = [Music]()
         
         for target in [MPMediaItemPropertyTitle, MPMediaItemPropertyArtist, MPMediaItemPropertyComposer, MPMediaItemPropertyAlbumTitle, MPMediaItemPropertyAlbumArtist] {
-            let property = MPMediaPropertyPredicate(value: keyword, forProperty: target, comparisonType: MPMediaPredicateComparison.Contains)
+            let property = MPMediaPropertyPredicate(value: keyword, forProperty: target, comparisonType: MPMediaPredicateComparison.contains)
             let query = MPMediaQuery()
             query.addFilterPredicate(property)
             let sTitle = query.items!

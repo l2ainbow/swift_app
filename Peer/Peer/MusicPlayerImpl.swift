@@ -14,26 +14,32 @@ public class MusicPlayerImpl: MusicPlayer
     var audioPlayer : AVAudioPlayer?
 
     public func play(music: Music){
-        let property = MPMediaPropertyPredicate(value: music.id, forProperty: MPMediaPropertyPersistentID)
+        let property = MPMediaPropertyPredicate(value: music.id, forProperty: MPMediaItemPropertyPersistentID)
         let query = MPMediaQuery()
         query.addFilterPredicate(property)
-        let items = query.items
-        if items.empty{
-            return
+        if let items = query.items {
+            if (items.isEmpty){
+                return
+            }
+            do {
+                try audioPlayer = AVAudioPlayer(contentsOf: (items[0].assetURL)!)
+                audioPlayer?.play()
+            } catch  {
+                print("audioPlayer cannot load")
+                return
+            }
         }
-        audioPlayer = AVAudioPlayer(contentOfURL: items[0].assetURL)
-        audioPlayer.play()
     }
     
     public func pause(){
-        if audioPlayer {
-            audioPlayer.pause()
+        if (audioPlayer != nil) {
+            audioPlayer?.pause()
         }
     }
     
     public func terminate(){
-        if audioPlayer {
-            audioPlayer.stop()
+        if (audioPlayer != nil) {
+            audioPlayer?.stop()
         }
     }
     

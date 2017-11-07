@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import Foundation
 
 public class ColorDisplayImpl: ColorDisplay
 {
@@ -16,6 +17,9 @@ public class ColorDisplayImpl: ColorDisplay
     private var ledCharacteristic: CBCharacteristic?
     
     private var isRepeatIllumination = false
+    private var willFinishIllumination = true
+    
+    private let semaphore = DispatchSemaphore(value: 1)
     
     init(view: UIView, peripheral: CBPeripheral?, characteristic: CBCharacteristic?){
         self.view = view
@@ -30,9 +34,8 @@ public class ColorDisplayImpl: ColorDisplay
     ///   - B: 表示色のB(0-255)
     public func display(R: UInt8, G: UInt8, B: UInt8)
     {
-        if (isRepeatIllumination){
-            isRepeatIllumination = false
-        }
+        self.willFinishIllumination = true
+        self.isRepeatIllumination = false
         self.displayColorChange(red: R, green: G, blue: B)
         self.ledColorChange(red: R, green: G, blue: B)
     }
@@ -46,22 +49,26 @@ public class ColorDisplayImpl: ColorDisplay
     }
     
     public func illuminate(interval: Double, colors: [Color], isRepeat: Bool) {
-        let semaphore = DispatchSemaphore(value: 1)
         let queue = DispatchQueue(label: "colordisplayimpl.illuminate")
-        self.isRepeatIllumination = false
-        semaphore.wait()
-        self.isRepeatIllumination = isRepeat
         queue.async{
+            self.willFinishIllumination = true
+            self.isRepeatIllumination = false
+            self.semaphore.wait()
+            self.willFinishIllumination = false
+            self.isRepeatIllumination = isRepeat
             repeat{
                 for color in colors {
-                    let rgb = convertColorToRGB(color)
+                    let rgb = self.convertColorToRGB(color: color)
                     self.displayColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
                     // - TODO: LEDの点滅を繰り返すように修正する（Arduino側の修正も必要）
                     self.ledColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
-                    Thread.sleep(interval)
+                    Thread.sleep(forTimeInterval: interval)
+                    if self.willFinishIllumination {
+                        break
+                    }
                 }
-            }while(isRepeatIllumination)
-            semaphore.signal()
+            }while(self.isRepeatIllumination)
+            self.semaphore.signal()
         }
     }
     
