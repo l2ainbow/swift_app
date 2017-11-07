@@ -12,6 +12,8 @@ public class UseCaseController {
     private var followMasterUC: FollowMasterUseCase!
     private var jukeBoxUC: JukeBoxUseCase!
     
+    private var currentUseCase = "None"
+    
     init(voiceOrderUC: VoiceOrderUseCase, weatherInformUC: WeatherInformUseCase, followMasterUC: FollowMasterUseCase, jukeBoxUC: JukeBoxUseCase){
         self.voiceOrderUC = voiceOrderUC
         self.weatherInformUC = weatherInformUC
@@ -21,25 +23,29 @@ public class UseCaseController {
     
     /// 音声指令を待ち受ける
     func listenVoiceOrder(){
+        currentUseCase = "VoiceOrder"
         let order = voiceOrderUC.start()
-        if (order.order == "WeatherInform"){
+        currentUseCase = order.order
+        if (currentUseCase == "WeatherInform"){
             weatherInformUC.start(voiceString: order.voiceString)
         }
-        else if(order.order == "FollowMaster"){
+        else if(currentUseCase == "FollowMaster"){
             followMasterUC.start()
         }
-        else if(order.order == "JukeBox"){
+        else if(currentUseCase == "JukeBox"){
             jukeBoxUC.start()
         }
     }
     
-    func pauseMusic(){
-        // - TODO: 呼び出し元の実装
-        jukeBoxUC.pauseMusic()
+    func viewDidTapped(){
+        if (currentUseCase == "JukeBox"){
+            jukeBoxUC.pauseMusic()
+        }
     }
     
-    func terminateMusic(){
-        // - TODO: 呼び出し元の実装
-        jukeBoxUC.terminate()
+    func viewDidLongPressed(){
+        if (currentUseCase == "JukeBox"){
+            jukeBoxUC.terminate()
+        }
     }
 }

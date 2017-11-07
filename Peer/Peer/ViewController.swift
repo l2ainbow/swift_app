@@ -11,7 +11,7 @@ import MultipeerConnectivity
 import CoreBluetooth
 import Foundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIGestureRecognizerDelegate{
     //-- 構造体 --//
     /// キャラクタリスティックの構造体
     struct Characteristic{
@@ -63,6 +63,7 @@ class ViewController: UIViewController {
     /// 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
     
+    
     // <その他>
     /// 音声スピーカー
     var speaker : Speaker!
@@ -100,6 +101,14 @@ class ViewController: UIViewController {
         // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
         
+        // タップ処理の初期化
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.tapped(_:)))
+        tapGesture.delegate = self
+        
+        // 長押し処理の初期化
+        let logPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.longPressed(_:)))
+        longPressGesture.delegate = self
+        
         // ユースケースの初期化
         Initializer.initialize(delegate: self)
         
@@ -115,6 +124,18 @@ class ViewController: UIViewController {
             while(true){
                 self.useCaseController.listenVoiceOrder()
             }
+        }
+    }
+    
+    @objc func tapped(_ sender: UITapGestureRecognizer){
+        if sender.state == .ended {
+            self.useCaseController.viewDidTapped()
+        }
+    }
+    
+    @objc func longPressed(_ sender: UILongPressGestureRecognizer){
+        if sender.state == .ended {
+            self.useCaseController.viewDidLongPressed()
         }
     }
     
