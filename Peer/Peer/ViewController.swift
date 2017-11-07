@@ -103,10 +103,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         
         // タップ処理の初期化
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.tapped(_:)))
+        self.view.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
         
         // 長押し処理の初期化
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.longPressed(_:)))
+        self.view.addGestureRecognizer(longPressGesture)
         longPressGesture.delegate = self
         
         // ユースケースの初期化

@@ -9,9 +9,11 @@
 import MediaPlayer
 import AVFoundation
 
-public class MusicPlayerImpl: MusicPlayer
+public class MusicPlayerImpl: NSObject, MusicPlayer
 {
     var audioPlayer : AVAudioPlayer?
+    
+    let semaphore = DispatchSemaphore(value: 0)
 
     public func play(music: Music){
         let property = MPMediaPropertyPredicate(value: music.id, forProperty: MPMediaItemPropertyPersistentID)
@@ -24,6 +26,7 @@ public class MusicPlayerImpl: MusicPlayer
             do {
                 try audioPlayer = AVAudioPlayer(contentsOf: (items[0].assetURL)!)
                 audioPlayer?.play()
+                audioPlayer?.delegate = self
             } catch  {
                 print("audioPlayer cannot load")
                 return
@@ -33,7 +36,12 @@ public class MusicPlayerImpl: MusicPlayer
     
     public func pause(){
         if (audioPlayer != nil) {
-            audioPlayer?.pause()
+            if (audioPlayer?.isPlaying)!{
+                audioPlayer?.pause()
+            }
+            else {
+                audioPlayer?.play()
+            }
         }
     }
     
@@ -44,6 +52,12 @@ public class MusicPlayerImpl: MusicPlayer
     }
     
     public func waitForEnd(){
-        // -TODO: ここを実装
+        semaphore.wait()
+    }
+}
+
+extension MusicPlayerImpl: AVAudioPlayerDelegate {
+    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        semaphore.signal()
     }
 }
