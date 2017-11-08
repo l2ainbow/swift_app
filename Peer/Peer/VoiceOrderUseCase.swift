@@ -6,12 +6,14 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
+import AudioToolbox
 public class VoiceOrderUseCase
 {
     private var voiceRecognizer: VoiceRecognizer
     private var voiceDetector: VoiceDetector
     private var colorDisplay: ColorDisplay
     private var messageDisplay: MessageDisplay
+    private var timer: Timer!
     
     init (colorDisplay: ColorDisplay, voiceDetector: VoiceDetector, voiceRecognizer: VoiceRecognizer, messageDisplay: MessageDisplay){
         self.colorDisplay = colorDisplay
@@ -26,15 +28,22 @@ public class VoiceOrderUseCase
     {
         // TODO: 【外村】必要があればstart()の内容を修正する
         colorDisplay.display(color: Color.Green)
-        messageDisplay.display(message: "音声検出中...")
-        while(!voiceDetector.detect()){
-        }
-        
+        print("\n")
+        print("=============start============")
+        print("\n")
+        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.textCheck(_:)), userInfo: self, repeats: true)
+        self.timer?.fire()
+        //voiceDetector.detect() // start
+        //while(!voiceDetector.detectVolume()){} // volume get
+        //print("====\(voiceRecognizer.recognize())")
+        voiceDetector.detect() // start
+        while(!voiceDetector.detectVolume()){} // volume get
+        voiceRecognizer.recognize()
         colorDisplay.display(color: Color.Yellow)
         messageDisplay.display(message: "音声認識中...")
         
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
-        order.voiceString = voiceRecognizer.recognize()
+        //order.voiceString = voiceRecognizer.recognize()
         
         if (KeywordSearcher.search(string: order.voiceString, keyword: "天気")){
             order.order = "WeatherInform"
@@ -47,4 +56,16 @@ public class VoiceOrderUseCase
         }
         return order
     }
+    
+    @objc func textCheck(_ timer: Timer){
+        if(voiceRecognizer.getText() != "===return") {
+         
+            print(voiceRecognizer.getText())
+            voiceDetector.detect()
+            while(!voiceDetector.detectVolume()){}
+            voiceRecognizer.recognize()
+        }
+
+    }
+    
 }

@@ -9,8 +9,12 @@
 import Foundation
 
 class MockVoiceDetector : VoiceDetector{
-    func detect() -> Bool {
+
+    func detect() {
+
+    }
+    func detectVolume() -> Bool{
         Thread.sleep(forTimeInterval: 1)
-        return true;
+        return true
     }
 }

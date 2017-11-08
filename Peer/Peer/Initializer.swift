@@ -19,9 +19,9 @@ class Initializer {
         delegate.leftMotor = Motor(peripheral: delegate.peripheral, characteristic: delegate.leftMotorCharacteristic)
         
         // TODO: 【外村】VoiceDetectorImplをテストする際に、以下のMockVoiceDetectorをVoiceDetectorImplに変える
-        let voiceDetector = MockVoiceDetector()
+        let voiceDetector = VoiceDetectorImpl()
         // TODO: 【外村】VoiceRecognizerImplをテストする際に、以下のMockVoiceRecognizerをVoiceRecognizerImplに変える
-        let voiceRecognizer = MockVoiceRecognizer()
+        let voiceRecognizer = VoiceRecognizerImpl()
         //let locator = MockCurrentLocator()
         let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()

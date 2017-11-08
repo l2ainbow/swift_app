@@ -6,6 +6,12 @@
 	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>このアプリは、現在地点の天気予報取得のため、常に位置情報を取得します</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string></string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

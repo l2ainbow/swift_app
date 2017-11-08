@@ -34,7 +34,8 @@ public class JukeBoxUseCase
     public func start()
     {
         speaker.speak(voice: "どんな曲がええどすか")
-        let keyword = voiceRecognizer.recognize()
+        voiceRecognizer.recognize()
+        let keyword = voiceRecognizer.getText()
         if (KeywordSearcher.search(string: keyword, keywords: ["特に無し","聞きたくない","やめる"])){
             speaker.speak(voice: "もう呼ばんといて")
             return
