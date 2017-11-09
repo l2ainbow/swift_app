@@ -29,20 +29,20 @@ public class VoiceOrderUseCase
         // TODO: 【外村】必要があればstart()の内容を修正する
         colorDisplay.display(color: Color.Green)
         print("\n")
-        print("=============start============")
+        //print("=============start============")
         print("\n")
-        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.textCheck(_:)), userInfo: self, repeats: true)
-        self.timer?.fire()
+        //self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.textCheck(_:)), userInfo: self, repeats: true)
+        //self.timer?.fire()
         //voiceDetector.detect() // start
         //while(!voiceDetector.detectVolume()){} // volume get
         //print("====\(voiceRecognizer.recognize())")
-        voiceDetector.detect() // start
-        while(!voiceDetector.detectVolume()){} // volume get
-        voiceRecognizer.recognize()
+        //voiceDetector.detect() // start
+        //while(!voiceDetector.detectVolume()){} // volume get
+        //voiceRecognizer.recognize()
         colorDisplay.display(color: Color.Yellow)
         messageDisplay.display(message: "音声認識中...")
         
-        var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
+        var order: VoiceOrder = VoiceOrder(order: "", voiceString: "来て")
         //order.voiceString = voiceRecognizer.recognize()
         
         if (KeywordSearcher.search(string: order.voiceString, keyword: "天気")){

@@ -18,12 +18,12 @@ class Initializer {
         delegate.rightMotor = Motor(peripheral: delegate.peripheral, characteristic: delegate.rightMotorCharacteristic)
         delegate.leftMotor = Motor(peripheral: delegate.peripheral, characteristic: delegate.leftMotorCharacteristic)
         
-        let voiceDetector = VoiceDetectorImpl()
-        let voiceRecognizer = VoiceRecognizerImpl()
+        let voiceDetector = MockVoiceDetector()
+        let voiceRecognizer = MockVoiceRecognizer()
         let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()
         // TODO: 【外村】MasterRecognizerImplに変えてテスト
-        let masterRecognizer = MockMasterRecognizer()
+        let masterRecognizer = MasterRecognizerImpl()
         let runner = RunnerImpl(rightMotor: delegate.rightMotor, leftMotor: delegate.leftMotor)
         let follower = Follower(runner: runner)
         let musicSearcher = MusicSearcherImpl()
