@@ -11,7 +11,7 @@ public class MasterRecognizerImpl : MasterRecognizer
     /// マスターの位置を認識する
     /// - Returns: マスターの位置
     public func recognize() -> Position {
-        // - TODO: ここに画像認識機能を実装する
+        // - TODO: 【外村】ここにカメラ撮影を実装する
         return Position(distance: 0, angle: 0)
     }
 }
