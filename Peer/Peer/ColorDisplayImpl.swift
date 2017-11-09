@@ -34,12 +34,13 @@ public class ColorDisplayImpl: ColorDisplay
     ///   - R: 表示色のR(0-255)
     ///   - G: 表示色のG(0-255)
     ///   - B: 表示色のB(0-255)
-    public func display(R: UInt8, G: UInt8, B: UInt8)
+    ///   - brightness: LEDの明るさ
+    public func display(R: UInt8, G: UInt8, B: UInt8, brightness: UInt8)
     {
         self.willFinishIllumination = true
         self.isRepeatIllumination = false
         self.displayColorChange(red: R, green: G, blue: B)
-        self.ledColorChange(red: R, green: G, blue: B)
+        self.ledColorChange(red: R, green: G, blue: B, brightness: brightness)
     }
     
     /// 色を表示する
@@ -48,6 +49,15 @@ public class ColorDisplayImpl: ColorDisplay
     {
         let rgb = convertColorToRGB(color: color)
         display(R: rgb[0], G: rgb[1], B: rgb[2])
+    }
+    
+    /// 色を表示する
+    /// - Parameters:
+    ///   - R: 表示色のR(0-255)
+    ///   - G: 表示色のG(0-255)
+    ///   - B: 表示色のB(0-255)
+    public func display(R: UInt8, G: UInt8, B: UInt8){
+        display(R: R, G: G, B: B, brightness: 255)
     }
     
     /// イルミネーションのように色を変化させながらゆっくり点滅を繰り返す
@@ -68,8 +78,11 @@ public class ColorDisplayImpl: ColorDisplay
                     let rgb = self.convertColorToRGB(color: color)
                     self.displayColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
                     // - TODO: LEDの点滅を繰り返すように修正する（Arduino側の修正も必要）
-                    self.ledColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
-                    Thread.sleep(forTimeInterval: interval)
+                    for i in 1...10 {
+                        let br = UInt8((5.0 - abs(5 - i)) / 5 * 255.0)
+                        self.ledColorChange(red: rgb[0], green: rgb[1], blue: rgb[2], br)
+                        Thread.sleep(forTimeInterval: interval/10.0)
+                    }
                     if self.willFinishIllumination {
                         break
                     }
@@ -100,10 +113,11 @@ public class ColorDisplayImpl: ColorDisplay
     ///   - r: RGBのR(0-255)
     ///   - g: RGBのG(0-255)
     ///   - b: RGBのB(0-255)
-    private func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8){
+    ///.  - brightness: 明るさ(0-255)
+    private func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8, brightness: UInt8){
         if(self.peripheral != nil && self.ledCharacteristic != nil){
-            var bytes : [UInt8] = [r, g, b]
-            let data = NSData(bytes: &bytes, length: 3)
+            var bytes : [UInt8] = [r, g, b, brightness]
+            let data = NSData(bytes: &bytes, length: 4)
             self.peripheral?.writeValue(data as Data, for: self.ledCharacteristic!, type:
                 CBCharacteristicWriteType.withResponse)
             
