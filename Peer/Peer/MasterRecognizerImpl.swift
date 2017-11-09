@@ -17,11 +17,8 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
     var output : AVCaptureVideoDataOutput!
     var position: Position = Position(distance: 0, angle: 0)
     
-    
-    /// マスターの位置を認識する
-    /// - Returns: マスターの位置
-    public func recognize() -> Position {
-        // - TODO: 【外村】ここにカメラ撮影を実装する
+    override init() {
+        super.init()
         // イメージビューを生成
         //imageView = UIImageView()
         
@@ -46,7 +43,14 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         
         // セッションスタート
         self.startSession()
-        print("===debug")
+        
+        
+    }
+    /// マスターの位置を認識する
+    /// - Returns: マスターの位置
+    public func recognize() -> Position {
+        // - TODO: 【外村】ここにカメラ撮影を実装する
+        
         return self.position
         
     }
@@ -134,10 +138,10 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
             
             // UIImageViewをビューに追加
             //ViewController().view.addSubview(self.imageView)
-            self.position.angle = 1.0
-            self.position.distance = 1.0
-            print("====camera")
-            // UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            self.position.angle += 1.0
+            self.position.distance += 1.0
+            
+            //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         }
     }
     
