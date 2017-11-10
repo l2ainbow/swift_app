@@ -37,7 +37,7 @@ public class WeatherInformUseCase
         let day = self.getDay(string: voiceString)
         let location = currentLocator.locate()
         let weather = weatherProvider.askWeather(daysLater: day, location: location)
-        let voice = self.getVoice(weather: weather!)
+        let voice = self.getVoice(day: day, weather: weather!)
         let color = self.getColor(weather: weather!)
         let message = self.getMessage(weather: weather!)
         speaker.speak(voice: voice)
@@ -75,27 +75,45 @@ public class WeatherInformUseCase
     /// 出力する音声を取得する
     /// - Parameter weather: 天気
     /// - Returns: 出力音声文字列
-    private func getVoice(weather: Weather) -> String{
+    private func getVoice(day: Int, weather: Weather) -> String{
       var voice = ""
+      switch day {
+      case 0:
+        voice += "今日の"
+      case 1:
+        voice += "明日の"
+      case 2:
+        voice += "明後日の"
+      case 3:
+        voice += "明々後日の"
+      case 4:
+        voice += "四日後の"
+      case 5:
+        voice += "五日後の"
+      default:
+      }
+      
+      voice += "天気は、"
+      
       switch weather {
       case Weather.Clear:
-        voice = "晴れどす"
+        voice += "晴れどす"
       case Weather.Cloudy:
-        voice = "曇りどす"
+        voice += "曇りどす"
       case Weather.Rain:
-        voice = "雨どす"
+        voice += "雨どす"
       case Weather.Snow:
-        voice = "雪どす"
+        voice += "雪どす"
       case Weather.Thunderstorm:
-        voice = "雷どす"
+        voice += "雷どす"
       case Weather.Drizzle:
-        voice = "霧どす"
+        voice += "霧どす"
       case Weather.Tornado:
-        voice = "竜巻どす"
+        voice += "竜巻どす"
       case Weather.Others:
-        voice = "いろいろどす"
+        voice += "いろいろどす"
       default:
-        voice = "不明どす"
+        voice += "不明どす"
       }
       return voice
     }
