@@ -75,7 +75,7 @@ public class WeatherInformUseCase
     /// 出力する音声を取得する
     /// - Parameter weather: 天気
     /// - Returns: 出力音声文字列
-    private func getVoice(day: Int, weather: Weather) -> String{
+    private func getVoice(day: Int, weather: DailyWeather) -> String{
       var voice = ""
       switch day {
       case 0:
@@ -95,26 +95,28 @@ public class WeatherInformUseCase
       
       voice += "天気は、"
       
-      switch weather {
+      switch weather.main {
       case Weather.Clear:
-        voice += "晴れどす"
+        voice += "晴れ"
       case Weather.Cloudy:
-        voice += "曇りどす"
+        voice += "曇り"
       case Weather.Rain:
-        voice += "雨どす"
+        voice += "雨"
       case Weather.Snow:
-        voice += "雪どす"
+        voice += "雪"
       case Weather.Thunderstorm:
-        voice += "雷どす"
+        voice += "雷"
       case Weather.Drizzle:
-        voice += "霧どす"
+        voice += "霧"
       case Weather.Tornado:
-        voice += "竜巻どす"
+        voice += "竜巻"
       case Weather.Others:
-        voice += "いろいろどす"
+        voice += "いろいろ"
       default:
-        voice += "不明どす"
+        voice += "不明"
       }
+      
+      voice += "どす"
       return voice
     }
     
@@ -173,5 +175,4 @@ public class WeatherInformUseCase
         }
         return message
     }
-
 }

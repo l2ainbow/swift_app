@@ -13,5 +13,5 @@ public protocol WeatherProvider
     ///   - daysLater: 知りたい日（何日後か）
     ///   - location: 知りたい場所
     /// - Returns: その日その場所の天気
-    func askWeather(daysLater: Int, location: Location) -> Weather?
+    func askWeather(daysLater: Int, location: Location) -> DailyWeather
 }

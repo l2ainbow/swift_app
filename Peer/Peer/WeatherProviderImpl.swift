@@ -23,10 +23,10 @@ public class WeatherProviderImpl: WeatherProvider
     ///   - daysLater: 知りたい日（何日後か）
     ///   - location: 知りたい場所
     /// - Returns: 知りたい日知りたい場所の天気
-    public func askWeather(daysLater: Int, location: Location) -> Weather?
+    public func askWeather(daysLater: Int, location: Location) -> DailyWeather
     {
         if (daysLater > MAX_DAYS){
-            return nil
+            return DailyWeather(Others, None, None)
         }
         let urlStr = OPEN_WEATHER_MAP_URL + "lat=" + String(location.latitude) + "&lon=" + String(location.longitude) + "&APPID=" + API_KEY
         let url = URL(string: urlStr)
@@ -44,9 +44,9 @@ public class WeatherProviderImpl: WeatherProvider
         semaphore.wait()
         
         let ids = parse(json: json)
-        let weather = getWeather(daysLater: daysLater, weatherIds: ids)
+        let dailyWeather = getWeather(daysLater: daysLater, weatherIds: ids)
         
-        return weather
+        return dailyWeather
     }
     
     /// JSONを解析する
@@ -81,8 +81,8 @@ public class WeatherProviderImpl: WeatherProvider
     ///   - daysLater: 知りたい日（何日後か）
     ///   - weatherIds: (key = UNIX時刻, value = 天気ID)のDictionary型
     /// - Returns: 知りたい日の天気
-    private func getWeather(daysLater: Int, weatherIds: Dictionary<Int, Int>) -> Weather{
-        var weather = Weather.Others
+    private func getWeather(daysLater: Int, weatherIds: Dictionary<Int, Int>) -> DailyWeather{
+        var dailyWeather = DailyWeather(Others, None, None)
         
         var cntWeather = Dictionary<Weather, Int>()
         
@@ -100,15 +100,25 @@ public class WeatherProviderImpl: WeatherProvider
             }
         }
         
-        var max = 0
-        for c in cntWeather{
-            if c.value > max {
-                weather = c.key
-                max = c.value
-            }
+        cntWeather.sorted(by: {$0.1 > $1.1})
+        
+        dailyWeather.main = cntWeather[0].key
+        dailyWeather.sub = cntWeather[1].key
+        var sum = 0
+        for c in cntWeather {
+            sum += c.value
+        }
+        if (cntWeather[1].value >= sum / 4){
+           dailyWeather.conjunction = WeatherConjunction.Sometimes
+        }
+        else if (cntWeather[1].value >= sum / 8){
+           dailyWeather.conjunction = WeatherConjunction.Temporary
+        }
+        else {
+           dailyWeather.conjunction = None
         }
         
-        return weather
+        return dailyWeather
     }
     
     /// 天気IDを天気に変換する
