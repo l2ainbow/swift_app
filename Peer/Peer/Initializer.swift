@@ -23,7 +23,7 @@ class Initializer {
         let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()
         // TODO: 【外村】MasterRecognizerImplに変えてテスト
-        let masterRecognizer = MockMasterRecognizer()
+        let masterRecognizer = MasterRecognizerImpl()
         let runner = RunnerImpl(rightMotor: delegate.rightMotor, leftMotor: delegate.leftMotor)
         let follower = Follower(runner: runner)
         let musicSearcher = MusicSearcherImpl()

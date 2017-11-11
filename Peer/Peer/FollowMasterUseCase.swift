@@ -28,6 +28,7 @@ public class FollowMasterUseCase
         var position = Position(distance: 0, angle: 0)
         repeat{
             position = masterRecognizer.recognize()
+            print(position.angle)
         }
         while(follower.follow(position: position))
     }
