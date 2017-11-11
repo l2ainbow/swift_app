@@ -13,8 +13,6 @@ import Foundation
 public class ColorDisplayImpl: ColorDisplay
 {
     private var view: UIView
-    private var peripheral: CBPeripheral?
-    private var ledCharacteristic: CBCharacteristic?
     
     /// イルミネーションの繰り返し中か
     private var isRepeatIllumination = false
@@ -23,10 +21,8 @@ public class ColorDisplayImpl: ColorDisplay
     
     private let semaphore = DispatchSemaphore(value: 1)
     
-    init(view: UIView, peripheral: CBPeripheral?, characteristic: CBCharacteristic?){
+    init(view: UIView){
         self.view = view
-        self.peripheral = peripheral
-        self.ledCharacteristic = characteristic
     }
     
     /// 色を表示する
@@ -115,13 +111,9 @@ public class ColorDisplayImpl: ColorDisplay
     ///   - b: RGBのB(0-255)
     ///.  - brightness: 明るさ(0-255)
     private func ledColorChange(red r: UInt8, green g: UInt8, blue b: UInt8, brightness: UInt8){
-        if(self.peripheral != nil && self.ledCharacteristic != nil){
-            var bytes : [UInt8] = [r, g, b, brightness]
-            let data = NSData(bytes: &bytes, length: 4)
-            self.peripheral?.writeValue(data as Data, for: self.ledCharacteristic!, type:
-                CBCharacteristicWriteType.withResponse)
-            
-        }
+        var bytes : [UInt8] = [r, g, b, brightness]
+        let data = NSData(bytes: &bytes, length: 4) as Data
+        BluetoothManager.shared.writeValue(value: data, type: CharacteristicType.LED)
     }
     
     /// 色をRGBに変換する

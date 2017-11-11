@@ -13,25 +13,28 @@ public class Motor {
     /// PWMの最大値
     public static let MAX_PWM = 100
     
-    private var peripheral : CBPeripheral?
-    private var characteristic : CBCharacteristic?
+    private var type: CharacteristicType
     
-    init(peripheral: CBPeripheral?, characteristic: CBCharacteristic?){
-        self.peripheral = peripheral
-        self.characteristic = characteristic
+    init(type: MotorType){
+        self.type = CharacteristicType.RightMotor
+        if (type == MotorType.Left){
+            self.type = CharacteristicType.LeftMotor
+        }
     }
     
     /// モータを回転する
     /// - Parameter pwm: モータのPWM
     func rotate(pwm: Int){
         let data = String(pwm).data(using: .utf8)!
-        if (self.peripheral != nil){
-            self.peripheral?.writeValue(data as Data, for: self.characteristic!, type: CBCharacteristicWriteType.withResponse)
-        }
+        BluetoothManager.shared.writeValue(value: data, type: type)
     }
     
     /// モータを停止する
     func stop(){
         self.rotate(pwm: 0)
     }
+}
+
+public enum MotorType {
+    case Right, Left
 }

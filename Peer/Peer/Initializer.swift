@@ -12,11 +12,11 @@ class Initializer {
     // 初期化を行う
     // delegate: 初期化する呼び出し元のViewController
     static func initialize(delegate: ViewController){
-        delegate.colorDisplay = ColorDisplayImpl(view: delegate.view, peripheral: delegate.peripheral, characteristic: delegate.ledCharacteristic)
+        delegate.colorDisplay = ColorDisplayImpl(view: delegate.view)
         delegate.messageDisplay = MessageDisplayImpl(label: delegate.conditionText)
         delegate.speaker = SpeakerImpl()
-        delegate.rightMotor = Motor(peripheral: delegate.peripheral, characteristic: delegate.rightMotorCharacteristic)
-        delegate.leftMotor = Motor(peripheral: delegate.peripheral, characteristic: delegate.leftMotorCharacteristic)
+        delegate.rightMotor = Motor(type: .Right)
+        delegate.leftMotor = Motor(type: .Left)
         
         let voiceDetector = MockVoiceDetector()
         let voiceRecognizer = MockVoiceRecognizer()

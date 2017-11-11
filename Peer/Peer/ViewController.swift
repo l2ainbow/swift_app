@@ -12,29 +12,9 @@ import CoreBluetooth
 import Foundation
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate{
-    //-- 構造体 --//
-    /// キャラクタリスティックの構造体
-    struct Characteristic{
-        /// UUID
-        let uuid: CBUUID
-        /// キャラクタリスティック名
-        let name: String
-        /// 送受信データのバイト数
-        let byte: Int
-    }
-    
     //-- 定数 --//
     /// P2P通信のサービス名
     let SERVICE_TYPE = "LCOC-Chat"
-    
-    /// BLE UUID
-    let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
-    /// 使用するキャラクタリスティックの配列
-    let CHAR_UUIDs:[String:Characteristic] = [
-        "leftMotor":Characteristic(uuid: CBUUID(string: "6C680001-F374-4D39-9FD8-A7DBB54CD6EB"), name: "leftMotor", byte: 4),
-        "rightMotor":Characteristic(uuid: CBUUID(string: "6C680002-F374-4D39-9FD8-A7DBB54CD6EB"), name: "rightMotor", byte: 4),
-        "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
-    ]
     
     //-- 変数 --//
     // <MultiConnectivity関連>
@@ -47,22 +27,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
     /// 接続先のID
     var peerID: MCPeerID!
     
-    // <Bluetooth関連>
-    /// セントラルの管理
-    var centralManager: CBCentralManager!
-    /// ペリフェラル
-    var peripheral: CBPeripheral!
-    /// 左モータを表すキャラクタリスティック
-    var leftMotorCharacteristic : CBCharacteristic?
-    /// 右モータを表すキャラクタリスティック
-    var rightMotorCharacteristic : CBCharacteristic?
-    /// LEDを表すキャラクタリスティック
-    var ledCharacteristic : CBCharacteristic?
-    
     // <UI関連>
     /// 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
-    
     
     // <その他>
     /// 音声スピーカー
@@ -97,9 +64,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         self.assistant = MCAdvertiserAssistant(serviceType:SERVICE_TYPE,
                                                discoveryInfo:nil, session:self.session)
         self.assistant.start()
-        
-        // Bluetooth初期化
-        self.centralManager = CBCentralManager(delegate: self, queue: nil)
         
         // タップ処理の初期化
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.tapped(_:)))
@@ -169,106 +133,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         }
         rgbData.append(UInt8(rgb)!)
         return rgbData
-    }
-}
-
-// MARK:- CBCentralManagerからのコールバック
-extension ViewController: CBCentralManagerDelegate {
-    /// Bluetooth状態遷移時の処理
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        switch central.state{
-        case .poweredOn:
-            centralManager.scanForPeripherals(withServices: [SERVICE_UUID]) // Peripheralのスキャン開始
-            print("state=powerOn, start to scan\(SERVICE_UUID)")
-        default:
-            break
-        }
-    }
-    
-    /// Peripheral発見時の処理
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        self.peripheral = peripheral
-        // print("ペリフェラル発見:%@",peripheral.name!)
-        centralManager.stopScan()
-        
-        central.connect(peripheral, options: nil)
-    }
-    
-    /// Peripheralとの接続切断時の処理
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        if (error != nil){
-            print("Peripheral切断時エラー:%@", error!)
-            return
-        }
-        print("ペリフェラル切断:%@",peripheral.name!)
-        self.messageDisplay.display(message: "Bluetooth接続が切断されました。")
-        self.colorDisplay.display(R: 255, G: 0, B: 0)
-        centralManager.scanForPeripherals(withServices: [SERVICE_UUID])
-    }
-    
-    /// Periphralとの接続時の処理
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        // print("ペリフェラルとの接続成功:%@",peripheral.name!)
-        self.peripheral = peripheral
-        centralManager.stopScan()
-        self.colorDisplay.display(R: 0, G: 255, B: 0)
-        self.messageDisplay.display(message: "Bluetooth接続しました。")
-        peripheral.delegate = self
-        peripheral.discoverServices([SERVICE_UUID])
-    }
-}
-
-// MARK:- CBPeripheralからのコールバック
-extension ViewController: CBPeripheralDelegate {
-    /// サービス発見時の処理
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if (error != nil){
-            print("サービス発見時エラー:%@", error!)
-            return
-        }
-        print("サービス発見:%@",peripheral.services!)
-        peripheral.discoverCharacteristics([], for: (peripheral.services?.first)!)
-    }
-    
-    /// キャラクタリスティック発見時の処理
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if (error != nil){
-            print("キャラクタリスティック発見時エラー:%@", error!)
-            return
-        }
-        
-        for characteristic in service.characteristics!
-        {
-            print("キャラクタリスティク発見:%@",characteristic)
-            peripheral.setNotifyValue(true, for: characteristic)
-            
-            if (characteristic.value == nil) {
-                let a = 0
-                characteristic.setValue(a, forKey: "")
-            }
-            
-            switch characteristic.uuid{
-            case (CHAR_UUIDs["leftMotor"]?.uuid)!:
-                leftMotorCharacteristic = characteristic
-                break
-            case (CHAR_UUIDs["rightMotor"]?.uuid)!:
-                rightMotorCharacteristic = characteristic
-                break
-            case (CHAR_UUIDs["LED"]?.uuid)!:
-                ledCharacteristic = characteristic
-                break
-            default:
-                break
-            }
-        }
-    }
-    
-    /// キャラクタリスティクのデータ更新時の処理
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if (error != nil){
-            print("データ更新エラー:%@", error!)
-            return
-        }
     }
 }
 
