@@ -26,7 +26,7 @@ public class WeatherProviderImpl: WeatherProvider
     public func askWeather(daysLater: Int, location: Location) -> DailyWeather
     {
         if (daysLater > MAX_DAYS){
-            return DailyWeather(Others, None, None)
+            return DailyWeather(main: Weather.Others, conjunction: WeatherConjunction.None, sub: Weather.None)
         }
         let urlStr = OPEN_WEATHER_MAP_URL + "lat=" + String(location.latitude) + "&lon=" + String(location.longitude) + "&APPID=" + API_KEY
         let url = URL(string: urlStr)
@@ -82,7 +82,7 @@ public class WeatherProviderImpl: WeatherProvider
     ///   - weatherIds: (key = UNIX時刻, value = 天気ID)のDictionary型
     /// - Returns: 知りたい日の天気
     private func getWeather(daysLater: Int, weatherIds: Dictionary<Int, Int>) -> DailyWeather{
-        var dailyWeather = DailyWeather(Others, None, None)
+        var dailyWeather = DailyWeather(main: Weather.Others, conjunction: WeatherConjunction.None, sub: Weather.None)
         
         var cntWeather = Dictionary<Weather, Int>()
         
@@ -100,22 +100,23 @@ public class WeatherProviderImpl: WeatherProvider
             }
         }
         
-        cntWeather.sorted(by: {$0.1 > $1.1})
+        let sorted = cntWeather.sorted(by: {$0.1 > $1.1})
         
-        dailyWeather.main = cntWeather[0].key
-        dailyWeather.sub = cntWeather[1].key
+        dailyWeather.main = sorted[0].key
+        dailyWeather.sub = sorted[1].key
+        let subCount = sorted[1].value
         var sum = 0
         for c in cntWeather {
             sum += c.value
         }
-        if (cntWeather[1].value >= sum / 4){
+        if (subCount >= sum / 4){
            dailyWeather.conjunction = WeatherConjunction.Sometimes
         }
-        else if (cntWeather[1].value >= sum / 8){
+        else if (subCount >= sum / 8){
            dailyWeather.conjunction = WeatherConjunction.Temporary
         }
         else {
-           dailyWeather.conjunction = None
+           dailyWeather.conjunction = WeatherConjunction.None
         }
         
         return dailyWeather

@@ -70,13 +70,16 @@ public enum Weather : Int
 /// - Sometimes: 時々
 /// - Temporary: 一時
 /// - None: なし
-public enum WeatherConjunction : Int
+public enum WeatherConjunction : String
 {
-    case And, Sometimes, Temporary, None
+    case And = "のち"
+    case Sometimes = "時々"
+    case Temporary = "一時"
+    case None = ""
 }
 
 public struct DailyWeather {
-    main: Weather
-    conjunction: WeatherConjunction
-    sub: Weather
+    var main: Weather
+    var conjunction: WeatherConjunction
+    var sub: Weather
 }

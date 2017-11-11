@@ -20,7 +20,7 @@ public class WeatherInformUseCase
     private var messageDisplay: MessageDisplay
     private var weather: Weather?
     private var location: Location?
-
+    
     init(speaker:Speaker , colorDisplay:ColorDisplay , currentLocator:CurrentLocator , weatherProvider:WeatherProvider, messageDisplay:MessageDisplay )
     {
         self.speaker = speaker
@@ -37,9 +37,9 @@ public class WeatherInformUseCase
         let day = self.getDay(string: voiceString)
         let location = currentLocator.locate()
         let weather = weatherProvider.askWeather(daysLater: day, location: location)
-        let voice = self.getVoice(day: day, weather: weather!)
-        let color = self.getColor(weather: weather!)
-        let message = self.getMessage(weather: weather!)
+        let voice = self.getVoice(day: day, weather: weather)
+        let color = self.getColor(weather: weather.main)
+        let message = self.getMessage(weather: weather.main)
         speaker.speak(voice: voice)
         colorDisplay.display(color: color)
         messageDisplay.display(message: message)
@@ -71,81 +71,66 @@ public class WeatherInformUseCase
         }
         return day
     }
-
+    
     /// 出力する音声を取得する
     /// - Parameter weather: 天気
     /// - Returns: 出力音声文字列
     private func getVoice(day: Int, weather: DailyWeather) -> String{
-      var voice = ""
-      switch day {
-      case 0:
-        voice += "今日の"
-      case 1:
-        voice += "明日の"
-      case 2:
-        voice += "明後日の"
-      case 3:
-        voice += "明々後日の"
-      case 4:
-        voice += "四日後の"
-      case 5:
-        voice += "五日後の"
-      default:
-      }
-      
-      voice += "天気は、"
-      
-      switch weather.main {
-      case Weather.Clear:
-        voice += "晴れ"
-      case Weather.Cloudy:
-        voice += "曇り"
-      case Weather.Rain:
-        voice += "雨"
-      case Weather.Snow:
-        voice += "雪"
-      case Weather.Thunderstorm:
-        voice += "雷"
-      case Weather.Drizzle:
-        voice += "霧"
-      case Weather.Tornado:
-        voice += "竜巻"
-      case Weather.Others:
-        voice += "いろいろ"
-      default:
-        voice += "不明"
-      }
-      
-      voice += "どす"
-      return voice
+        var voice = ""
+        switch day {
+        case 0:
+            voice += "今日の"
+        case 1:
+            voice += "明日の"
+        case 2:
+            voice += "明後日の"
+        case 3:
+            voice += "明々後日の"
+        case 4:
+            voice += "四日後の"
+        case 5:
+            voice += "五日後の"
+        default: break
+        }
+        
+        voice += "天気は、"
+        voice += weather.main.inJapanese()
+        
+        if (weather.conjunction != WeatherConjunction.None){
+            voice += weather.conjunction.rawValue
+            voice += weather.sub.inJapanese()
+        }
+        
+        voice += "どす"
+        return voice
     }
     
     /// 表示する色を取得する
     /// - Parameter weather: 天気
     /// - Returns: 表示色
     private func getColor(weather:Weather) -> Color{
-      var color: Color = Color.Black
-      switch weather {
-      case Weather.Clear:
-        color = Color.Orange
-      case Weather.Cloudy:
-        color = Color.Gray
-      case Weather.Rain:
-        color = Color.Blue
-      case Weather.Snow:
-        color = Color.White
-      case Weather.Thunderstorm:
-        color = Color.Yellow
-      case Weather.Drizzle:
-        color = Color.LightGray
-      case Weather.Tornado:
-        color = Color.LightBlue
-      case Weather.Others:
-        color = Color.Red
-      default:
-        color = Color.Black
-      }
-      return color
+        var color: Color = Color.Black
+        switch weather {
+        case Weather.Clear:
+            color = Color.Orange
+        case Weather.Cloudy:
+            color = Color.Gray
+        case Weather.Rain:
+            color = Color.Blue
+        case Weather.Snow:
+            color = Color.White
+        case Weather.Thunderstorm:
+            color = Color.Yellow
+        case Weather.Drizzle:
+            color = Color.LightGray
+        case Weather.Tornado:
+            color = Color.LightBlue
+        case Weather.Others:
+            color = Color.Red
+        default:
+            color = Color.Black
+        }
+        return color
     }
     
     /// 表示するメッセージを取得する
