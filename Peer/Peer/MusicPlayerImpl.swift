@@ -51,7 +51,6 @@ public class MusicPlayerImpl: NSObject, MusicPlayer
     
     /// 音楽再生を終了する
     public func terminate(){
-        // - TOOD: 一時停止の処理になっているので、音楽再生を終了するように変更
         if (audioPlayer != nil) {
             audioPlayer?.stop()
             audioPlayer = nil

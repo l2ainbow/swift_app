@@ -63,6 +63,7 @@ public class JukeBoxUseCase
     /// 音楽を一時停止する
     public func pauseMusic(){
         musicPlayer.pause()
+        // - TODO: 音楽の一時停止時に色の変更を止めるように修正
     }
     
     /// ユースケースを終了する
