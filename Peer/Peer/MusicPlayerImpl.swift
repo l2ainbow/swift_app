@@ -54,7 +54,9 @@ public class MusicPlayerImpl: NSObject, MusicPlayer
         // - TOOD: 一時停止の処理になっているので、音楽再生を終了するように変更
         if (audioPlayer != nil) {
             audioPlayer?.stop()
+            audioPlayer = nil
         }
+        semaphore.signal()
     }
     
     /// 音楽が終了するまで待つ
@@ -66,6 +68,6 @@ public class MusicPlayerImpl: NSObject, MusicPlayer
 extension MusicPlayerImpl: AVAudioPlayerDelegate {
     /// 音楽が終了した時の処理
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        semaphore.signal()
+        terminate()
     }
 }
