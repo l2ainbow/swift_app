@@ -17,9 +17,10 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     private var text: String = ""
     private var timer: Timer!
     private var resultText: String = ""
+    private var isRun: Bool!
     
     init() {
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
         timer.fire()
     }
     // 音声を認識する
@@ -27,12 +28,30 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     public func recognize() -> String {
         // TODO: 【外村】ここを実装する
         var result: String = ""
-        result = resultText
-        resultText = ""
+        result = self.resultCheck()
+        print("check1 === " + result)
+        Thread.sleep(forTimeInterval: 3)
+        if (result.contains("バディ")) {
+            result = ""
+            result = self.resultCheck()
+            print("check2 === " + result)
+        }
+        
         return result
     }
     
-    
+    func resultCheck () -> String{
+        var result: String = ""
+        self.resultText = ""
+        self.isRun = true
+        while(true) {
+            if (self.resultText != "" || !isRun) {
+                result = self.resultText
+                break
+            }
+        }
+        return result
+    }
     func startRecording() throws {
         
         if let recognitionTask = recognitionTask {
@@ -67,6 +86,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
             } else {
                 print("====result else")
                 self.stopRecording()
+                self.isRun = false
             }
 
             if error != nil || isFinal {
@@ -101,7 +121,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     
     
     @objc func repeatRecognize(_ timer: Timer) {
-        self.resultText = ""
+        
         if (!self.audioEngine.isRunning) {
             print("start")
             try! self.startRecording()
@@ -111,7 +131,6 @@ public class VoiceRecognizerImpl: VoiceRecognizer
             self.text = ""
             stopRecording()
             print("stop")
-            print("===\(self.resultText)")
         }
         
     }

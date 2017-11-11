@@ -5,7 +5,6 @@
 //  Created by Yu Iijima on 2017/10/22.
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
-import Foundation
 
 public class VoiceOrderUseCase
 {
@@ -32,34 +31,11 @@ public class VoiceOrderUseCase
         print("=============start============")
         print("\n")
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
-        var result = ""
         while(!voiceDetector.detect()){}
         print("===detect")
-        while(true){
-            result = voiceRecognizer.recognize()
-            if (result != ""){
-                print("result = " + result)
-                break
-            }
-        }
-        if (result.contains("バディ")) {
-            result = ""
-            Thread.sleep(forTimeInterval: 3)
-            while(true) {
-                result = voiceRecognizer.recognize()
-                if (result != "") {
-                    print("result = " + result)
-                    break
-                }
-            
-            colorDisplay.display(color: Color.Yellow)
-            messageDisplay.display(message: "音声認識中...")
-            }
-            
-            order.voiceString = result
-        }
-        //var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
-        
+        colorDisplay.display(color: Color.Yellow)
+        messageDisplay.display(message: "音声認識中...")
+        order.voiceString = voiceRecognizer.recognize()
         
         if (KeywordSearcher.search(string: order.voiceString, keyword: "天気")){
             order.order = "WeatherInform"
