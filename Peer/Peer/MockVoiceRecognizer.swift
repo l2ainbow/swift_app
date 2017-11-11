@@ -11,11 +11,7 @@ import Foundation
 class MockVoiceRecognizer : VoiceRecognizer{
     private var cnt = 0
     
-    func recognize() {
-
-    }
-    
-    func getText() -> String {
+    func recognize() -> String {
         Thread.sleep(forTimeInterval: 1)
         //return "弥な明後日の天気はどうですか"
         //return "ついてきて"
@@ -25,4 +21,7 @@ class MockVoiceRecognizer : VoiceRecognizer{
         }
         return "音楽再生"
     }
+    
+    
+    
 }

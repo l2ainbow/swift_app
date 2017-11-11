@@ -6,34 +6,33 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 import Speech
+import AudioToolbox
+
 public class VoiceRecognizerImpl: VoiceRecognizer
 {
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
-    private var text: String = "===return"
+    private var text: String = ""
+    private var timer: Timer!
+    private var resultText: String = ""
     
+    init() {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
+        timer.fire()
+    }
     // 音声を認識する
     // -> 認識した音声文字列
-    public func recognize()
-    {
+    public func recognize() -> String {
         // TODO: 【外村】ここを実装する
-        if (audioEngine.isRunning) {
-            audioEngine.stop()
-            recognitionRequest?.endAudio()
-        }
-        
-        try! self.startRecording()
-        
+        var result: String = ""
+        result = resultText
+        resultText = ""
+        return result
     }
     
-    public func getText() -> String{
-        var result: String = self.text
-        self.text = "===return"
-        return result
-        
-    }
+    
     func startRecording() throws {
         
         if let recognitionTask = recognitionTask {
@@ -60,21 +59,14 @@ public class VoiceRecognizerImpl: VoiceRecognizer
 
             if let result = result {
                 /* ここで文字列を処理 */
-                
+                //self.stopRecording()
                 self.text = result.bestTranscription.formattedString
                 //print("====\(self.text)")
-
-                self.audioEngine.stop()
-                recognitionRequest.endAudio()
                 isFinal = result.isFinal
 
-
             } else {
-
                 print("====result else")
-                self.audioEngine.stop()
-                recognitionRequest.endAudio()
-
+                self.stopRecording()
             }
 
             if error != nil || isFinal {
@@ -82,8 +74,6 @@ public class VoiceRecognizerImpl: VoiceRecognizer
                 inputNode.removeTap(onBus: 0)
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
-
-
             }
 
 
@@ -100,6 +90,31 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         
     }
     
+    func stopRecording() {
+        if (self.audioEngine.isRunning) {
+            self.audioEngine.stop()
+            self.recognitionRequest?.endAudio()
+        }
+        
+    }
+    
+    
+    
+    @objc func repeatRecognize(_ timer: Timer) {
+        self.resultText = ""
+        if (!self.audioEngine.isRunning) {
+            print("start")
+            try! self.startRecording()
+        }
+        if (self.text != "") {
+            self.resultText = self.text
+            self.text = ""
+            stopRecording()
+            print("stop")
+            print("===\(self.resultText)")
+        }
+        
+    }
     
 }
 

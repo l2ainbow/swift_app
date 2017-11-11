@@ -25,12 +25,22 @@ public class VoiceDetectorImpl: VoiceDetector
     
     var queue: AudioQueueRef!
     var timer: Timer!
-    var isDetect: Bool = true                                             /* 音量判定 */
+    var isDetect: Bool!                                             /* 音量判定 */
     var levelMeter = AudioQueueLevelMeterState()                    /* 音量のレベル */
     var propertySize = UInt32(MemoryLayout<AudioQueueLevelMeterState>.size)
+
+    init () {
+        self.detectStart()
+        self.isDetect = false
+    }
+    
     // 音声を検出する
     // -> 検出可否(true: 検出した, false: 未検出)
-    
+    public func detect() -> Bool {
+        let result: Bool = self.isDetect
+        self.isDetect = false
+        return result
+    }
     
     /**
      *
@@ -38,7 +48,7 @@ public class VoiceDetectorImpl: VoiceDetector
      *
      */
     
-    public func detect() {
+    func detectStart(){
         
         var dataFormat = AudioStreamBasicDescription(
             mSampleRate: 44100.0,
@@ -69,24 +79,24 @@ public class VoiceDetectorImpl: VoiceDetector
         var enabledLevelMeter: UInt32 = 1
         AudioQueueSetProperty(self.queue, kAudioQueueProperty_EnableLevelMetering, &enabledLevelMeter, UInt32(MemoryLayout<UInt32>.size))
         
-        //self.detectVolume()
+        
         /* timerの設定 */
-//        self.timer = Timer.scheduledTimer(timeInterval: 0.5,
-//                                          target: self,
-//                                          selector: #selector(VoiceDetectorImpl.detectVolume(_:)),
-//                                          userInfo: nil,
-//                                          repeats: true)
-//        self.timer?.fire()
+        self.timer = Timer.scheduledTimer(timeInterval: 1.0,
+                                          target: self,
+                                          selector: #selector(self.detectVolume(_:)),
+                                          userInfo: nil,
+                                          repeats: true)
+        self.timer?.fire()
     }
     
     /**
      * 音声検出をやめる。
      *
      */
-    func stopUpdatingVolume()
+    func detectStop()
     {
-        //self.timer.invalidate()
-        //self.timer = nil
+        self.timer.invalidate()
+        self.timer = nil
         AudioQueueFlush(self.queue)
         AudioQueueStop(self.queue, false)
         AudioQueueDispose(self.queue, true)
@@ -97,7 +107,7 @@ public class VoiceDetectorImpl: VoiceDetector
      * @param timer: 検出を繰り返す時間
      *
      */
-    public func detectVolume() -> Bool
+    @objc public func detectVolume(_ timer: Timer)
     {
         
         AudioQueueGetProperty(
@@ -109,24 +119,17 @@ public class VoiceDetectorImpl: VoiceDetector
         /* 音声レベルの出力（デバッグ用） */
         print("========\(levelMeter.mAveragePower)")
         
-        
-        /**
-         * バックグラウンドで検出されるため、
-         * ここで音量検出後の処理を行っている。
-         * 修正予定
-         */
         if (levelMeter.mPeakPower >= -10.0) {
             
             self.isDetect = true
-            print("===========detect============")
-            self.stopUpdatingVolume()
+
+            // self.detectStop()
             
         } else {
             
-            isDetect = false
+            self.isDetect = false
                 
         }
-        return isDetect
         
     }
 }
