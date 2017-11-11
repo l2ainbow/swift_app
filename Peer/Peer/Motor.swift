@@ -13,6 +13,7 @@ public class Motor {
     /// PWMの最大値
     public static let MAX_PWM = 100
     
+    /// キャラクタリスティクの種類
     private var type: CharacteristicType
     
     init(type: MotorType){
@@ -35,6 +36,9 @@ public class Motor {
     }
 }
 
+/// モータの種類
+/// - Right: 右モータ
+/// - Left: 左モータ
 public enum MotorType {
     case Right, Left
 }

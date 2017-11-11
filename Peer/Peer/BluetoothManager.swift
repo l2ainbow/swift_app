@@ -11,52 +11,43 @@ import CoreBluetooth
 
 public class BluetoothManager : NSObject{
 
+    /// シングルトンインスタンス
     static let shared = BluetoothManager()
-    
-    /// キャラクタリスティックの構造体
-    struct Characteristic{
-        /// UUID
-        let uuid: CBUUID
-        /// キャラクタリスティック名
-        let name: String
-        /// 送受信データのバイト数
-        let byte: Int
-    }
     
     /// BLE UUID
     let SERVICE_UUID = CBUUID(string: "6C680000-F374-4D39-9FD8-A7DBB54CD6EB")
-    /// 使用するキャラクタリスティックの配列
-    let CHAR_UUIDs:[String:Characteristic] = [
-        "leftMotor":Characteristic(uuid: CBUUID(string: "6C680001-F374-4D39-9FD8-A7DBB54CD6EB"), name: "leftMotor", byte: 4),
-        "rightMotor":Characteristic(uuid: CBUUID(string: "6C680002-F374-4D39-9FD8-A7DBB54CD6EB"), name: "rightMotor", byte: 4),
-        "LED":Characteristic(uuid: CBUUID(string: "6C680003-F374-4D39-9FD8-A7DBB54CD6EB"), name: "LED", byte: 3)
+    /// 使用するキャラクタリスティックのUUID配列
+    let CHAR_UUIDS: [String : CharacteristicType] = [
+        "6C680001-F374-4D39-9FD8-A7DBB54CD6EB" : .LeftMotor,
+        "6C680002-F374-4D39-9FD8-A7DBB54CD6EB" : .RightMotor,
+        "6C680003-F374-4D39-9FD8-A7DBB54CD6EB" : .LED
     ]
     
-    // <Bluetooth関連>
     /// セントラルの管理
     var centralManager: CBCentralManager!
     /// ペリフェラル
     var peripheral: CBPeripheral?
-    
     /// キャラクタリスティク
-    var characteristics: Dictionary <CharacteristicType, CBCharacteristic?> = [CharacteristicType.RightMotor : nil, CharacteristicType.LeftMotor : nil, CharacteristicType.LED : nil]
+    var characteristics: [CharacteristicType : CBCharacteristic?] = [
+        CharacteristicType.RightMotor : nil,
+        CharacteristicType.LeftMotor : nil,
+        CharacteristicType.LED : nil
+    ]
     
     private override init(){
         super.init()
-        
-        // Bluetooth初期化
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
+    /// キャラクタリスティクの値を上書きする
+    /// - Parameters:
+    ///   - value: キャラクタリスティクの値
+    ///   - type: キャラクタリスティクの種類
     public func writeValue(value: Data, type: CharacteristicType){
         if (self.peripheral != nil && characteristics[type] != nil){
             self.peripheral?.writeValue(value, for: characteristics[type]!!, type: CBCharacteristicWriteType.withResponse)
         }
     }
-}
-
-public enum CharacteristicType {
-    case RightMotor, LeftMotor, LED
 }
 
 extension BluetoothManager : CBCentralManagerDelegate {
@@ -123,19 +114,8 @@ extension BluetoothManager: CBPeripheralDelegate {
         {
             print("キャラクタリスティク発見:%@",characteristic)
             peripheral.setNotifyValue(true, for: characteristic)
-            
-            switch characteristic.uuid{
-            case (CHAR_UUIDs["leftMotor"]?.uuid)!:
-                self.characteristics[CharacteristicType.LeftMotor] = characteristic
-                break
-            case (CHAR_UUIDs["rightMotor"]?.uuid)!:
-                self.characteristics[CharacteristicType.RightMotor] = characteristic
-                break
-            case (CHAR_UUIDs["LED"]?.uuid)!:
-                self.characteristics[CharacteristicType.LED] = characteristic
-                break
-            default:
-                break
+            if let type = CHAR_UUIDS[characteristic.uuid.uuidString] {
+                self.characteristics[type] = characteristic
             }
         }
     }
@@ -147,4 +127,12 @@ extension BluetoothManager: CBPeripheralDelegate {
             return
         }
     }
+}
+
+/// キャラクタリスティクの種類
+/// - RightMotor: 右モータ
+/// - LeftMotor: 左モータ
+/// - LED: LED
+public enum CharacteristicType {
+    case RightMotor, LeftMotor, LED
 }
