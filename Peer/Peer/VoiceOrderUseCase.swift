@@ -33,9 +33,13 @@ public class VoiceOrderUseCase
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
         while(!voiceDetector.detect()){}
         print("===detect")
-        colorDisplay.display(color: Color.Yellow)
-        messageDisplay.display(message: "音声認識中...")
-        order.voiceString = voiceRecognizer.recognize()
+        var result: String = ""
+        result = voiceRecognizer.recognize()
+        if (result.contains("バディ")){
+            messageDisplay.display(message: "音声認識中...")
+            colorDisplay.display(color: Color.Yellow)
+            order.voiceString = voiceRecognizer.recognize()
+        }
         
         if (KeywordSearcher.search(string: order.voiceString, keyword: "天気")){
             order.order = "WeatherInform"

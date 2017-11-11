@@ -30,13 +30,13 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         var result: String = ""
         result = self.resultCheck()
         print("check1 === " + result)
-        Thread.sleep(forTimeInterval: 3)
-        if (result.contains("バディ")) {
-            result = ""
-            result = self.resultCheck()
-            print("check2 === " + result)
-        }
-        
+        Thread.sleep(forTimeInterval: 2)
+//        if (result.contains("バディ")) {
+//            result = ""
+//            result = self.resultCheck()
+//            print("check2 === " + result)
+//        }
+//        
         return result
     }
     
