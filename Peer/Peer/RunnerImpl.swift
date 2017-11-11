@@ -6,8 +6,21 @@
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
 
+import Foundation
+
 public class RunnerImpl: Runner
 {
+    /// バディの長さ [m]
+    let LENGTH = 0.077
+    // バディの幅 [m]
+    let WIDTH = 0.097
+    // バディの高さ [m]
+    let HEIGHT = 0.05
+    // タイヤの半径 [m]
+    let RADIUS = 0.025
+    // カーブ係数
+    let K_CURVE = 1.0
+
     /// 右モータ
     var rightMotor: Motor
     /// 左モータ
@@ -35,7 +48,31 @@ public class RunnerImpl: Runner
     /// - Parameter distance: 走行距離 [m]
     /// - Parameter angle: 目標角度 [rad]
     public func curveRun(distance: Double, angle: Double){
-        // - TODO: 前島くんのシミュレーションが完成したら実装
+        let ob = distance / sin(angle) / 2; //OBの長さ
+        let br = sqrt(LENGTH * LENGTH + WIDTH * WIDTH) / 2; //中心から右前のタイヤの長さ
+        let cos_obr = WIDTH / sqrt(LENGTH * LENGTH + WIDTH * WIDTH); //cos_OBR
+        let Or = sqrt(ob * ob + br * br - 2 * ob * br * cos_obr);
+        let Dr = 2 * Or * Double.pi * (angle / Double.pi);
+        let Wr = Dr / (2 * Double.pi * RADIUS);
+        
+        let ol = sqrt(ob * ob + br * br + 2 * ob * br * cos_obr);
+        let Dl = 2 * ol * Double.pi * (angle / Double.pi);
+        let Wl = Dl / (2 * Double.pi * RADIUS);
+        
+        var rMotorSpeed = 0.0
+        var lMotorSpeed = 0.0
+        if(abs(Wr) < abs(Wl)){
+            let lower = Wr / Wl * K_CURVE;
+            rMotorSpeed = Double(Motor.MAX_PWM) * lower
+            lMotorSpeed = Double(Motor.MAX_PWM)
+        }
+        else{
+            let lower = Wl / Wr * K_CURVE;
+            rMotorSpeed = Double(Motor.MAX_PWM)
+            lMotorSpeed = Double(Motor.MAX_PWM) * lower
+        }
+        self.rightMotor.rotate(pwm: Int(rMotorSpeed))
+        self.leftMotor.rotate(pwm: Int(lMotorSpeed))
     }
     
     /// 旋回する
