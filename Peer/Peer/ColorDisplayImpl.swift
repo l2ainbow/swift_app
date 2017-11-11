@@ -79,8 +79,8 @@ public class ColorDisplayImpl: ColorDisplay
                     self.displayColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
                     // - TODO: LEDの点滅を繰り返すように修正する（Arduino側の修正も必要）
                     for i in 1...10 {
-                        let br = UInt8((5.0 - abs(5 - i)) / 5 * 255.0)
-                        self.ledColorChange(red: rgb[0], green: rgb[1], blue: rgb[2], br)
+                        let br = (Double((5 - abs(5 - i))) / 5 * 255.0)
+                        self.ledColorChange(red: rgb[0], green: rgb[1], blue: rgb[2], brightness: UInt8(br))
                         Thread.sleep(forTimeInterval: interval/10.0)
                     }
                     if self.willFinishIllumination {

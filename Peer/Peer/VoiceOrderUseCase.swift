@@ -31,8 +31,8 @@ public class VoiceOrderUseCase
         print("\n")
         print("=============start============")
         print("\n")
-        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.textCheck(_:)), userInfo: self, repeats: true)
-        self.timer?.fire()
+        //self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.textCheck(_:)), userInfo: self, repeats: true)
+        //self.timer?.fire()
         //voiceDetector.detect() // start
         //while(!voiceDetector.detectVolume()){} // volume get
         //print("====\(voiceRecognizer.recognize())")
@@ -43,7 +43,7 @@ public class VoiceOrderUseCase
         messageDisplay.display(message: "音声認識中...")
         
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
-        //order.voiceString = voiceRecognizer.recognize()
+        order.voiceString = voiceRecognizer.getText()
         
         if (KeywordSearcher.search(string: order.voiceString, keyword: "天気")){
             order.order = "WeatherInform"
