@@ -17,7 +17,6 @@
 /// - Others: その他
 public enum Weather : Int
 {
-    // TODO: 「雨のち晴れ」等のバリエーションを増やす
     case Clear = 0, Cloudy, Rain, Snow, Thunderstorm, Drizzle, Tornado, None, Others
     
     /// 天気を全て取得する
@@ -28,6 +27,8 @@ public enum Weather : Int
         }
     }
     
+    /// 天気を日本語に変換する
+    /// - Returns: 日本語の天気
     func inJapanese() -> String {
         switch self {
         case .Clear:
@@ -78,8 +79,12 @@ public enum WeatherConjunction : String
     case None = ""
 }
 
+/// 一日の天気
 public struct DailyWeather {
+    /// メイン天気
     var main: Weather
+    /// 接続詞
     var conjunction: WeatherConjunction
+    /// サブ天気
     var sub: Weather
 }

@@ -109,10 +109,11 @@ public class WeatherProviderImpl: WeatherProvider
         for c in cntWeather {
             sum += c.value
         }
-        if (subCount >= sum / 4){
+        // - TODO: 「のち」の実装
+        if (Double(subCount) >= Double(sum) / 4.0){
            dailyWeather.conjunction = WeatherConjunction.Sometimes
         }
-        else if (subCount >= sum / 8){
+        else if (Double(subCount) >= Double(sum) / 8.0){
            dailyWeather.conjunction = WeatherConjunction.Temporary
         }
         else {

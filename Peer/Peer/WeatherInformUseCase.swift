@@ -10,9 +10,6 @@ import Foundation
 
 public class WeatherInformUseCase
 {
-    /// 天気予報を伝える際のスリープ時間 [s]
-    private let SLEEPING_TIME = 3
-    
     private var speaker: Speaker
     private var colorDisplay: ColorDisplay
     private var currentLocator: CurrentLocator
@@ -37,13 +34,21 @@ public class WeatherInformUseCase
         let day = self.getDay(string: voiceString)
         let location = currentLocator.locate()
         let weather = weatherProvider.askWeather(daysLater: day, location: location)
+        let message = self.getMessage(day: day, weather: weather)
+        messageDisplay.display(message: message)
         let voice = self.getVoice(day: day, weather: weather)
         let color = self.getColor(weather: weather.main)
-        let message = self.getMessage(weather: weather.main)
         speaker.speak(voice: voice)
         colorDisplay.display(color: color)
-        messageDisplay.display(message: message)
-        Thread.sleep(forTimeInterval: TimeInterval(SLEEPING_TIME))
+        if (weather.conjunction != WeatherConjunction.None){
+            Thread.sleep(forTimeInterval: 3.0)
+            let subVoice = self.getSubVoice(conjunction: weather.conjunction, weather: weather.sub)
+            speaker.speak(voice: subVoice)
+            let subColor = self.getColor(weather: weather.sub)
+            colorDisplay.display(color: subColor)
+        }
+        speaker.speak(voice: "どす")
+        Thread.sleep(forTimeInterval: 3.0)
     }
     
     /// 天気を知りたい日を取得する
@@ -74,7 +79,7 @@ public class WeatherInformUseCase
     
     /// 出力する音声を取得する
     /// - Parameter weather: 天気
-    /// - Returns: 出力音声文字列
+    /// - Returns: 音声文字列
     private func getVoice(day: Int, weather: DailyWeather) -> String{
         var voice = ""
         switch day {
@@ -96,13 +101,16 @@ public class WeatherInformUseCase
         voice += "天気は、"
         voice += weather.main.inJapanese()
         
-        if (weather.conjunction != WeatherConjunction.None){
-            voice += weather.conjunction.rawValue
-            voice += weather.sub.inJapanese()
-        }
-        
-        voice += "どす"
         return voice
+    }
+    
+    /// サブ天気の音声を取得する
+    /// - Parameters:
+    ///   - conjunction: 天気予報の接続詞
+    ///   - weather: サブ天気
+    /// - Returns: 音声文字列
+    private func getSubVoice(conjunction: WeatherConjunction, weather: Weather) -> String{
+        return conjunction.rawValue + "、" + weather.inJapanese()
     }
     
     /// 表示する色を取得する
@@ -136,27 +144,27 @@ public class WeatherInformUseCase
     /// 表示するメッセージを取得する
     /// - Parameter weather: 天気
     /// - Returns: 表示メッセージ
-    private func getMessage(weather: Weather) -> String{
+    private func getMessage(day: Int, weather: DailyWeather) -> String{
         var message = ""
-        switch weather {
-        case Weather.Clear:
-            message += "晴れ"
-        case Weather.Cloudy:
-            message += "曇り"
-        case Weather.Rain:
-            message += "雨"
-        case Weather.Snow:
-            message += "雪"
-        case Weather.Thunderstorm:
-            message += "雷"
-        case Weather.Drizzle:
-            message += "霧"
-        case Weather.Tornado:
-            message += "竜巻"
-        case Weather.Others:
-            message += "いろいろ"
-        default:
-            message += "不明"
+        switch day {
+        case 0:
+            message += "今日"
+        case 1:
+            message += "明日"
+        case 2:
+            message += "明後日"
+        case 3:
+            message += "明々後日"
+        case 4:
+            message += "四日後"
+        case 5:
+            message += "五日後"
+        default: break
+        }
+        message += "は"
+        message += weather.main.inJapanese()
+        if (weather.conjunction != WeatherConjunction.None){
+            message += weather.conjunction.rawValue + weather.sub.inJapanese()
         }
         return message
     }
