@@ -5,7 +5,7 @@
 //  Created by Yu Iijima on 2017/10/22.
 //  Copyright © 2017年 Shingo. All rights reserved.
 //
-
+import Foundation
 public class VoiceOrderUseCase
 {
     private var voiceRecognizer: VoiceRecognizer
@@ -30,12 +30,12 @@ public class VoiceOrderUseCase
         print("\n")
         print("=============start============")
         print("\n")
-        var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
         while(!voiceDetector.detect()){}
+        var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
         print("===detect")
         var result: String = ""
         result = voiceRecognizer.recognize()
-        if (result.contains("バディ")){
+        if (result.contains("バディ") || result.contains("バリ") || result.contains("針")){
             messageDisplay.display(message: "音声認識中...")
             colorDisplay.display(color: Color.Yellow)
             order.voiceString = voiceRecognizer.recognize()

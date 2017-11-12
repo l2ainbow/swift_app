@@ -33,7 +33,7 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable : Int(kCVPixelFormatType_32BGRA)]
         
         // デリゲートを設定
-        output.setSampleBufferDelegate(self, queue:DispatchQueue.main)
+        output.setSampleBufferDelegate(self, queue:DispatchQueue(label: "cameraRunning"))
         
         // 遅れてきたフレームは無視する
         output.alwaysDiscardsLateVideoFrames = true
@@ -133,7 +133,7 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
     {
         
         let image = self.imageFromSampleBuffer(sampleBuffer)
-        DispatchQueue.main.async {
+        let data: Data = UIImagePNGRepresentation(image)!
             //self.imageView.image = image
             
             // UIImageViewをビューに追加
@@ -142,7 +142,6 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
             self.position.distance += 1.0
             
             //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        }
     }
     
 }
