@@ -15,7 +15,7 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
     var device : AVCaptureDevice!
     var input : AVCaptureDeviceInput!
     var output : AVCaptureVideoDataOutput!
-    var position: Position = Position(distance: 0, angle: 0)
+    var position: Position = Position(distance: 0.0, angle: 0.0)
     
     override init() {
         super.init()
@@ -43,7 +43,7 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         
         // セッションスタート
         self.startSession()
-        
+        device?.activeVideoMinFrameDuration = CMTimeMake(1, 30)
         
     }
     /// マスターの位置を認識する
@@ -64,7 +64,7 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         let screenHeight = UIScreen.main.bounds.size.height;
         // プレビュー用のビューを生成
         imageView.frame = CGRect(x: 0.0, y: 0.0, width: screenWidth, height: screenHeight)
-
+        
     }
     
     
@@ -96,23 +96,23 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
     }
     
     func setUpSession() -> AVCaptureVideoDataOutput {
-    
-    // セッションの生成
-    session = AVCaptureSession()
-    // フロントカメラ取得
-    device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .front)
-    // インプットの取得
-    input = try! AVCaptureDeviceInput(device: device)
-    // インプットをセッションに追加
-    session.addInput(input)
-    // アウトプットを生成
-    // 今回は動画から静止画をキャプチャするためVideoを設定
-    output = AVCaptureVideoDataOutput()
-    // アウトプットをセッションに追加
-    session.addOutput(output)
-    
-    return output
-    
+        
+        // セッションの生成
+        session = AVCaptureSession()
+        // フロントカメラ取得
+        device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .front)
+        // インプットの取得
+        input = try! AVCaptureDeviceInput(device: device)
+        // インプットをセッションに追加
+        session.addInput(input)
+        // アウトプットを生成
+        // 今回は動画から静止画をキャプチャするためVideoを設定
+        output = AVCaptureVideoDataOutput()
+        // アウトプットをセッションに追加
+        session.addOutput(output)
+        
+        return output
+        
     }
     
     
@@ -122,11 +122,7 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         session.startRunning()
     }
     
-    // 時間設定
-    // 未完成　引数はなんでも同じ
-    func setTime(time : Int) {
-        device?.activeVideoMinFrameDuration = CMTimeMake(1, 30)
-    }
+    
     
     
     public func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!)
@@ -134,16 +130,16 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         
         let image = self.imageFromSampleBuffer(sampleBuffer)
         let objcpp = ObjCpp()
-        let result: String = objcpp.calcPosition(image, distance: self.position.distance, radian: self.position.angle)
-        print(result)
-            //self.imageView.image = image
-            
-            // UIImageViewをビューに追加
-            //ViewController().view.addSubview(self.imageView)
-            self.position.angle += 1.0
-            self.position.distance += 1.0
-            
-            //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        let resultStr: String = objcpp.calcPosition(image, distance: self.position.distance, radian: self.position.angle)
+        print(resultStr)
+        //self.imageView.image = image
+        let result: [String] = resultStr.components(separatedBy: ",")
+        // UIImageViewをビューに追加
+        //ViewController().view.addSubview(self.imageView)
+        self.position.angle = Double(result[0])!
+        self.position.distance = Double(result[1])!
+        
+        //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
     
 }
