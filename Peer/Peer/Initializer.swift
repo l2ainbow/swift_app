@@ -18,8 +18,10 @@ class Initializer {
         delegate.rightMotor = Motor(type: .Right)
         delegate.leftMotor = Motor(type: .Left)
         
-        let voiceDetector = VoiceDetectorImpl()
-        let voiceRecognizer = VoiceRecognizerImpl()
+        //let voiceDetector = VoiceDetectorImpl()
+        let voiceDetector = MockVoiceDetector()
+        //let voiceRecognizer = VoiceRecognizerImpl()
+        let voiceRecognizer = MockVoiceRecognizer()
         let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()
         let masterRecognizer = MasterRecognizerImpl()

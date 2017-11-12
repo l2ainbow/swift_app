@@ -10,7 +10,6 @@ import AVFoundation
 
 public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDataOutputSampleBufferDelegate
 {
-    var imageView : UIImageView!
     var session : AVCaptureSession!
     var device : AVCaptureDevice!
     var input : AVCaptureDeviceInput!
@@ -26,7 +25,6 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         //self.setScreen(imageView: imageView)
         
         // セッションを生成
-        
         let output = self.setUpSession()
         
         // ピクセルフォーマットを 32bit BGR + A とする
@@ -41,32 +39,20 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         // video出力に接続
         output.connection(withMediaType: AVMediaTypeVideo)
         
-        // セッションスタート
-        self.startSession()
         device?.activeVideoMinFrameDuration = CMTimeMake(1, 30)
         
     }
     /// マスターの位置を認識する
     /// - Returns: マスターの位置
     public func recognize() -> Position {
-        // - TODO: 【外村】ここにカメラ撮影を実装する
+        if (!session.isRunning){
+            // セッションスタート
+            self.startSession()
+        }
         
         return self.position
         
     }
-    
-    
-    func setScreen(imageView : UIImageView) {
-        
-        //スクリーンの幅
-        let screenWidth = UIScreen.main.bounds.size.width;
-        //スクリーンの高さ
-        let screenHeight = UIScreen.main.bounds.size.height;
-        // プレビュー用のビューを生成
-        imageView.frame = CGRect(x: 0.0, y: 0.0, width: screenWidth, height: screenHeight)
-        
-    }
-    
     
     func imageFromSampleBuffer(_ sampleBuffer :CMSampleBuffer) -> UIImage {
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
@@ -115,27 +101,19 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         
     }
     
-    
-    
     // セッションをスタートする
     func startSession() {
         session.startRunning()
     }
     
-    
-    
-    
     public func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!)
     {
-        
         let image = self.imageFromSampleBuffer(sampleBuffer)
         let objcpp = ObjCpp()
         let resultStr: String = objcpp.calcPosition(image, distance: self.position.distance, radian: self.position.angle)
         print(resultStr)
-        //self.imageView.image = image
         let result: [String] = resultStr.components(separatedBy: ",")
         // UIImageViewをビューに追加
-        //ViewController().view.addSubview(self.imageView)
         self.position.angle = Double(result[0])!
         self.position.distance = Double(result[1])!
         

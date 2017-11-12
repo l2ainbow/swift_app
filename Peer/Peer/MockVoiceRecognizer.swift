@@ -14,8 +14,12 @@ class MockVoiceRecognizer : VoiceRecognizer{
     func recognize() -> String {
         Thread.sleep(forTimeInterval: 1)
         //return "五日後の天気はどうですか"
-        //return "ついてきて"
         cnt += 1
+        if (cnt == 1){
+            return "バディ"
+        }
+        return "ついてきて"
+        
         if (cnt % 2 == 0){
             return "青"
         }
