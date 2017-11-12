@@ -56,6 +56,9 @@
 		DBD944FC1FABD44E0040CA49 /* MockRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F51FABD44E0040CA49 /* MockRunner.swift */; };
 		DBD944FD1FABD44E0040CA49 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F61FABD44E0040CA49 /* Position.swift */; };
 		DBD944FE1FABD44E0040CA49 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD944F71FABD44E0040CA49 /* Runner.swift */; };
+		F916E6DD1FB86BE200965626 /* objcpp.mm in Sources */ = {isa = PBXBuildFile; fileRef = F916E6DB1FB86BE200965626 /* objcpp.mm */; };
+		F916E6E31FB86C1100965626 /* DetectMan-2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F916E6E01FB86C1100965626 /* DetectMan-2.cpp */; };
+		F916E6E61FB86C3700965626 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F916E6E51FB86C3700965626 /* opencv2.framework */; };
 		F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E31F21315200B24DC0 /* AppDelegate.swift */; };
 		F98954E61F21315200B24DC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98954E51F21315200B24DC0 /* ViewController.swift */; };
 		F98954E91F21315200B24DC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98954E71F21315200B24DC0 /* Main.storyboard */; };
@@ -113,6 +116,13 @@
 		DBD944F51FABD44E0040CA49 /* MockRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRunner.swift; sourceTree = "<group>"; };
 		DBD944F61FABD44E0040CA49 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		DBD944F71FABD44E0040CA49 /* Runner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
+		F916E6DA1FB86BE100965626 /* Peer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Peer-Bridging-Header.h"; sourceTree = "<group>"; };
+		F916E6DB1FB86BE200965626 /* objcpp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = objcpp.mm; path = objc/objcpp.mm; sourceTree = SOURCE_ROOT; };
+		F916E6DC1FB86BE200965626 /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = objc/Header.h; sourceTree = SOURCE_ROOT; };
+		F916E6DF1FB86C1100965626 /* cpp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = cpp.hpp; path = cpp/cpp.hpp; sourceTree = SOURCE_ROOT; };
+		F916E6E01FB86C1100965626 /* DetectMan-2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "DetectMan-2.cpp"; path = "cpp/DetectMan-2.cpp"; sourceTree = SOURCE_ROOT; };
+		F916E6E11FB86C1100965626 /* c++Test-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "c++Test-Bridging-Header.h"; path = "New Group1/c++Test-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		F916E6E51FB86C3700965626 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		F98954E01F21315200B24DC0 /* Peer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98954E31F21315200B24DC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98954E51F21315200B24DC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F916E6E61FB86C3700965626 /* opencv2.framework in Frameworks */,
 				DB1DAF511FA56D16000F8450 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,14 +225,39 @@
 		DB1DAF4F1FA56D16000F8450 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F916E6E51FB86C3700965626 /* opencv2.framework */,
 				DB1DAF501FA56D16000F8450 /* CoreLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F916E6D91FB86BA300965626 /* objc */ = {
+			isa = PBXGroup;
+			children = (
+				F916E6DC1FB86BE200965626 /* Header.h */,
+				F916E6DB1FB86BE200965626 /* objcpp.mm */,
+				F916E6DA1FB86BE100965626 /* Peer-Bridging-Header.h */,
+			);
+			name = objc;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		F916E6DE1FB86BF300965626 /* cpp */ = {
+			isa = PBXGroup;
+			children = (
+				F916E6E11FB86C1100965626 /* c++Test-Bridging-Header.h */,
+				F916E6DF1FB86C1100965626 /* cpp.hpp */,
+				F916E6E01FB86C1100965626 /* DetectMan-2.cpp */,
+			);
+			name = cpp;
+			path = "New Group1";
+			sourceTree = "<group>";
+		};
 		F98954D71F21315200B24DC0 = {
 			isa = PBXGroup;
 			children = (
+				F916E6DE1FB86BF300965626 /* cpp */,
+				F916E6D91FB86BA300965626 /* objc */,
 				F98954E21F21315200B24DC0 /* Peer */,
 				F98954E11F21315200B24DC0 /* Products */,
 				DB1DAF4F1FA56D16000F8450 /* Frameworks */,
@@ -284,8 +320,8 @@
 				TargetAttributes = {
 					F98954DF1F21315200B24DC0 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = WB7NGK438F;
-						LastSwiftMigration = 0830;
+						DevelopmentTeam = MF4M3CTG8F;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -326,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F916E6E31FB86C1100965626 /* DetectMan-2.cpp in Sources */,
 				DBC3D0EE1FB09F3200E54670 /* MockMusicSearcher.swift in Sources */,
 				DBC3D0EA1FB09A1B00E54670 /* Music.swift in Sources */,
 				DB1DAF391F9C9712000F8450 /* MockVoiceDetector.swift in Sources */,
@@ -348,6 +385,7 @@
 				DBD944FA1FABD44E0040CA49 /* MasterRecognizer.swift in Sources */,
 				DBC3D0F21FB0AAC900E54670 /* MusicSearcherImpl.swift in Sources */,
 				DB1DAF291F98E82A000F8450 /* VoiceOrderUseCase.swift in Sources */,
+				F916E6DD1FB86BE200965626 /* objcpp.mm in Sources */,
 				DB1DAF211F98E82A000F8450 /* ColorDisplay.swift in Sources */,
 				DB1DAF2E1F98E82A000F8450 /* WeatherInformUseCase.swift in Sources */,
 				DBD944FB1FABD44E0040CA49 /* MockMasterRecognizer.swift in Sources */,
@@ -499,12 +537,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = WB7NGK438F;
+				DEVELOPMENT_TEAM = MF4M3CTG8F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Peer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Shingo.Peer;
+				PRODUCT_BUNDLE_IDENTIFIER = "-Users-tomura-Desktop-SwiftApp-Peer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "New Group/Peer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -515,12 +557,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = WB7NGK438F;
+				DEVELOPMENT_TEAM = MF4M3CTG8F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Peer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Shingo.Peer;
+				PRODUCT_BUNDLE_IDENTIFIER = "-Users-tomura-Desktop-SwiftApp-Peer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "New Group/Peer-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
