@@ -133,7 +133,9 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
     {
         
         let image = self.imageFromSampleBuffer(sampleBuffer)
-        let data: Data = UIImagePNGRepresentation(image)!
+        let objcpp = ObjCpp()
+        let result: String = objcpp.calcPosition(image, distance: self.position.distance, radian: self.position.angle)
+        print(result)
             //self.imageView.image = image
             
             // UIImageViewをビューに追加
