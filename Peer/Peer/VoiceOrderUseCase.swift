@@ -35,7 +35,7 @@ public class VoiceOrderUseCase
         print("===detect")
         var result: String = ""
         result = voiceRecognizer.recognize()
-        if (result.contains("バディ")){
+        if (result.contains("バディ") || result.contains("バリ") || result.contains("針")){
             messageDisplay.display(message: "音声認識中...")
             colorDisplay.display(color: Color.Yellow)
             order.voiceString = voiceRecognizer.recognize()

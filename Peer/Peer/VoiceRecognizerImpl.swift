@@ -32,7 +32,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
             }
             
             DispatchQueue.main.async {
-                self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
+                self.timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
                 self.timer.fire()
             }
         }
