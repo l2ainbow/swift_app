@@ -23,23 +23,21 @@ func AudioQueueInputCallback(
 public class VoiceDetectorImpl: VoiceDetector
 {
     
-    var queue: AudioQueueRef!
-    var timer: Timer!
-    var isDetect: Bool!                                             /* 音量判定 */
-    var levelMeter = AudioQueueLevelMeterState()                    /* 音量のレベル */
-    var propertySize = UInt32(MemoryLayout<AudioQueueLevelMeterState>.size)
-
-    init () {
-        self.detectStart()
-        self.isDetect = false
-    }
+    private var queue: AudioQueueRef!
+    private var timer: Timer!
+    private var isDetect: Bool = false                                           /* 音量判定 */
+    private var levelMeter = AudioQueueLevelMeterState()                    /* 音量のレベル */
+    private var propertySize = UInt32(MemoryLayout<AudioQueueLevelMeterState>.size)
+    private var timerCheck: Bool = false
     
     // 音声を検出する
     // -> 検出可否(true: 検出した, false: 未検出)
     public func detect() -> Bool {
-        let result: Bool = self.isDetect
-        self.isDetect = false
-        return result
+        if (timer == nil){
+            self.detectStart()
+        }
+        return self.isDetect
+        
     }
     
     /**
@@ -78,17 +76,19 @@ public class VoiceDetectorImpl: VoiceDetector
         
         var enabledLevelMeter: UInt32 = 1
         AudioQueueSetProperty(self.queue, kAudioQueueProperty_EnableLevelMetering, &enabledLevelMeter, UInt32(MemoryLayout<UInt32>.size))
-        
-        
+        DispatchQueue.main.async {
+    
         /* timerの設定 */
-        self.timer = Timer.scheduledTimer(timeInterval: 1.0,
+            self.timer = Timer.scheduledTimer(timeInterval: 0.5,
                                           target: self,
                                           selector: #selector(self.detectVolume(_:)),
                                           userInfo: nil,
                                           repeats: true)
-        self.timer?.fire()
+        
+            self.timer.fire()
+        }
+        
     }
-    
     /**
      * 音声検出をやめる。
      *
@@ -97,6 +97,8 @@ public class VoiceDetectorImpl: VoiceDetector
     {
         self.timer.invalidate()
         self.timer = nil
+        Thread.sleep(forTimeInterval: 3)
+        self.isDetect = false
         AudioQueueFlush(self.queue)
         AudioQueueStop(self.queue, false)
         AudioQueueDispose(self.queue, true)
@@ -120,16 +122,12 @@ public class VoiceDetectorImpl: VoiceDetector
         print("========\(levelMeter.mAveragePower)")
         
         if (levelMeter.mPeakPower >= -10.0) {
-            
             self.isDetect = true
-
-            // self.detectStop()
-            
+            self.detectStop()
         } else {
-            
             self.isDetect = false
-                
         }
-        
+        self.timerCheck = true
     }
+    
 }

@@ -19,18 +19,20 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     private var resultText: String = ""
     private var isRun: Bool!
     
-    init() {
-        timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
-        timer.fire()
-    }
+    
     // 音声を認識する
     // -> 認識した音声文字列
     public func recognize() -> String {
         // TODO: 【外村】ここを実装する
+        if (self.timer == nil) {
+            DispatchQueue.main.async {
+                self.timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: !self.audioEngine.isRunning)
+                self.timer.fire()
+            }
+        }
         var result: String = ""
         result = self.resultCheck()
         print("check1 === " + result)
-        Thread.sleep(forTimeInterval: 2)
 //        if (result.contains("バディ")) {
 //            result = ""
 //            result = self.resultCheck()
@@ -130,6 +132,9 @@ public class VoiceRecognizerImpl: VoiceRecognizer
             self.resultText = self.text
             self.text = ""
             stopRecording()
+            timer.invalidate()
+            self.timer = nil
+            Thread.sleep(forTimeInterval: 1)
             print("stop")
         }
         
