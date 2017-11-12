@@ -24,9 +24,15 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     // -> 認識した音声文字列
     public func recognize() -> String {
         // TODO: 【外村】ここを実装する
-        if (self.timer == nil) {
+        if (self.timer == nil || !self.timer.isValid && self.text == "") {
+            if (!self.audioEngine.isRunning) {
+                print("start")
+                stopRecording()
+                try! self.startRecording()
+            }
+            
             DispatchQueue.main.async {
-                self.timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: !self.audioEngine.isRunning)
+                self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
                 self.timer.fire()
             }
         }
@@ -84,6 +90,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
                 self.text = result.bestTranscription.formattedString
                 //print("====\(self.text)")
                 isFinal = result.isFinal
+                self.stopRecording()
 
             } else {
                 print("====result else")
@@ -113,29 +120,28 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     }
     
     func stopRecording() {
-        if (self.audioEngine.isRunning) {
+        
             self.audioEngine.stop()
             self.recognitionRequest?.endAudio()
-        }
-        
     }
     
     
     
     @objc func repeatRecognize(_ timer: Timer) {
-        
-        if (!self.audioEngine.isRunning) {
-            print("start")
-            try! self.startRecording()
+        if (!self.timer.isValid) {
+            if (!self.audioEngine.isRunning) {
+                print("start")
+                stopRecording()
+                try! self.startRecording()
+            }
         }
         if (self.text != "") {
             self.resultText = self.text
             self.text = ""
             stopRecording()
             timer.invalidate()
-            self.timer = nil
-            Thread.sleep(forTimeInterval: 1)
             print("stop")
+            
         }
         
     }
