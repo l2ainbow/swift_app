@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB10B05B1FB9B66700321C27 /* MusicSearcherImplForCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB10B05A1FB9B66700321C27 /* MusicSearcherImplForCS.swift */; };
 		DB1DAF101F937058000F8450 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF0F1F937058000F8450 /* Speaker.swift */; };
 		DB1DAF211F98E82A000F8450 /* ColorDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */; };
 		DB1DAF221F98E82A000F8450 /* ColorDisplayImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB10B05A1FB9B66700321C27 /* MusicSearcherImplForCS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearcherImplForCS.swift; sourceTree = "<group>"; };
 		DB1DAF0F1F937058000F8450 /* Speaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
 		DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDisplay.swift; sourceTree = "<group>"; };
 		DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDisplayImpl.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 		DB1DAF351F9C93F1000F8450 /* interface */ = {
 			isa = PBXGroup;
 			children = (
+				DB10B05A1FB9B66700321C27 /* MusicSearcherImplForCS.swift */,
 				DBC3D0F71FB6D24A00E54670 /* BluetoothManager.swift */,
 				DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */,
 				DB1DAF141F98E82A000F8450 /* CurrentLocatorImpl.swift */,
@@ -392,6 +395,7 @@
 				DB1DAF2D1F98E82A000F8450 /* Weather.swift in Sources */,
 				DBC3D0EB1FB09A1B00E54670 /* MusicPlayer.swift in Sources */,
 				DBD944FD1FABD44E0040CA49 /* Position.swift in Sources */,
+				DB10B05B1FB9B66700321C27 /* MusicSearcherImplForCS.swift in Sources */,
 				DB1DAF411F9C9C10000F8450 /* MockSpeaker.swift in Sources */,
 				F98954E41F21315200B24DC0 /* AppDelegate.swift in Sources */,
 				DB1DAF431F9C9C8D000F8450 /* MockWeatherProvider.swift in Sources */,

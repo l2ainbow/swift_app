@@ -24,7 +24,7 @@ class Initializer {
         let voiceRecognizer = MockVoiceRecognizer()
         let locator = CurrentLocatorImpl()
         let provider = WeatherProviderImpl()
-        let masterRecognizer = MasterRecognizerImpl()
+        let masterRecognizer = MockMasterRecognizer()
         let runner = RunnerImpl(rightMotor: delegate.rightMotor, leftMotor: delegate.leftMotor)
         let follower = Follower(runner: runner)
         let musicSearcher = MusicSearcherImplForCS()

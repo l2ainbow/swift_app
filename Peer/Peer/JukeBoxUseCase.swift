@@ -46,6 +46,7 @@ public class JukeBoxUseCase
             return
         }
         speaker.speak(voice: "わかりました")
+        Thread.sleep(forTimeInterval: 2)
         
         while let music = self.shuffle(musics: &musics){
             musicPlayer.play(music: music)

@@ -22,13 +22,15 @@ public class MusicSearcherImplForCS: MusicSearcher{
         let performanceProperty = MPMediaPropertyPredicate(value: PERFORMANCE_KEYWORD, forProperty: KEYWORD_PROPERTY, comparisonType: MPMediaPredicateComparison.contains)
         
         for target in [MPMediaItemPropertyTitle, MPMediaItemPropertyArtist, MPMediaItemPropertyComposer, MPMediaItemPropertyAlbumTitle, MPMediaItemPropertyAlbumArtist] {
-            let property2 = MPMediaPropertyPredicate(value: keyword, forProperty: target, comparisonType: MPMediaPredicateComparison.contains)
+            let property = MPMediaPropertyPredicate(value: keyword, forProperty: target, comparisonType: MPMediaPredicateComparison.contains)
             let query = MPMediaQuery()
             query.addFilterPredicate(performanceProperty)
             query.addFilterPredicate(property)
-            let sTitle = query.items!
-            for single in sTitle {
-                musics.append(Music(id: String(single.persistentID), title: single.title!, artist: single.artist!))
+            if query.items != nil {
+                let sTitle = query.items!
+                for single in sTitle {
+                    musics.append(Music(id: String(single.persistentID), title: single.title!, artist: single.artist!))
+                }
             }
         }
         
