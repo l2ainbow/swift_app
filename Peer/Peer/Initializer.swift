@@ -27,7 +27,7 @@ class Initializer {
         let masterRecognizer = MasterRecognizerImpl()
         let runner = RunnerImpl(rightMotor: delegate.rightMotor, leftMotor: delegate.leftMotor)
         let follower = Follower(runner: runner)
-        let musicSearcher = MusicSearcherImpl()
+        let musicSearcher = MusicSearcherImplForCS()
         let musicPlayer = MusicPlayerImpl()
         
         let weatherInformUC = WeatherInformUseCase(speaker: delegate.speaker, colorDisplay: delegate.colorDisplay, currentLocator: locator, weatherProvider: provider, messageDisplay: delegate.messageDisplay)
