@@ -19,7 +19,7 @@ public class RunnerImpl: Runner
     // タイヤの半径 [m]
     let RADIUS = 0.025
     // カーブ係数
-    let K_CURVE = 1.0
+    let K_CURVE = 0.8
 
     /// 右モータ
     var rightMotor: Motor

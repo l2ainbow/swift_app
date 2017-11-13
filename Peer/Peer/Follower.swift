@@ -13,9 +13,9 @@ public class Follower
     /// 追走を行う最小距離 [m]
     let MIN_DISTANCE_TO_FOLLOW = 0.5
     /// 旋回する最小角度 [rad]
-    let MIN_ANGLE_TO_SPIN = Double.pi / 2
+    let MIN_ANGLE_TO_SPIN = Double.pi / 3.5
     /// 前進する最大角度 [rad]
-    let MAX_ANGLE_TO_GO_STRAIGHT	 = Double.pi / 12
+    let MAX_ANGLE_TO_GO_STRAIGHT	 = Double.pi / 9.0
     /// 停止を続けた場合に追走をやめる時間 [s]
     let TIME_TO_STOP_FOLLOWING = 5
 
