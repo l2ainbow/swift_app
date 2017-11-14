@@ -33,8 +33,8 @@ public class VoiceOrderUseCase
         while(!voiceDetector.detect()){}
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
         print("===detect")
-        var result: String = ""
-        result = voiceRecognizer.recognize()
+        var result: String = "バディ"
+        //result = voiceRecognizer.recognize()
         if (result.contains("バディ") || result.contains("バリ") || result.contains("針")){
             messageDisplay.display(message: "音声認識中...")
             colorDisplay.display(color: Color.Yellow)

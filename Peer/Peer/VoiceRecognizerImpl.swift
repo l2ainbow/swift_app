@@ -140,6 +140,14 @@ public class VoiceRecognizerImpl: VoiceRecognizer
             self.text = ""
             stopRecording()
             timer.invalidate()
+            let audioSession = AVAudioSession.sharedInstance()
+            do {
+                try audioSession.setActive(false)
+                try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
+            } catch {
+                print("error!")
+                return
+            }
             print("stop")
             
         }

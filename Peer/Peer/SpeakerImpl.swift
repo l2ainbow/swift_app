@@ -22,9 +22,12 @@ public class SpeakerImpl: Speaker
     /// - Parameter voice: 出力音声メッセージ
     public func speak(voice: String)
     {
+        let audioSession = AVAudioSession.sharedInstance()
+        try! audioSession.setCategory(AVAudioSessionCategoryAmbient)
         let utterance = AVSpeechUtterance(string: voice)
         utterance.rate = VOICE_RATE
         utterance.pitchMultiplier = VOICE_PITCH
         self.synthesizer.speak(utterance)
     }
+    
 }
