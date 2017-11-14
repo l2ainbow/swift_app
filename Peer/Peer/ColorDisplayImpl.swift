@@ -18,6 +18,8 @@ public class ColorDisplayImpl: ColorDisplay
     private var isRepeatIllumination = false
     /// イルミネーションを終了予定か
     private var willFinishIllumination = true
+    /// イルミネーション停止中か
+    private var isStopIllumination = false
     
     private let semaphore = DispatchSemaphore(value: 1)
     
@@ -69,11 +71,11 @@ public class ColorDisplayImpl: ColorDisplay
             self.semaphore.wait()
             self.willFinishIllumination = false
             self.isRepeatIllumination = isRepeat
+            self.isStopIllumination = false
             repeat{
                 for color in colors {
                     let rgb = self.convertColorToRGB(color: color)
                     self.displayColorChange(red: rgb[0], green: rgb[1], blue: rgb[2])
-                    // - TODO: LEDの点滅を繰り返すように修正する（Arduino側の修正も必要）
                     for i in 1...10 {
                         let br = (Double((5 - abs(5 - i))) / 5 * 255.0)
                         self.ledColorChange(red: rgb[0], green: rgb[1], blue: rgb[2], brightness: UInt8(br))
