@@ -18,12 +18,12 @@ class MockVoiceRecognizer : VoiceRecognizer{
             return "バディ"
         }
         //return "五日後の天気はどうですか"
-        //return "ついてきて"
+        return "ついてきて"
  
+        /*
         if (cnt==2){
             return "ごきげんよう"
         }
-        /*
         if (cnt == 2){
             return "音楽再生"
         }
