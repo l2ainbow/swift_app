@@ -54,7 +54,7 @@ static void rgb2hsv(Mat &img, Mat &hsv) {
 static void mask(Mat &gray, Mat &img) {
     Mat hsv;
     rgb2hsv(img, hsv);
-
+    
     //cvCvtColor(&img, &hsv, CV_RGB2HSV_FULL);
     for (int i = 0; i < gray.cols; i++) {
         for (int j = 0; j < gray.rows; j++) {
@@ -80,19 +80,24 @@ static void detectShirt(Mat &img, vector<Rect> &rects) {
     
     //gray.release();
     
-    for (int i = 0; i < contours->total; i++) {
-        CvArr *approx = NULL;
+    //for (int i = 0; i < contours->total; i++) {
+    for (; contours != 0; contours = contours->h_next) {
+        //Mat *approx = 0;
         //bug, CvSeq cannot convert to CvArr
-        cvConvexHull2(&contours[i], approx);
-        rects.push_back(cvBoundingRect(approx));
-    }
-    
-    for (auto it = rects.end(); it != rects.begin(); it--) {
-        auto x = *it;
-        if ((x.width / x.height < 2)&(x.height / x.width > 0.5)) {
-            rects.erase(it);
+        //cvConvexHull2(&contours[i], approx);
+        Rect rect = cvBoundingRect(contours, 1);
+        auto x = rect;
+        if (!(x.width / x.height < 2) || !(x.height / x.width > 0.5)) {
+            rects.push_back(rect);
         }
     }
+    
+    /*for (auto it = rects.end(); it != rects.begin(); it--) {
+     auto x = *it;
+     if ((x.width / x.height < 2)&(x.height / x.width > 0.5)) {
+     rects.erase(it);
+     }
+     }*/
     
     cvReleaseMemStorage(&storage);
     
@@ -106,7 +111,8 @@ double calcDist(double r, double rmax) {
     return tan(theta);
 }
 
-string CCpp::detectMan(Mat &img, double oldD, double oldTheta){
+string CCpp::detectMan(Mat &img, double oldD, double oldTheta) {
+    
     vector<Rect> rects;
     detectShirt(img, rects);
     
