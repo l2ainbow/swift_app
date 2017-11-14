@@ -42,6 +42,9 @@ public class UseCaseController {
         if (currentUseCase == "JukeBox"){
             jukeBoxUC.pauseMusic()
         }
+        if (currentUseCase == "FollowMaster"){
+            followMasterUC.terminate()
+        }
     }
     
     /// 画面が長押しされた時の処理

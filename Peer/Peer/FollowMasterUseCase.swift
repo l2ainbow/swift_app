@@ -13,6 +13,8 @@ public class FollowMasterUseCase
     private var colorDisplay: ColorDisplay
     private var messageDisplay: MessageDisplay
     
+    private var willFinishFollowing = false
+    
     init (colorDisplay: ColorDisplay, masterRecognizer: MasterRecognizer, follower: Follower, messageDisplay: MessageDisplay){
         self.masterRecognizer = masterRecognizer
         self.follower = follower
@@ -27,9 +29,21 @@ public class FollowMasterUseCase
         messageDisplay.display(message: "追走中...")
         var position = Position(distance: 0, angle: 0)
         repeat{
+            if (willFinishFollowing){
+                willFinishFollowing = false
+                break
+            }
+        
             position = masterRecognizer.recognize()
             print(position.angle)
+            
         }
         while(follower.follow(position: position))
     }
+    
+    /// ユースケースを強制終了する
+    public func terminate(){
+        willFinishFollowing = true
+    }
+    
 }
