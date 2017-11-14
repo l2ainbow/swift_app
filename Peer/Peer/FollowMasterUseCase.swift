@@ -8,6 +8,9 @@
 
 public class FollowMasterUseCase
 {
+    /// 人認識周期 [s]
+    private let RECOGNIZE_CYCLE = 0.5
+    
     private var masterRecognizer: MasterRecognizer
     private var follower: Follower
     private var colorDisplay: ColorDisplay
@@ -33,10 +36,10 @@ public class FollowMasterUseCase
                 willFinishFollowing = false
                 break
             }
+            Thread.sleep(forTimeInterval: RECOGNIZE_CYCLE)
         
             position = masterRecognizer.recognize()
-            print(position.angle)
-            
+            print("recognize:" + String(position.distance) + "," + String(position.angle))
         }
         while(follower.follow(position: position))
     }

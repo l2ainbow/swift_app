@@ -114,8 +114,8 @@ public class MasterRecognizerImpl : NSObject, MasterRecognizer, AVCaptureVideoDa
         print(resultStr)
         let result: [String] = resultStr.components(separatedBy: ",")
         // UIImageViewをビューに追加
-        self.position.angle = Double(result[0])!
-        self.position.distance = Double(result[1])!
+        self.position.angle = Double(result[1])!
+        self.position.distance = fabs(Double(result[0])!)
         
         //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
