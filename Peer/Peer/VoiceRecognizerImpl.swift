@@ -8,7 +8,7 @@
 import Speech
 import AudioToolbox
 
-public class VoiceRecognizerImpl: VoiceRecognizer
+public class VoiceRecognizerImpl: NSObject, VoiceRecognizer, SFSpeechRecognizerDelegate
 {
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -24,27 +24,24 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     // -> 認識した音声文字列
     public func recognize() -> String {
         // TODO: 【外村】ここを実装する
-        if (self.timer == nil || !self.timer.isValid && self.text == "") {
+        //if (self.timer == nil || !self.timer.isValid && self.text == "") {
             if (!self.audioEngine.isRunning) {
+                Thread.sleep(forTimeInterval: 1)
                 print("start")
                 stopRecording()
                 try! self.startRecording()
             }
             
-            DispatchQueue.main.async {
-                self.timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
-                self.timer.fire()
-            }
-        }
+//            DispatchQueue.main.async {
+//                self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.repeatRecognize(_:)), userInfo: nil, repeats: true)
+//                self.timer.fire()
+//            }
+        //}
         var result: String = ""
         result = self.resultCheck()
         print("check1 === " + result)
-//        if (result.contains("バディ")) {
-//            result = ""
-//            result = self.resultCheck()
-//            print("check2 === " + result)
-//        }
-//        
+
+        self.stopRecording()
         return result
     }
     
@@ -54,10 +51,12 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         self.isRun = true
         while(true) {
             if (self.resultText != "" || !isRun) {
+                Thread.sleep(forTimeInterval: 1)
                 result = self.resultText
                 break
             }
         }
+        
         return result
     }
     func startRecording() throws {
@@ -78,7 +77,7 @@ public class VoiceRecognizerImpl: VoiceRecognizer
         
         guard let recognitionRequest = recognitionRequest else { fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object") }
         
-        //recognitionRequest.shouldReportPartialResults = true
+        recognitionRequest.shouldReportPartialResults = true
         
         /* 音声認識スタート */
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
@@ -88,9 +87,11 @@ public class VoiceRecognizerImpl: VoiceRecognizer
                 /* ここで文字列を処理 */
                 //self.stopRecording()
                 self.text = result.bestTranscription.formattedString
-                //print("====\(self.text)")
+                self.resultText = self.text
+                print("====\(self.text)")
+                self.text = ""
                 isFinal = result.isFinal
-                self.stopRecording()
+                //self.stopRecording()
 
             } else {
                 print("====result else")
@@ -120,33 +121,39 @@ public class VoiceRecognizerImpl: VoiceRecognizer
     }
     
     func stopRecording() {
-        
-            self.audioEngine.stop()
-            self.recognitionRequest?.endAudio()
+        self.audioEngine.stop()
+        self.recognitionRequest?.endAudio()
+        self.recognitionTask?.finish()
+        let audioSession = AVAudioSession.sharedInstance()
+        try! audioSession.setActive(false)
+        try! audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
     }
     
     
     
-    @objc func repeatRecognize(_ timer: Timer) {
-        if (!self.timer.isValid) {
-            if (!self.audioEngine.isRunning) {
-                print("start")
-                stopRecording()
-                try! self.startRecording()
-            }
-        }
-        if (self.text != "") {
-            self.resultText = self.text
-            self.text = ""
-            stopRecording()
-            timer.invalidate()
-            let audioSession = AVAudioSession.sharedInstance()
-            try! audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
-            print("stop")
-            
-        }
-        
-    }
+//    @objc func repeatRecognize(_ timer: Timer) {
+//        if (!self.timer.isValid) {
+//            if (!self.audioEngine.isRunning) {
+//                print("start")
+//                stopRecording()
+//                try! self.startRecording()
+//            }
+//        }
+//        if (self.text != "") {
+//            self.resultText = self.text
+//            self.text = ""
+//            stopRecording()
+//            timer.invalidate()
+//            let audioSession = AVAudioSession.sharedInstance()
+//            try! audioSession.setActive(false)
+//            try! audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
+//            try! audioSession.setActive(true)
+//            print("stop")
+//
+//        }
+//
+//    }
+//
     
 }
 
