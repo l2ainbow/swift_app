@@ -50,7 +50,7 @@ public class VoiceOrderUseCase
         else if (KeywordSearcher.search(string: order.voiceString, keywords: ["音楽", "聞きたい", "聴きたい", "ミュージック", "曲"])){
             order.order = "JukeBox"
         }
-        else if (KeywordSearcher.search(string: order.voiceString, keyword: "ごきげんよう")){
+        else if (KeywordSearcher.search(string: order.voiceString, keywords: ["ごきげんよう"])){
             order.order = "Talking"
         }
         else {

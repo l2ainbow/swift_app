@@ -20,12 +20,17 @@ class MockVoiceRecognizer : VoiceRecognizer{
         //return "五日後の天気はどうですか"
         //return "ついてきて"
  
+        if (cnt==2){
+            return "ごきげんよう"
+        }
+        /*
         if (cnt == 2){
             return "音楽再生"
         }
         if (cnt == 3){
             return "冬"
         }
+ */
         return ""
     }
     

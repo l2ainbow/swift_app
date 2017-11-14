@@ -30,10 +30,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
     // <UI関連>
     /// 状態を表すテキスト
     @IBOutlet weak var conditionText: UILabel!
-    /// テキストの高さを可変にする
-    conditionText.numberOfLines = 0
-    conditionText.sizeToFit()
-    conditionText.lineBreakMode = LineBreakByWordWrapping
     
     // <その他>
     /// 音声スピーカー

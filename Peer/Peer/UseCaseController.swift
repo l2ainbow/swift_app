@@ -11,14 +11,16 @@ public class UseCaseController {
     private var weatherInformUC: WeatherInformUseCase!
     private var followMasterUC: FollowMasterUseCase!
     private var jukeBoxUC: JukeBoxUseCase!
+    private var talkingUC: TalkingUseCase!
     
     private var currentUseCase = "None"
     
-    init(voiceOrderUC: VoiceOrderUseCase, weatherInformUC: WeatherInformUseCase, followMasterUC: FollowMasterUseCase, jukeBoxUC: JukeBoxUseCase){
+    init(voiceOrderUC: VoiceOrderUseCase, weatherInformUC: WeatherInformUseCase, followMasterUC: FollowMasterUseCase, jukeBoxUC: JukeBoxUseCase, talkingUC: TalkingUseCase){
         self.voiceOrderUC = voiceOrderUC
         self.weatherInformUC = weatherInformUC
         self.followMasterUC = followMasterUC
         self.jukeBoxUC = jukeBoxUC
+        self.talkingUC = talkingUC
     }
     
     /// 音声指令を待ち受ける
@@ -34,6 +36,9 @@ public class UseCaseController {
         }
         else if(currentUseCase == "JukeBox"){
             jukeBoxUC.start()
+        }
+        else if(currentUseCase == "Talking"){
+            talkingUC.start(voiceString: order.voiceString)
         }
     }
     

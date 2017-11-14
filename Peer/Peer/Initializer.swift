@@ -34,7 +34,8 @@ class Initializer {
         let voiceOrderUC = VoiceOrderUseCase(colorDisplay: delegate.colorDisplay, voiceDetector: voiceDetector, voiceRecognizer: voiceRecognizer, messageDisplay: delegate.messageDisplay)
         let followMasterUC = FollowMasterUseCase(colorDisplay: delegate.colorDisplay, masterRecognizer: masterRecognizer, follower: follower, messageDisplay: delegate.messageDisplay)
         let jukeBoxUC = JukeBoxUseCase(speaker: delegate.speaker, voiceRecognizer: voiceRecognizer, musicSearcher: musicSearcher, musicPlayer: musicPlayer, colorDisplay: delegate.colorDisplay, messageDisplay: delegate.messageDisplay, runner: runner)
+        let talkingUC = TalkingUseCase(speaker: delegate.speaker)
         
-        delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUC, weatherInformUC: weatherInformUC, followMasterUC: followMasterUC, jukeBoxUC: jukeBoxUC)
+        delegate.useCaseController = UseCaseController(voiceOrderUC: voiceOrderUC, weatherInformUC: weatherInformUC, followMasterUC: followMasterUC, jukeBoxUC: jukeBoxUC, talkingUC: talkingUC)
     }
 }

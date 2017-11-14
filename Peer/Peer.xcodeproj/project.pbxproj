@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DB10B05B1FB9B66700321C27 /* MusicSearcherImplForCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB10B05A1FB9B66700321C27 /* MusicSearcherImplForCS.swift */; };
+		DB10B05D1FBB184400321C27 /* TalkingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB10B05C1FBB184400321C27 /* TalkingUseCase.swift */; };
 		DB1DAF101F937058000F8450 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF0F1F937058000F8450 /* Speaker.swift */; };
 		DB1DAF211F98E82A000F8450 /* ColorDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */; };
 		DB1DAF221F98E82A000F8450 /* ColorDisplayImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		DB10B05A1FB9B66700321C27 /* MusicSearcherImplForCS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearcherImplForCS.swift; sourceTree = "<group>"; };
+		DB10B05C1FBB184400321C27 /* TalkingUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkingUseCase.swift; sourceTree = "<group>"; };
 		DB1DAF0F1F937058000F8450 /* Speaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
 		DB1DAF111F98E82A000F8450 /* ColorDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDisplay.swift; sourceTree = "<group>"; };
 		DB1DAF121F98E82A000F8450 /* ColorDisplayImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDisplayImpl.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				DBD944F61FABD44E0040CA49 /* Position.swift */,
 				DBD944F71FABD44E0040CA49 /* Runner.swift */,
 				DB1DAF0F1F937058000F8450 /* Speaker.swift */,
+				DB10B05C1FBB184400321C27 /* TalkingUseCase.swift */,
 				DB1DAF171F98E82A000F8450 /* VoiceDetector.swift */,
 				DB1DAF191F98E82A000F8450 /* VoiceOrderUseCase.swift */,
 				DB1DAF4D1FA46BD5000F8450 /* VoiceOrder.swift */,
@@ -379,6 +382,7 @@
 				DB1DAF251F98E82A000F8450 /* Location.swift in Sources */,
 				DB41213F1FAEB19C001D97D2 /* Motor.swift in Sources */,
 				DB1DAF491F9F619A000F8450 /* MessageDisplay.swift in Sources */,
+				DB10B05D1FBB184400321C27 /* TalkingUseCase.swift in Sources */,
 				DBC3D0E91FB09A1B00E54670 /* JukeBoxUseCase.swift in Sources */,
 				DBC3D0F81FB6D24A00E54670 /* BluetoothManager.swift in Sources */,
 				F98954E61F21315200B24DC0 /* ViewController.swift in Sources */,
