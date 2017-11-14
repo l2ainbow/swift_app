@@ -24,7 +24,6 @@ public class VoiceOrderUseCase
     /// - Returns: 音声指令
     public func start() -> VoiceOrder
     {
-        // TODO: 【外村】必要があればstart()の内容を修正する
         colorDisplay.display(color: Color.Green)
         messageDisplay.display(message: "音声検出中...")
         print("\n")
@@ -33,6 +32,7 @@ public class VoiceOrderUseCase
         while(!voiceDetector.detect()){}
         var order: VoiceOrder = VoiceOrder(order: "", voiceString: "")
         print("===detect")
+        // TODO: ２回目の音声認識が上手くいかないための突貫処理
         var result: String = "バディ"
         //result = voiceRecognizer.recognize()
         if (result.contains("バディ") || result.contains("バリ") || result.contains("針")){
@@ -50,7 +50,7 @@ public class VoiceOrderUseCase
         else if (KeywordSearcher.search(string: order.voiceString, keywords: ["音楽", "聞きたい", "聴きたい", "ミュージック", "曲"])){
             order.order = "JukeBox"
         }
-        else if (KeywordSearcher.search(string: order.voiceString, keywords: ["ごきげんよう"])){
+        else if (KeywordSearcher.search(string: order.voiceString, keywords: ["ごきげんよう","こんにちは"])){
             order.order = "Talking"
         }
         else {

@@ -63,6 +63,7 @@ public class JukeBoxUseCase
     /// 音楽を一時停止する
     public func pauseMusic(){
         musicPlayer.pause()
+        self.runner.stop()
         // - TODO: 音楽の一時停止時に色の変更を止めるように修正
     }
     
@@ -70,6 +71,7 @@ public class JukeBoxUseCase
     public func terminate(){
         musics.removeAll()
         musicPlayer.terminate()
+        self.runner.stop()
     }
     
     /// 音楽をシャッフル選択する（選択された音楽は配列からは除外する）
